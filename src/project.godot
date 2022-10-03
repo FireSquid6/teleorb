@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Teleorb Definitive"
+run/main_scene="res://scenes/level_template.tscn"
 config/features=PackedStringArray("4.0", "Vulkan Mobile")
 config/icon="res://icon.svg"
 
