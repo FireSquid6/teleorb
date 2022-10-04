@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bycyewd3cxndk"]
+
+[ext_resource type="Script" path="res://level_building/world/world.gd" id="1_vuo35"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_vuo35")
+
+[node name="Background" type="ParallaxLayer" parent="."]
+
+[node name="Foreground" type="Node2D" parent="."]
+
+[node name="Walls" type="TileMap" parent="Foreground"]
+format = 2
+
+[node name="Spikes" type="TileMap" parent="Foreground"]
+format = 2
+
+[node name="Areas" type="Node2D" parent="."]
+visible = false

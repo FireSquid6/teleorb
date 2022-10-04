@@ -1,18 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://biawsca0nmg8p"]
+[gd_scene load_steps=8 format=3 uid="uid://gp0qpdkdtgfn"]
 
-[ext_resource type="Texture2D" uid="uid://b6fvetaqvqfge" path="res://entities/player/player.png" id="1_3sqyr"]
-[ext_resource type="Script" path="res://entities/player/player.gd" id="1_ykm5t"]
-[ext_resource type="Script" path="res://shared/state_machine/state_machine.gd" id="3_37p7o"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_snhna"]
+[ext_resource type="Texture2D" uid="uid://b6fvetaqvqfge" path="res://player/player.png" id="2_clhcy"]
+[ext_resource type="Script" path="res://shared/state_machine/state_machine.gd" id="3_rv0ji"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fys1s"]
 size = Vector2(8, 21)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2owiq"]
-atlas = ExtResource("1_3sqyr")
+atlas = ExtResource("2_clhcy")
 region = Rect2(0, 0, 16, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hg1sw"]
-atlas = ExtResource("1_3sqyr")
+atlas = ExtResource("2_clhcy")
 region = Rect2(16, 0, 16, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kvlaq"]
@@ -24,7 +24,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_ykm5t")
+script = ExtResource("1_snhna")
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
@@ -36,4 +36,4 @@ frames = SubResource("SpriteFrames_kvlaq")
 animation = &"idle"
 
 [node name="StateMachine" type="Node" parent="."]
-script = ExtResource("3_37p7o")
+script = ExtResource("3_rv0ji")

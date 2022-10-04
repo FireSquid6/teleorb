@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://tkmkp8vmfun0"]
-
-[node name="Level" type="Node2D"]
-texture_filter = 1
-texture_repeat = 1

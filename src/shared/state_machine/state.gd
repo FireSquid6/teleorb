@@ -5,6 +5,7 @@ class_name State
 signal entered()  # emitted when this state is entered into
 signal exitted()  # emitted when this state is exited
 var active_signals := []  # list of active signal objects
+@onready var machine: StateMachine = get_parent() 
 
 # virtual method for chaning the state
 # called by the state machine when another state requests to change into this state. If it returns false, the change is aborted.
