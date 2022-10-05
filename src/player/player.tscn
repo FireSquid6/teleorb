@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://gp0qpdkdtgfn"]
+[gd_scene load_steps=13 format=3 uid="uid://gp0qpdkdtgfn"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_snhna"]
 [ext_resource type="Texture2D" uid="uid://b6fvetaqvqfge" path="res://player/player.png" id="2_clhcy"]
 [ext_resource type="Script" path="res://shared/state_machine/state_machine.gd" id="3_rv0ji"]
+[ext_resource type="Script" path="res://player/states/state_falling.gd" id="5_55tsp"]
+[ext_resource type="Script" path="res://player/states/state_jumping.gd" id="5_g8jcl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fys1s"]
 size = Vector2(8, 21)
@@ -23,7 +25,33 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="GDScript" id="GDScript_bqtcm"]
+script/source = "extends PlayerState
+
+
+func _logic(delta: float = -1.0):
+	var input = player.input
+	
+	# accelerate based on the player's movements
+	player.run(input['move'], true)
+	
+	# check if the player should jump
+	if input[\"jump_pressed\"]:
+		machine.change_state(\"StateJumping\")
+	
+	# check if the player has walked off a ledge
+	if !player.is_on_floor():
+		machine.change_state(\"StateFalling\")
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0y1ya"]
+size = Vector2(8, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ebe0b"]
+size = Vector2(34, 21)
+
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_snhna")
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="."]
@@ -37,3 +65,36 @@ animation = &"idle"
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_rv0ji")
+starting_state = NodePath("StateMoving")
+
+[node name="StateMoving" type="Node" parent="StateMachine"]
+script = SubResource("GDScript_bqtcm")
+
+[node name="StateJumping" type="Node" parent="StateMachine"]
+script = ExtResource("5_g8jcl")
+
+[node name="StateFalling" type="Node" parent="StateMachine"]
+script = ExtResource("5_55tsp")
+
+[node name="JumpBufferCollision" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="JumpBufferCollision"]
+position = Vector2(0, 24)
+shape = SubResource("RectangleShape2D_0y1ya")
+
+[node name="WalljumpBuffer" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="WalljumpBuffer"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_ebe0b")
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="JumpTimer" type="Timer" parent="Timers"]
+
+[node name="InputCancelTime" type="Timer" parent="Timers"]
+wait_time = 0.5
+
+[connection signal="timeout" from="Timers/InputCancelTime" to="." method="_on_input_cancel_time_timeout"]

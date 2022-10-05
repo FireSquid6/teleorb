@@ -9,7 +9,7 @@ var active_signals := []  # list of active signal objects
 
 # virtual method for chaning the state
 # called by the state machine when another state requests to change into this state. If it returns false, the change is aborted.
-func _can_change() -> bool:
+func _can_transition() -> bool:
 	return true
 
 

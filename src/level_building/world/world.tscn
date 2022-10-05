@@ -1,19 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://bycyewd3cxndk"]
+[gd_scene load_steps=3 format=3 uid="uid://bycyewd3cxndk"]
 
 [ext_resource type="Script" path="res://level_building/world/world.gd" id="1_vuo35"]
+[ext_resource type="TileSet" uid="uid://cpcpsdihdl5bh" path="res://level_building/world/world_tileset.tres" id="2_sswmj"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_vuo35")
 
 [node name="Background" type="ParallaxLayer" parent="."]
 
-[node name="Foreground" type="Node2D" parent="."]
-
-[node name="Walls" type="TileMap" parent="Foreground"]
+[node name="Map" type="TileMap" parent="."]
+texture_filter = 1
+texture_repeat = 1
+tile_set = ExtResource("2_sswmj")
 format = 2
-
-[node name="Spikes" type="TileMap" parent="Foreground"]
-format = 2
+layer_0/name = "Walls"
+layer_1/name = "Damage"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 0
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "Gizmos"
+layer_2/enabled = true
+layer_2/modulate = Color(1, 1, 1, 1)
+layer_2/y_sort_enabled = false
+layer_2/y_sort_origin = 0
+layer_2/z_index = 0
+layer_2/tile_data = PackedInt32Array()
 
 [node name="Areas" type="Node2D" parent="."]
 visible = false

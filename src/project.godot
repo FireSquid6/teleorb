@@ -57,8 +57,8 @@ _global_script_class_icons={
 [application]
 
 config/name="Teleorb Definitive"
-run/main_scene="res://level_building/level_template.tscn"
-config/features=PackedStringArray("4.0", "Vulkan Mobile")
+run/main_scene="res://scenes/levels/tests/movement_test.tscn"
+config/features=PackedStringArray("4.0")
 config/icon="res://icon.svg"
 
 [display]

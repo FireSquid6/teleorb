@@ -21,3 +21,5 @@ zoom = Vector2(2, 2)
 limit_smoothed = true
 smoothing_enabled = true
 smoothing_speed = 25.0
+
+[editable path="World"]
