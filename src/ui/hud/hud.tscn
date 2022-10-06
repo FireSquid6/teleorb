@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://hxl4sqm7pvxl"]
+
+[ext_resource type="Script" path="res://ui/hud/hud.gd" id="1_jid4h"]
+[ext_resource type="Script" path="res://ui/hud/debug_labels.gd" id="2_byokk"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_jid4h")
+
+[node name="DebugLabels" type="VBoxContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -200.0
+offset_right = 384.0
+grow_vertical = 0
+alignment = 2
+script = ExtResource("2_byokk")
+
+[node name="Label" type="Label" parent="DebugLabels"]
+offset_top = 177.0
+offset_right = 384.0
+offset_bottom = 200.0

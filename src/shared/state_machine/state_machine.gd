@@ -5,7 +5,7 @@ class_name StateMachine
 var state_history := []  # the history of states
 var possible_states := []  # the names of every possible state
 var selected_state: State  # the currently selected state
-@export_node_path(State) var starting_state  # the state the machine starts on
+@export_node_path(Node) var starting_state  # the state the machine starts on
 @export var output_changes: bool = false  # whether the state machine outputs its changes or not
 @export_range(0, 50) var max_state_history_length: int = 20  # the maximum length the state history can be
 
@@ -27,7 +27,8 @@ func _ready() -> void:
 
 func change_state(new_state: String, enter_args := [], exit_args := []) -> bool:
 	# make sure the new state is a possible state
-	assert(new_state in possible_states)
+	# some bug in godot 4 is causing this to fail
+	# assert(new_state in possible_states)
 	
 	var old_name = 'none'
 	var new_name = 'none'
@@ -36,8 +37,8 @@ func change_state(new_state: String, enter_args := [], exit_args := []) -> bool:
 	if get_state(new_state)._can_transition():
 		if selected_state:
 			# run the old state's exit function
-			selected_state._exit()
-			selected_state.emit_signal("exited")
+			selected_state._exit(exit_args)
+			selected_state.emit_signal("exitted")
 			
 			# edit the state history
 			state_history.insert(0, selected_state.name)
@@ -67,9 +68,14 @@ func change_state(new_state: String, enter_args := [], exit_args := []) -> bool:
 
 
 func process_logc(delta) -> void:
-	
+	selected_state._logic(delta)
 	emit_signal('logic_finished')
 
 
-func get_state(name) -> State:
-	return get_node(name)
+func process_supplementary_logic() -> void:
+	selected_state._supplementary_logic()
+	emit_signal('supplementary_logic_finished')
+
+
+func get_state(state_name) -> State:
+	return get_node(state_name)

@@ -9,10 +9,35 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "CanvasLayer",
+"class": &"HUD",
+"language": &"GDScript",
+"path": "res://ui/hud/hud.gd"
+}, {
+"base": "Node2D",
+"class": &"Level",
+"language": &"GDScript",
+"path": "res://level_building/level.gd"
+}, {
+"base": "Area2D",
+"class": &"LevelArea",
+"language": &"GDScript",
+"path": "res://level_building/world/area/area.gd"
+}, {
+"base": "Node",
+"class": &"Orb",
+"language": &"GDScript",
+"path": "res://player/orb/orb.gd"
+}, {
 "base": "CharacterBody2D",
 "class": &"Player",
 "language": &"GDScript",
-"path": "res://entities/player/player.gd"
+"path": "res://player/player.gd"
+}, {
+"base": "State",
+"class": &"PlayerState",
+"language": &"GDScript",
+"path": "res://player/states/player_state.gd"
 }, {
 "base": "Node",
 "class": &"State",
@@ -23,19 +48,34 @@ _global_script_classes=[{
 "class": &"StateMachine",
 "language": &"GDScript",
 "path": "res://shared/state_machine/state_machine.gd"
+}, {
+"base": "Node2D",
+"class": &"World",
+"language": &"GDScript",
+"path": "res://level_building/world/world.gd"
 }]
 _global_script_class_icons={
+"HUD": "",
+"Level": "",
+"LevelArea": "",
+"Orb": "",
 "Player": "",
+"PlayerState": "",
 "State": "",
-"StateMachine": ""
+"StateMachine": "",
+"World": ""
 }
 
 [application]
 
 config/name="Teleorb Definitive"
-run/main_scene="res://scenes/level_template.tscn"
-config/features=PackedStringArray("4.0", "Vulkan Mobile")
+run/main_scene="res://scenes/levels/tests/movement_test.tscn"
+config/features=PackedStringArray("4.0")
 config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [input]
 
@@ -96,8 +136,6 @@ reset={
 
 2d_physics/layer_1="World"
 2d_physics/layer_2="Player"
-2d_physics/layer_3="Orb"
-2d_physics/layer_4="Gizmos"
 
 [rendering]
 
