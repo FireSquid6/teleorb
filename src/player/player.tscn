@@ -1,13 +1,40 @@
-[gd_scene load_steps=13 format=3 uid="uid://gp0qpdkdtgfn"]
+[gd_scene load_steps=32 format=3 uid="uid://gp0qpdkdtgfn"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_snhna"]
 [ext_resource type="Texture2D" uid="uid://b6fvetaqvqfge" path="res://player/player.png" id="2_clhcy"]
+[ext_resource type="Shape2D" uid="uid://dtu7kkn3wgc6t" path="res://player/player_collision_shape.tres" id="2_jy2uy"]
 [ext_resource type="Script" path="res://shared/state_machine/state_machine.gd" id="3_rv0ji"]
+[ext_resource type="Script" path="res://player/states/state_moving.gd" id="4_x4780"]
 [ext_resource type="Script" path="res://player/states/state_falling.gd" id="5_55tsp"]
 [ext_resource type="Script" path="res://player/states/state_jumping.gd" id="5_g8jcl"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fys1s"]
-size = Vector2(8, 21)
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8tc7"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(160, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rey24"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(176, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5yup"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(192, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpjrj"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(208, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2vpf"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(224, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1chn"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(240, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q41ob"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(256, 0, 16, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2owiq"]
 atlas = ExtResource("2_clhcy")
@@ -17,32 +44,86 @@ region = Rect2(0, 0, 16, 24)
 atlas = ExtResource("2_clhcy")
 region = Rect2(16, 0, 16, 24)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ybnhq"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(128, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgp6p"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(272, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_srxwv"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(288, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yuox"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(304, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7brs4"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(320, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyljv"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(336, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5etic"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(48, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvtse"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(64, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mi85"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(80, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aa5c5"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(96, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ep5ty"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(112, 0, 16, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xf3sf"]
+atlas = ExtResource("2_clhcy")
+region = Rect2(144, 0, 16, 24)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_kvlaq"]
 animations = [{
+"frames": [SubResource("AtlasTexture_i8tc7"), SubResource("AtlasTexture_rey24"), SubResource("AtlasTexture_d5yup"), SubResource("AtlasTexture_wpjrj"), SubResource("AtlasTexture_r2vpf"), SubResource("AtlasTexture_x1chn"), SubResource("AtlasTexture_q41ob")],
+"loop": true,
+"name": &"die",
+"speed": 20.0
+}, {
 "frames": [SubResource("AtlasTexture_2owiq"), SubResource("AtlasTexture_hg1sw")],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
+}, {
+"frames": [SubResource("AtlasTexture_ybnhq")],
+"loop": true,
+"name": &"midair",
+"speed": 5.0
+}, {
+"frames": [SubResource("AtlasTexture_hgp6p"), SubResource("AtlasTexture_srxwv"), SubResource("AtlasTexture_6yuox"), SubResource("AtlasTexture_7brs4"), SubResource("AtlasTexture_nyljv")],
+"loop": true,
+"name": &"teleport",
+"speed": 25.0
+}, {
+"frames": [SubResource("AtlasTexture_5etic"), SubResource("AtlasTexture_mvtse"), SubResource("AtlasTexture_8mi85"), SubResource("AtlasTexture_aa5c5"), SubResource("AtlasTexture_ep5ty")],
+"loop": true,
+"name": &"walking",
+"speed": 10.0
+}, {
+"frames": [SubResource("AtlasTexture_xf3sf")],
+"loop": true,
+"name": &"wall",
+"speed": 5.0
 }]
-
-[sub_resource type="GDScript" id="GDScript_bqtcm"]
-script/source = "extends PlayerState
-
-
-func _logic(delta: float = -1.0):
-	var input = player.input
-	
-	# accelerate based on the player's movements
-	player.run(input['move'], true)
-	
-	# check if the player should jump
-	if input[\"jump_pressed\"]:
-		machine.change_state(\"StateJumping\")
-	
-	# check if the player has walked off a ledge
-	if !player.is_on_floor():
-		machine.change_state(\"StateFalling\")
-"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0y1ya"]
 size = Vector2(8, 24)
@@ -52,23 +133,25 @@ size = Vector2(34, 21)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
+floor_stop_on_slope = false
 script = ExtResource("1_snhna")
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
-shape = SubResource("RectangleShape2D_fys1s")
+shape = ExtResource("2_jy2uy")
 
 [node name="AnimatedSprite2d" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 frames = SubResource("SpriteFrames_kvlaq")
 animation = &"idle"
+playing = true
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_rv0ji")
 starting_state = NodePath("StateMoving")
 
 [node name="StateMoving" type="Node" parent="StateMachine"]
-script = SubResource("GDScript_bqtcm")
+script = ExtResource("4_x4780")
 
 [node name="StateJumping" type="Node" parent="StateMachine"]
 script = ExtResource("5_g8jcl")
@@ -95,6 +178,6 @@ shape = SubResource("RectangleShape2D_ebe0b")
 [node name="JumpTimer" type="Timer" parent="Timers"]
 
 [node name="InputCancelTime" type="Timer" parent="Timers"]
-wait_time = 0.5
+wait_time = 0.3
 
 [connection signal="timeout" from="Timers/InputCancelTime" to="." method="_on_input_cancel_time_timeout"]

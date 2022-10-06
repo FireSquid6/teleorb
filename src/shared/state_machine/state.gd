@@ -14,17 +14,17 @@ func _can_transition() -> bool:
 
 
 # runs whenever this state is entered into
-func _enter(args := []) -> void:
+func _enter(_args := []) -> void:
 	pass
 
 
 # runs whenever this state is exited. Runs before the previous state is entered.
-func _exit(args := []) -> void:
+func _exit(_args := []) -> void:
 	pass
 
 
 # executed whenever the process_logic() method on the state machine is called
-func _logic(delta: float = -1.0) -> void:
+func _logic(_delta: float = -1.0) -> void:
 	pass
 
 
@@ -34,7 +34,7 @@ func _supplementary_logic() -> void:
 
 
 # same as _input(), but is only called when active
-func _active_input(event: InputEvent) -> void:
+func _active_input(_event: InputEvent) -> void:
 	pass
 
 
@@ -50,11 +50,11 @@ class ActiveSignal:
 	var signal_name: String
 	var method: Callable
 	
-	func _init(_signaler: Object, _signal_name: String, _method: Callable):
+	func _init(signaler: Object, signal_name: String, method: Callable):
 		#setup names
-		signaler = _signaler
-		signal_name = _signal_name
-		method = _method
+		self.signaler = signaler
+		self.signal_name = signal_name
+		self.method = method
 	
 	func _on_State_entered():
 		return signaler.connect(signal_name, method)

@@ -37,8 +37,8 @@ func change_state(new_state: String, enter_args := [], exit_args := []) -> bool:
 	if get_state(new_state)._can_transition():
 		if selected_state:
 			# run the old state's exit function
-			selected_state._exit()
-			selected_state.emit_signal("exited")
+			selected_state._exit(exit_args)
+			selected_state.emit_signal("exitted")
 			
 			# edit the state history
 			state_history.insert(0, selected_state.name)
@@ -77,5 +77,5 @@ func process_supplementary_logic() -> void:
 	emit_signal('supplementary_logic_finished')
 
 
-func get_state(name) -> State:
-	return get_node(name)
+func get_state(state_name) -> State:
+	return get_node(state_name)

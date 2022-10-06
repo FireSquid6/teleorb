@@ -12,7 +12,7 @@ func _logic(delta: float = -1.0):
 	var input = player.input
 	
 	# move
-	player.run(input["move"], false, 1 / player.air_resistance)
+	player.run(delta, input["move"], false, 1 / player.air_resistance)
 	
 	# go back to moving if on floor
 	if player.is_on_floor():
@@ -24,7 +24,7 @@ func _logic(delta: float = -1.0):
 		machine.change_state("StateJumping")
 	
 	# fall
-	player.velocity.y += player.grv
+	player.velocity.y += player.grv * delta
 	if player.velocity.y > player.terminal_velocity:
 		player.velocity.y = player.terminal_velocity
 	

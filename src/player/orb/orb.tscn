@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://ckj7pflc6h0a4"]
+
+[ext_resource type="Shape2D" uid="uid://dtu7kkn3wgc6t" path="res://player/player_collision_shape.tres" id="1_ql1xm"]
+[ext_resource type="Script" path="res://player/orb/orb.gd" id="1_xhhfp"]
+[ext_resource type="Texture2D" uid="uid://bxrek460iqi3u" path="res://player/orb/orb_throw.png" id="2_7j76n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sid38"]
+atlas = ExtResource("2_7j76n")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hl3ob"]
+atlas = ExtResource("2_7j76n")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hls7p"]
+atlas = ExtResource("2_7j76n")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1rfyk"]
+atlas = ExtResource("2_7j76n")
+region = Rect2(36, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_62h5k"]
+animations = [{
+"frames": [SubResource("AtlasTexture_sid38"), SubResource("AtlasTexture_hl3ob"), SubResource("AtlasTexture_hls7p"), SubResource("AtlasTexture_1rfyk")],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r5hyr"]
+radius = 4.0
+
+[node name="Orb" type="Node"]
+script = ExtResource("1_xhhfp")
+
+[node name="OrbArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="AnimatedSprite2d" type="AnimatedSprite2D" parent="OrbArea"]
+texture_filter = 1
+texture_repeat = 1
+frames = SubResource("SpriteFrames_62h5k")
+playing = true
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="OrbArea"]
+shape = SubResource("CircleShape2D_r5hyr")
+
+[node name="PlayerMask" type="CharacterBody2D" parent="."]
+collision_layer = 0
+motion_mode = 1
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="PlayerMask"]
+shape = ExtResource("1_ql1xm")
+
+[connection signal="body_entered" from="OrbArea" to="." method="_on_orb_area_body_entered"]

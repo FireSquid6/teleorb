@@ -4,13 +4,17 @@ extends PlayerState
 func _enter(_args := []) -> void:
 	# restore walljumps
 	player.walljumps_left = player.max_walljumps
+	
+	# if there is a jump buffered, jump
+	if player.jump_buffered:
+		machine.change_state("StateJumping")
 
 
 func _logic(delta: float = -1.0):
 	var input = player.input
 	
 	# accelerate based on the player's movements
-	player.run(input['move'], true)
+	player.run(delta, input['move'], true)
 	
 	# check if the player should jump
 	if input["jump_pressed"]:
