@@ -15,7 +15,7 @@ var has_orb: bool = false
 var walljumps_left: int = 0  # the amount of walljumps the player has left
 var jump_buffered: bool = false  # whether a jump input has been buffered or not
 var walljump_buffered: bool = false  # whether a walljump is buffered or not
-var canceled_input: int = 0
+var canceled_input: int = 0  # input direction canceled. If 0, not inputs are canceled
 
 @export var running_speed: float = 200  # the maximum speed the player can accelerate to
 @export var acceleration: float = 4800  # the speed the player accelerates at
@@ -26,7 +26,7 @@ var canceled_input: int = 0
 @export var jump_time: float = 0.3  # the amount of time the player jumps for
 @export var jump_grv: float = 450  # the gravity during jumps
 @export var grv: float = 900  # standard gravity
-@export var air_resistance: float = 0.0  # percent movement is reduced by when moving in air
+@export var air_resistance: float = 0.33  # percent movement is reduced by when moving in air
 @export var cyote_time: float = 0.1  # the amount of time the player can still jump while falling
 @export var terminal_velocity: float = 10000  # the maximum velocity the player can reach traveling downwards
 
@@ -61,7 +61,9 @@ func _physics_process(delta):
 	current_state = state_machine.selected_state.name
 	
 	# move and slide
-	var _collided = move_and_slide()
+	var collided = move_and_slide()
+	if collided:
+		canceled_input = 0
 	
 	# check for player throwing
 

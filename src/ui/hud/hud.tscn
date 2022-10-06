@@ -17,6 +17,7 @@ alignment = 2
 script = ExtResource("2_byokk")
 
 [node name="Label" type="Label" parent="DebugLabels"]
+layout_mode = 2
 offset_top = 177.0
 offset_right = 384.0
 offset_bottom = 200.0
