@@ -32,7 +32,7 @@ var orb_thrown := false  # whether the orb is currently in the air or not
 @export var jump_time: float = 0.3  # the amount of time the player jumps for
 @export var jump_grv: float = 450  # the gravity during jumps
 @export var grv: float = 900  # standard gravity
-@export var air_resistance: float = 0.33  # percent movement is reduced by when moving in air
+@export var air_resistance: float = 1  # percent movement is reduced by when moving in air
 @export var cyote_time: float = 0.1  # the amount of time the player can still jump while falling
 @export var terminal_velocity: float = 10000  # the maximum velocity the player can reach traveling downwards
 
@@ -92,37 +92,78 @@ func _physics_process(delta):
 		
 
 
-# accelerates this object's horizontal velocity based on acceleration, deceleration, 
-# dir - the direction to accelerate in
-# decelerate_above_max_speed - whether to decelerate the velocity if the 
-func run(delta: float, dir: int, decelerate_above_max_speed: bool = false, acceleration_multiplier: float = 1.0) -> void:
+#func run(delta: float, dir: int, decelerate_above_max_speed: bool = false, acceleration_multiplier: float = 1.0) -> void:
+#	# set animation player xscale to move
+#	if move != 0:
+#		sprite.scale.x = move
+#
+#	# get deceleration and acceleration
+#	var dec := deceleration * delta
+#	var acc := acceleration * delta
+#
+#	# accelerate if moving
+#	if dir != 0:
+#		# decelerate if aboce maximum speed
+#		if (abs(velocity.x) >= running_speed):
+#			if decelerate_above_max_speed and (abs(velocity.x) - dec) > running_speed:
+#				velocity.x -= dec * dir
+#			else:
+#				velocity.x = sign(velocity.x) * running_speed
+#		else:
+#			velocity.x += acc * acceleration_multiplier * dir
+#			if !decelerate_above_max_speed:
+#				velocity.x = clamp(velocity.x, -running_speed, running_speed)
+#	# decelerate if not moving
+#	else:
+#		# snap velocity to 0 if needed
+#		if abs(velocity.x) <= dec * acceleration_multiplier:
+#			velocity.x = 0
+#		else:
+#			velocity.x -= acc * acceleration_multiplier * sign(velocity.x)
+
+#// deceleration
+#if velocity > max speed:
+#  velocity -= deceleration * sign(velocity)
+#  if abs(velocity) < max speed:
+#    velocity = max_speed * sign(velocity)
+#
+#// acceleration
+#if velocity < max speed:
+#  velocity += deceleration * dir
+#  if abs(velocity) > max speed:
+#    velocity = max_speed * dir
+
+func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, acceleration_multiplier: float = 1.0) -> void:
 	# set animation player xscale to move
 	if move != 0:
 		sprite.scale.x = move
-	
+
 	# get deceleration and acceleration
 	var dec := deceleration * delta
 	var acc := acceleration * delta
 	
-	# accelerate if moving
-	if dir != 0:
-		# decelerate if aboce maximum speed
-		if (abs(velocity.x) >= running_speed):
-			if decelerate_above_max_speed and (abs(velocity.x) - dec) > running_speed:
-				velocity.x -= dec * dir
-			else:
-				velocity.x = sign(velocity.x) * running_speed
+	# decelerate
+	print("frick")
+	if ((velocity.x > running_speed) and decelerate_if_above_max_speed) or (dir == 0):
+		if abs(velocity.x) - dec <= 0:
+			velocity.x = 0 
 		else:
-			velocity.x += acc * acceleration_multiplier * dir
-			if !decelerate_above_max_speed:
-				velocity.x = clamp(velocity.x, -running_speed, running_speed)
-	# decelerate if not moving
-	else:
-		# snap velocity to 0 if needed
-		if abs(velocity.x) <= dec * acceleration_multiplier:
-			velocity.x = 0
+			velocity.x -= dec * sign(velocity.x)
+		
+		print("Decelerating!")
+	
+	# accelerate
+	if velocity.x <= running_speed and dir != 0:
+		if abs(velocity.x) + acc <= running_speed:
+			velocity.x += acc * dir
+		elif sign(velocity.x) == dir:
+			# note to future self: this line is the problem
+			velocity.x = running_speed * sign(velocity.x)
 		else:
-			velocity.x -= acc * acceleration_multiplier * sign(velocity.x)
+			velocity.x += acc * dir
+		
+		print("Accelerating")
+	
 
 
 # stops an input from being pressed for a given amount of time
