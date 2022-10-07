@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://gp0qpdkdtgfn"]
+[gd_scene load_steps=33 format=3 uid="uid://gp0qpdkdtgfn"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_snhna"]
 [ext_resource type="Texture2D" uid="uid://b6fvetaqvqfge" path="res://player/player.png" id="2_clhcy"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://player/states/state_moving.gd" id="4_x4780"]
 [ext_resource type="Script" path="res://player/states/state_falling.gd" id="5_55tsp"]
 [ext_resource type="Script" path="res://player/states/state_jumping.gd" id="5_g8jcl"]
+[ext_resource type="Script" path="res://player/states/state_teleport.gd" id="8_sqbjb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i8tc7"]
 atlas = ExtResource("2_clhcy")
@@ -158,6 +159,9 @@ script = ExtResource("5_g8jcl")
 
 [node name="StateFalling" type="Node" parent="StateMachine"]
 script = ExtResource("5_55tsp")
+
+[node name="StateTeleport" type="Node" parent="StateMachine"]
+script = ExtResource("8_sqbjb")
 
 [node name="JumpBufferCollision" type="Area2D" parent="."]
 collision_layer = 0

@@ -25,4 +25,6 @@ smoothing_speed = 25.0
 
 [node name="HUD" parent="." instance=ExtResource("4_kxrjr")]
 
+[connection signal="level_loaded" from="." to="Player" method="_on_level_level_loaded"]
+
 [editable path="World"]

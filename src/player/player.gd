@@ -17,11 +17,17 @@ var jump_buffered: bool = false  # whether a jump input has been buffered or not
 var walljump_buffered: bool = false  # whether a walljump is buffered or not
 var canceled_input: int = 0  # input direction canceled. If 0, not inputs are canceled
 
+var can_throw := false  # whether the player has an orb to throw
+var orb_thrown := false  # whether the orb is currently in the air or not
+
+@export_group("X Movement")
 @export var running_speed: float = 200  # the maximum speed the player can accelerate to
 @export var acceleration: float = 4800  # the speed the player accelerates at
 @export var deceleration: float = 4800  # the speed the player slows down at
 @export var max_walljumps: int = 1  # the maximum amount of times the player can walljump
 @export var walljump_spd: float = 200
+
+@export_group("Y Movement")
 @export var jump_spd: float = 200 # the speed that the player jumps at
 @export var jump_time: float = 0.3  # the amount of time the player jumps for
 @export var jump_grv: float = 450  # the gravity during jumps
@@ -29,6 +35,9 @@ var canceled_input: int = 0  # input direction canceled. If 0, not inputs are ca
 @export var air_resistance: float = 0.33  # percent movement is reduced by when moving in air
 @export var cyote_time: float = 0.1  # the amount of time the player can still jump while falling
 @export var terminal_velocity: float = 10000  # the maximum velocity the player can reach traveling downwards
+
+@export_group("Orb")
+@export var orb_speed: float = 500
 
 @onready var input: Dictionary = {}  # dictionary for the input each frame
 @onready var state_machine: StateMachine = get_node('StateMachine')  # ref to state machine
@@ -43,6 +52,7 @@ func _physics_process(delta):
 	on_wall = is_on_wall()
 	
 	# get input
+	# TODO: abstract this more
 	move = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 	if canceled_input != 0:
 		move = canceled_input * -1
@@ -53,7 +63,8 @@ func _physics_process(delta):
 		"slide" : Input.is_action_just_pressed("slide") and has_slide,
 		"throw" : Input.is_action_just_pressed("throw") and has_orb,
 		"jump_pressed" : Input.is_action_just_pressed("jump"),
-		"jump" : Input.is_action_pressed("jump")
+		"jump" : Input.is_action_pressed("jump"),
+		"angle" : global_position.angle_to(get_global_mouse_position()),
 	}
 	
 	# process states
@@ -66,6 +77,19 @@ func _physics_process(delta):
 		canceled_input = 0
 	
 	# check for player throwing
+	# TODO: Abstract this more
+	if input["throw"] and has_orb and can_throw and !orb_thrown:
+		# set booleans
+		orb_thrown = true
+		has_orb = false
+		
+		# create the orb
+		var orb: Orb = orb_scene.instantiate()
+		orb.velocity = Vector2(orb_speed, 0).rotated(input["angle"])
+		add_child(orb)
+		
+		# move to teleport state
+		
 
 
 # accelerates this object's horizontal velocity based on acceleration, deceleration, 
