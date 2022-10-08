@@ -22,3 +22,6 @@ func _physics_process(delta):
 # when the orb hits a wall, emit a signal to teleport the player
 func _on_orb_area_body_entered(_body):
 	emit_signal("hit", mask.position)
+	var player = get_parent() as Player
+	player.orb_thrown = false
+	queue_free()

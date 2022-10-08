@@ -8,6 +8,9 @@ func _enter(_args := []) -> void:
 	# if there is a jump buffered, jump
 	if player.jump_buffered:
 		machine.change_state("StateJumping")
+	
+	# allow the player to throw the orb again
+	player.can_throw = true
 
 
 func _logic(delta: float = -1.0):

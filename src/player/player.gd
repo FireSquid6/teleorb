@@ -10,20 +10,20 @@ var move = 0
 # whether the player has access to certain items
 var has_dash: bool = false
 var has_slide: bool = false
-var has_orb: bool = false
+var has_orb: bool = true
 
 var walljumps_left: int = 0  # the amount of walljumps the player has left
 var jump_buffered: bool = false  # whether a jump input has been buffered or not
 var walljump_buffered: bool = false  # whether a walljump is buffered or not
 var canceled_input: int = 0  # input direction canceled. If 0, not inputs are canceled
 
-var can_throw := false  # whether the player has an orb to throw
+var can_throw := true  # whether the player has an orb to throw
 var orb_thrown := false  # whether the orb is currently in the air or not
 
 @export_group("X Movement")
 @export var running_speed: float = 200  # the maximum speed the player can accelerate to
-@export var acceleration: float = 4800  # the speed the player accelerates at
-@export var deceleration: float = 4800  # the speed the player slows down at
+@export var acceleration: float = 3000  # the speed the player accelerates at
+@export var deceleration: float = 2500  # the speed the player slows down at
 @export var max_walljumps: int = 1  # the maximum amount of times the player can walljump
 @export var walljump_spd: float = 200
 
@@ -85,11 +85,15 @@ func _physics_process(delta):
 		
 		# create the orb
 		var orb: Orb = orb_scene.instantiate()
-		orb.velocity = Vector2(orb_speed, 0).rotated(input["angle"])
+		orb.connect("hit", Callable(self, "_on_orb_hit"))
+		orb.velocity = Vector2(orb_speed, 0).rotated(input["angle"] + PI / 2)
 		add_child(orb)
 		
-		# move to teleport state
-		
+
+
+func _on_orb_hit(new_pos: Vector2):
+	# move to state teleport
+	state_machine.change_state("StateTeleport", [new_pos])
 
 
 #func run(delta: float, dir: int, decelerate_above_max_speed: bool = false, acceleration_multiplier: float = 1.0) -> void:
@@ -143,14 +147,12 @@ func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, ac
 	var acc := acceleration * delta
 	
 	# decelerate
-	print("frick")
 	if ((velocity.x > running_speed) and decelerate_if_above_max_speed) or (dir == 0):
 		if abs(velocity.x) - dec <= 0:
 			velocity.x = 0 
 		else:
 			velocity.x -= dec * sign(velocity.x)
 		
-		print("Decelerating!")
 	
 	# accelerate
 	if velocity.x <= running_speed and dir != 0:
@@ -162,7 +164,6 @@ func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, ac
 		else:
 			velocity.x += acc * dir
 		
-		print("Accelerating")
 	
 
 
