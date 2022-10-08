@@ -77,6 +77,10 @@ config/icon="res://icon.svg"
 
 window/stretch/mode="canvas_items"
 
+[editor]
+
+movie_writer/movie_file="C:/Users/jdeis/projects/games/teleorb-definitive/src/movie.avi"
+
 [input]
 
 move_left={

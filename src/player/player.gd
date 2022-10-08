@@ -4,6 +4,8 @@ class_name Player
 
 # debug stuff
 var on_wall = false
+var on_floor = false
+var on_floor_2 = false
 var current_state = ""
 var move = 0
 
@@ -19,6 +21,8 @@ var canceled_input: int = 0  # input direction canceled. If 0, not inputs are ca
 
 var can_throw := true  # whether the player has an orb to throw
 var orb_thrown := false  # whether the orb is currently in the air or not
+
+var level: Level = null
 
 @export_group("X Movement")
 @export var running_speed: float = 200  # the maximum speed the player can accelerate to
@@ -46,10 +50,19 @@ var orb_thrown := false  # whether the orb is currently in the air or not
 @onready var jump_buffer_area: Area2D = get_node('JumpBufferCollision')  # ref to the area that handles the jump buffer
 @onready var input_cancel_timer: Timer = $Timers/InputCancelTime  # timer for canceling inputs
 @onready var orb_scene := preload("res://player/orb/orb.tscn")  # scene instanced for spawning the orb
+@onready var wall_detector: Area2D = $WallDetector
+@onready var floor_detector: Area2D = $FloorDetector
+
+
+func _enter_tree():
+	level = get_parent()
 
 
 func _physics_process(delta):
 	on_wall = is_on_wall()
+	
+	if Input.is_action_just_pressed("interact"):
+		print(position)
 	
 	# get input
 	# TODO: abstract this more
@@ -64,12 +77,16 @@ func _physics_process(delta):
 		"throw" : Input.is_action_just_pressed("throw") and has_orb,
 		"jump_pressed" : Input.is_action_just_pressed("jump"),
 		"jump" : Input.is_action_pressed("jump"),
-		"angle" : global_position.angle_to(get_global_mouse_position()),
+		"angle" : position.angle_to_point(level.cursor.position),
 	}
 	
 	# process states
+	var pre_floor = is_on_floor()
+	
 	state_machine.process_logc(delta)
 	current_state = state_machine.selected_state.name
+	
+	on_floor = str(pre_floor) + " | " + str(is_on_floor())
 	
 	# move and slide
 	var collided = move_and_slide()
@@ -78,16 +95,17 @@ func _physics_process(delta):
 	
 	# check for player throwing
 	# TODO: Abstract this more
-	if input["throw"] and has_orb and can_throw and !orb_thrown:
-		# set booleans
-		orb_thrown = true
-		has_orb = false
-		
-		# create the orb
-		var orb: Orb = orb_scene.instantiate()
-		orb.connect("hit", Callable(self, "_on_orb_hit"))
-		orb.velocity = Vector2(orb_speed, 0).rotated(input["angle"] + PI / 2)
-		add_child(orb)
+	if input["throw"]:
+		if can_throw and !orb_thrown:
+			# set booleans
+			orb_thrown = true
+			can_throw = false
+			
+			# create the orb
+			var orb: Orb = orb_scene.instantiate()
+			orb.connect("hit", Callable(self, "_on_orb_hit"))
+			orb.velocity = Vector2(orb_speed, 0).rotated(input["angle"])
+			add_child(orb)
 		
 
 
@@ -146,23 +164,28 @@ func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, ac
 	var dec := deceleration * delta
 	var acc := acceleration * delta
 	
-	# decelerate
-	if ((velocity.x > running_speed) and decelerate_if_above_max_speed) or (dir == 0):
-		if abs(velocity.x) - dec <= 0:
-			velocity.x = 0 
-		else:
-			velocity.x -= dec * sign(velocity.x)
+	# make sure the player isn't in a wall
+	var bodies := wall_detector.get_overlapping_bodies()
+	if len(bodies) <= 0:
+		# decelerate
+		if ((velocity.x > running_speed) and decelerate_if_above_max_speed) or (dir == 0):
+			if abs(velocity.x) - dec <= 0:
+				velocity.x = 0 
+			else:
+				velocity.x -= dec * sign(velocity.x)
+			
 		
-	
-	# accelerate
-	if velocity.x <= running_speed and dir != 0:
-		if abs(velocity.x) + acc <= running_speed:
-			velocity.x += acc * dir
-		elif sign(velocity.x) == dir:
-			# note to future self: this line is the problem
-			velocity.x = running_speed * sign(velocity.x)
-		else:
-			velocity.x += acc * dir
+		# accelerate
+		if velocity.x <= running_speed and dir != 0:
+			if abs(velocity.x) + acc <= running_speed:
+				velocity.x += acc * dir
+			elif sign(velocity.x) == dir:
+				# note to future self: this line is the problem
+				velocity.x = running_speed * sign(velocity.x)
+			else:
+				velocity.x += acc * dir
+	else:
+		print("Player stuck in wall. Body: " + str(bodies))
 		
 	
 
@@ -176,10 +199,10 @@ func cancel_dir(dir: int):
 func _on_input_cancel_time_timeout():
 	canceled_input = 0
 
-
 func _on_level_level_loaded(level: Level):
 	level.hud.add_debug_label(self, "velocity", "V = ")
 	level.hud.add_debug_label(self, "on_wall", "OnWall = ")
 	level.hud.add_debug_label(self, "current_state", "State = ")
 	level.hud.add_debug_label(self, "move", "Move = ")
 	level.hud.add_debug_label(self, "canceled_input", "Canceled Direction = ")
+	level.hud.add_debug_label(self, "on_floor", "OnFloor = ")

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4rknw3g4r1ie"]
+[gd_scene load_steps=6 format=3 uid="uid://b4rknw3g4r1ie"]
 
 [ext_resource type="PackedScene" uid="uid://bycyewd3cxndk" path="res://level_building/world/world.tscn" id="1_r1v6m"]
 [ext_resource type="Script" path="res://level_building/level.gd" id="1_yorse"]
 [ext_resource type="PackedScene" uid="uid://gp0qpdkdtgfn" path="res://player/player.tscn" id="2_k0fro"]
 [ext_resource type="PackedScene" uid="uid://hxl4sqm7pvxl" path="res://ui/hud/hud.tscn" id="4_kxrjr"]
+[ext_resource type="PackedScene" uid="uid://b1b3s6hwx7hk2" path="res://cursor/cursor.tscn" id="5_x2383"]
 
 [node name="Level" type="Node2D"]
 texture_filter = 1
@@ -24,6 +25,8 @@ smoothing_enabled = true
 smoothing_speed = 25.0
 
 [node name="HUD" parent="." instance=ExtResource("4_kxrjr")]
+
+[node name="Cursor" parent="." instance=ExtResource("5_x2383")]
 
 [connection signal="level_loaded" from="." to="Player" method="_on_level_level_loaded"]
 

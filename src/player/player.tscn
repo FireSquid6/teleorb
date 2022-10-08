@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://gp0qpdkdtgfn"]
+[gd_scene load_steps=34 format=3 uid="uid://gp0qpdkdtgfn"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_snhna"]
 [ext_resource type="Texture2D" uid="uid://b6fvetaqvqfge" path="res://player/player.png" id="2_clhcy"]
@@ -132,9 +132,13 @@ size = Vector2(8, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ebe0b"]
 size = Vector2(34, 21)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oq756"]
+size = Vector2(7.9, 21)
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 floor_stop_on_slope = false
+safe_margin = 0.085
 script = ExtResource("1_snhna")
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="."]
@@ -150,6 +154,7 @@ playing = true
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_rv0ji")
 starting_state = NodePath("StateMoving")
+output_changes = true
 
 [node name="StateMoving" type="Node" parent="StateMachine"]
 script = ExtResource("4_x4780")
@@ -164,6 +169,7 @@ script = ExtResource("5_55tsp")
 script = ExtResource("8_sqbjb")
 
 [node name="JumpBufferCollision" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="JumpBufferCollision"]
@@ -171,11 +177,26 @@ position = Vector2(0, 24)
 shape = SubResource("RectangleShape2D_0y1ya")
 
 [node name="WalljumpBuffer" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="WalljumpBuffer"]
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_ebe0b")
+
+[node name="WallDetector" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="WallDetector"]
+position = Vector2(0, 1.5)
+shape = ExtResource("2_jy2uy")
+
+[node name="FloorDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="FloorDetector"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_oq756")
 
 [node name="Timers" type="Node" parent="."]
 

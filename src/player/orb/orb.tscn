@@ -47,9 +47,9 @@ playing = true
 shape = SubResource("RectangleShape2D_wefv1")
 
 [node name="PlayerMask" type="CharacterBody2D" parent="."]
-visible = false
 collision_layer = 0
 motion_mode = 1
+safe_margin = 1.0
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="PlayerMask"]
 shape = ExtResource("1_ql1xm")
