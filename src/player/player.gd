@@ -61,9 +61,6 @@ func _enter_tree():
 func _physics_process(delta):
 	on_wall = is_on_wall()
 	
-	if Input.is_action_just_pressed("interact"):
-		print(position)
-	
 	# get input
 	# TODO: abstract this more
 	move = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
@@ -185,8 +182,7 @@ func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, ac
 			else:
 				velocity.x += acc * dir
 	else:
-		print("Player stuck in wall. Body: " + str(bodies))
-		
+		push_error("Player stuck in wall. Body: " + str(bodies))
 	
 
 
@@ -198,6 +194,7 @@ func cancel_dir(dir: int):
 
 func _on_input_cancel_time_timeout():
 	canceled_input = 0
+
 
 func _on_level_level_loaded(level: Level):
 	level.hud.add_debug_label(self, "velocity", "V = ")

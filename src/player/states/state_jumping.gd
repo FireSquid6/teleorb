@@ -11,6 +11,9 @@ func _enter(_args := []) -> void:
 	var timer: Timer = player.get_node("Timers/JumpTimer")
 	timer.wait_time = player.jump_time
 	timer.start()
+	
+	# animation
+	player.sprite.animation = "midair"
 
 
 func _logic(delta: float = -1.0) -> void:

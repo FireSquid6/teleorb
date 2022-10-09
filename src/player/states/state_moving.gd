@@ -16,6 +16,12 @@ func _enter(_args := []) -> void:
 func _logic(delta: float = -1.0):
 	var input = player.input
 	
+	# change animation
+	if input['move'] == 0:
+		player.sprite.animation = "idle"
+	else:
+		player.sprite.animation = "walking"
+	
 	# accelerate based on the player's movements
 	player.run(delta, input['move'], true)
 	

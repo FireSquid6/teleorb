@@ -12,5 +12,9 @@ class_name Level
 signal level_loaded()  # emitted on this object's ready function
 
 
+func _enter_tree():
+	print_rich("[u][color=yellow]Loading Level[/color] \"[color=aqua]{0}[/color]\"[/u]".format([name]))
+
 func _ready():
+	print_rich("[u][color=yellow]Started Level[/color] \"[color=aqua]{0}[/color]\"[/u]".format([name]))
 	emit_signal("level_loaded", self)

@@ -154,7 +154,6 @@ playing = true
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_rv0ji")
 starting_state = NodePath("StateMoving")
-output_changes = true
 
 [node name="StateMoving" type="Node" parent="StateMachine"]
 script = ExtResource("4_x4780")

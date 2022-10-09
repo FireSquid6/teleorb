@@ -3,7 +3,7 @@ class_name State
 
 
 signal entered()  # emitted when this state is entered into
-signal exitted()  # emitted when this state is exited
+signal exited()  # emitted when this state is exited
 var active_signals := []  # list of active signal objects
 @onready var machine: StateMachine = get_parent() 
 
@@ -39,8 +39,9 @@ func _active_input(_event: InputEvent) -> void:
 
 
 # adds a signal that is activated and deactivated based on when this state is active
-func _add_active_signal(signaler: Object, signal_name: String, method: Callable):
+func add_active_signal(signaler: Object, signal_name: String, method: Callable):
 	var active_signal: ActiveSignal = ActiveSignal.new(signaler, signal_name, method)
+	active_signals.append(active_signal)
 	connect('entered', Callable(active_signal, '_on_State_entered'))
 	connect('exited', Callable(active_signal, '_on_State_exited'))
 

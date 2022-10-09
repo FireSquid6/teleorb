@@ -38,7 +38,7 @@ func change_state(new_state: String, enter_args := [], exit_args := []) -> bool:
 		if selected_state:
 			# run the old state's exit function
 			selected_state._exit(exit_args)
-			selected_state.emit_signal("exitted")
+			selected_state.emit_signal("exited")
 			
 			# edit the state history
 			state_history.insert(0, selected_state.name)

@@ -3,6 +3,8 @@ extends PlayerState
 @onready var cyote_time = 0
 
 func _enter(_args := []) -> void:
+	player.sprite.animation = "midair"
+	
 	cyote_time = 0
 	if machine.state_history[0] == "StateMoving":
 		cyote_time = player.cyote_time
