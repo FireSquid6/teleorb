@@ -8,6 +8,7 @@ var labels := []  # list of debug labels
 # automatically tracks the property
 func add_debug_label(object: Object, property_name: String, custom_label: String = "") -> void:
 	var node := Label.new()
+	node.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(node)
 	labels.append(DebugLabel.new(object, property_name, node, custom_label))
 

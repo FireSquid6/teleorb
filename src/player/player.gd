@@ -22,7 +22,18 @@ var canceled_input: int = 0  # input direction canceled. If 0, not inputs are ca
 var can_throw := true  # whether the player has an orb to throw
 var orb_thrown := false  # whether the orb is currently in the air or not
 
-var level: Level = null
+var level: Level = null  # ref to the current level
+
+var mobile: bool = false
+var default_input: Dictionary = {
+	"move" : 0,
+	"dash" : false,
+	"slide" : false,
+	"throw" : false,
+	"jump_pressed" : false,
+	"jump" : false,
+	"angle" : false,
+}
 
 @export_group("X Movement")
 @export var running_speed: float = 200  # the maximum speed the player can accelerate to
@@ -58,6 +69,11 @@ func _enter_tree():
 	level = get_parent()
 
 
+func _ready():
+	Console.connect("focused", Callable(self, "_on_Console_focused"))
+	Console.connect("unfocused", Callable(self, "_on_Console_unfocused"))
+
+
 func _physics_process(delta):
 	on_wall = is_on_wall()
 	
@@ -67,6 +83,7 @@ func _physics_process(delta):
 	if canceled_input != 0:
 		move = canceled_input * -1
 	
+	# TODO: make this a class instead of a dict
 	input = {
 		"move" : move,
 		"dash" : Input.is_action_just_pressed("dash") and has_dash,
@@ -76,6 +93,8 @@ func _physics_process(delta):
 		"jump" : Input.is_action_pressed("jump"),
 		"angle" : position.angle_to_point(level.cursor.position),
 	}
+	if !mobile:
+		input = default_input
 	
 	# process states
 	var pre_floor = is_on_floor()
@@ -203,3 +222,11 @@ func _on_level_level_loaded(level: Level):
 	level.hud.add_debug_label(self, "move", "Move = ")
 	level.hud.add_debug_label(self, "canceled_input", "Canceled Direction = ")
 	level.hud.add_debug_label(self, "on_floor", "OnFloor = ")
+
+
+func _on_Console_focused():
+	mobile = false
+
+
+func _on_Console_unfocused():
+	mobile = true

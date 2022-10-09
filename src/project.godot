@@ -73,6 +73,10 @@ run/main_scene="res://scenes/levels/tests/movement_test.tscn"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Console="*res://ui/debug_console/debug_console.tscn"
+
 [display]
 
 window/stretch/mode="canvas_items"

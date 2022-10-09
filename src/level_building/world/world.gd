@@ -6,14 +6,30 @@ class_name World
 @onready var level: Level = get_parent()
 var player: Player
 var camera_shapes: Array[Rect2] = []  # an array of shape 2D's used to define different rooms for the camera
+var light_textures: Array[Texture] = []  # an array of textures for lighting
 
+var camera_area_output_string = "CollisionShape2D of [color=green](position = {0}, size = {1})[/color] converted to Rect2 of [color=green](position = {2}, size = {3})[/color]"
 
 func _ready():
-	await level.ready
+	await level.level_references_initialized
 	player = level.player
 	
+	# load the camera areas
+	print_rich('[b][color=green]Parsing Camera Areas:[/color][/b]')
+	
 	for collision_shape in shape_containers.get_children():
-		camera_shapes.append(collision_shape_2d_to_rect2(collision_shape))
+		collision_shape = collision_shape as CollisionShape2D
+		var rect2: Rect2 = collision_shape_2d_to_rect2(collision_shape)
+		camera_shapes.append(rect2)
+		
+		print_rich(camera_area_output_string.format([collision_shape.position, collision_shape.shape.size, rect2.position, rect2.size]))
+	
+	print('')
+	
+	# TODO: generate light textures from the camera areas
+	print_rich('[b][color=green]Generating light textures:[/color][/b]')
+	print_rich('[color=red]Feature not implemented yet[/color]')
+	print('')
 	
 	shape_containers.queue_free()
 
