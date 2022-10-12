@@ -24,7 +24,7 @@ var orb_thrown := false  # whether the orb is currently in the air or not
 
 var level: Level = null  # ref to the current level
 
-var mobile: bool = false
+var mobile: bool = true
 var default_input: Dictionary = {
 	"move" : 0,
 	"dash" : false,
