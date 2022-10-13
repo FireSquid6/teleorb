@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4rknw3g4r1ie"]
+[gd_scene load_steps=9 format=3 uid="uid://b4rknw3g4r1ie"]
 
 [ext_resource type="PackedScene" uid="uid://bycyewd3cxndk" path="res://level_building/world/world.tscn" id="1_r1v6m"]
 [ext_resource type="Script" path="res://level_building/level.gd" id="1_yorse"]
 [ext_resource type="PackedScene" uid="uid://gp0qpdkdtgfn" path="res://player/player.tscn" id="2_k0fro"]
+[ext_resource type="Script" path="res://level_building/camera.gd" id="4_5wpfp"]
 [ext_resource type="PackedScene" uid="uid://hxl4sqm7pvxl" path="res://ui/hud/hud.tscn" id="4_kxrjr"]
 [ext_resource type="PackedScene" uid="uid://b1b3s6hwx7hk2" path="res://cursor/cursor.tscn" id="5_x2383"]
 
@@ -40,6 +41,7 @@ zoom = Vector2(2, 2)
 limit_smoothed = true
 smoothing_enabled = true
 smoothing_speed = 25.0
+script = ExtResource("4_5wpfp")
 
 [node name="HUD" parent="." instance=ExtResource("4_kxrjr")]
 
