@@ -1,38 +1,45 @@
 extends CanvasLayer
 
 
-@export var key = KEY_F12
+var key = KEY_F12
+@export var command_packs: Array[CommandPack] = []
+@export var only_show_if_debug_mode: bool = true
 signal unfocused()
 signal focused()
 
 @onready var body: RichTextLabel = $DebugConsole/Panel/VBoxContainer/Body
-@onready var edit: LineEdit = $DebugConsole/LineEdit
+@onready var edit: LineEdit = $DebugConsole/Panel/VBoxContainer/Edit/LineEdit
 @onready var edit_display: RichTextLabel = $DebugConsole/Panel/VBoxContainer/Edit
-var pre_body = ''
+var pre_body := ''
+var commands := []
+var closed := false
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	visible = false
 	body.clear()
 	body.append_text(pre_body)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	
+	if (!OS.is_debug_build()) and only_show_if_debug_mode:
+		closed = true
+	
+	# add command packs
+	for pack in command_packs:
+		pack = pack as CommandPack
+		commands.append_array(pack.get_commands())
 
 
 func _input(event):
-	event = event as InputEventKey
-	if event:
-		if event.physical_keycode == key and event.pressed:
-			visible = !visible
-			if visible:
-				emit_signal("focused")
-				edit.grab_focus()
-			else:
-				emit_signal("unfocused")
+	if !closed:
+		event = event as InputEventKey
+		if event:
+			if event.physical_keycode == key and event.pressed:
+				visible = !visible
+				if visible:
+					emit_signal("focused")
+					edit.grab_focus()
+				else:
+					emit_signal("unfocused")
 
 
 # prints both to the stdout and the rich text label
@@ -49,12 +56,63 @@ func output(text: String, use_bbcode: bool = true) -> void:
 		pre_body += "\n"+text
 
 
-func run_command(text) -> String:
-	return '[color=red]Syntax Error. Command [color=white]"' + highlight_command(text) + '"[/color] not recognized.[/color]'
+func run_command(text: String) -> String:
+	# parse the text
+	var argument_strings: Array = text.split(" ")
+	var command_name: String = argument_strings[0]  
+	argument_strings.remove_at(0)
+	
+	# find the command
+	var command = get_command(command_name)
+	
+	if !command.has("null"):
+		var meta: Dictionary = command["meta"]
+		var function: Callable = command["function"]
+		
+		# get argument values
+		var arguments := {}
+		for argument_couples in argument_strings:
+			var split: Array = argument_couples.split("=")
+			if len(split) == 2:
+				arguments[split[0]] = split[1]
+			else:
+				return "[color=red]Argument [color=white]\"{0}\"[/color] not given a value. If you want to use an argument's default value, simply do not specify it.[/color]".format([split[0]])
+		
+		# add any missing arguments their default value
+		for argument in meta["arguments"]:
+			argument = argument as Dictionary
+			
+			if !arguments.has(argument["name"]):
+				arguments[argument["name"]] = argument["default_value"]
+		
+		# run the function
+		var output = function.call(arguments)
+		return output
+	
+	return '[color=red]Command [color=white]"{0}"[/color] not recognized[/color]'.format([command_name])
 
 
-func add_command(callable: Callable, data: CommandData) -> bool:
-	return false
+func get_command(name: String) -> Dictionary:
+	for command in commands:
+		command = command as Dictionary
+		if command["meta"]["name"] == name:
+			return command
+	return {
+		"null": true
+	}
+
+
+# metadata should look something like the following:
+# name: <command-name>
+# description: <command-description>
+# arguments: [{
+#	name: <argument-name>
+#	description: <argument-description>
+#	possible-values: <possible-values>
+#	default-value: <default-value>
+# }]
+func add_command(command: Dictionary) -> void:
+	commands.append(command)
 
 
 func _on_line_edit_text_submitted(new_text):
@@ -88,7 +146,3 @@ func highlight_command(text: String) -> String:
 			bbcode += word + ' '
 	
 	return bbcode
-
-
-class CommandData:
-	pass

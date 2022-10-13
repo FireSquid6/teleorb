@@ -15,19 +15,13 @@ signal level_loaded(level: Level)
 
 func _enter_tree():
 	# TODO: add level load time print
-	Console.output("
-[b]-----------------------------------------------------------------------------------[/b]
-[b][u][color=green]Loading level. . .[/color] \"[color=aqua]{0}[/color]\"[/u][/b]\n".format([name]))
+	Console.output("[u][color=green]Loading level. . .[/color] \"[color=aqua]{0}[/color]\"[/u]\n".format([name]))
 
 func _ready():
 	emit_signal("level_references_initialized", self)
-	Console.output("[b][u][color=green]Level loaded successfully in [color=aqua]{1}[/color]ms[/color][/u][/b]
-[b]-----------------------------------------------------------------------------------[/b]".format([name, "x"]))
+	Console.output("[u][color=green]Level loaded successfully in [color=aqua]{1}[/color]ms[/color][/u]".format([name, "x"]))
 	emit_signal("level_loaded", self)
 
 
 func goto_level(scene: PackedScene):
-	Console.output("[b]-----------------------------------------------------------------------------------[/b]
-[b]Exiting level {0} and heading to level {1}
-[b]-----------------------------------------------------------------------------------[/b]
-	")
+	Console.output("Exiting level {0} and heading to level {1}")

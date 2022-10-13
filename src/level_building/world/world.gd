@@ -15,7 +15,7 @@ func _ready():
 	player = level.player
 	
 	# load the camera areas
-	Console.output('[b][color=green]Parsing Camera Areas:[/color][/b]')
+	Console.output('[color=green]Parsing Camera Areas:[/color]')
 	
 	for collision_shape in shape_containers.get_children():
 		collision_shape = collision_shape as CollisionShape2D
@@ -27,7 +27,7 @@ func _ready():
 	Console.output('')
 	
 	# TODO: generate light textures from the camera areas
-	Console.output('[b][color=green]Generating light textures:[/color][/b]')
+	Console.output('[color=green]Generating light textures:[/color]')
 	Console.output('[color=red]Feature not implemented yet[/color]')
 	Console.output('')
 	
