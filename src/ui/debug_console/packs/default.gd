@@ -1,5 +1,5 @@
 extends CommandPack
-class_name HelperPack
+class_name DefaultPack
 
 
 # TODO: add the following commands:

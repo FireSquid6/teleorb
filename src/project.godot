@@ -14,15 +14,15 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://ui/debug_console/command_pack.gd"
 }, {
+"base": "CommandPack",
+"class": &"DefaultPack",
+"language": &"GDScript",
+"path": "res://ui/debug_console/packs/default.gd"
+}, {
 "base": "CanvasLayer",
 "class": &"HUD",
 "language": &"GDScript",
 "path": "res://ui/hud/hud.gd"
-}, {
-"base": "CommandPack",
-"class": &"HelperPack",
-"language": &"GDScript",
-"path": "res://ui/debug_console/default_packs/helpers.gd"
 }, {
 "base": "Node2D",
 "class": &"Level",
@@ -44,6 +44,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://player/player.gd"
 }, {
+"base": "AnimatedSprite2D",
+"class": &"PlayerSprite",
+"language": &"GDScript",
+"path": "res://player/animated_sprite.gd"
+}, {
 "base": "State",
 "class": &"PlayerState",
 "language": &"GDScript",
@@ -59,6 +64,11 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://shared/state_machine/state_machine.gd"
 }, {
+"base": "CommandPack",
+"class": &"TeleorbPack",
+"language": &"GDScript",
+"path": "res://ui/debug_console/packs/teleorb.gd"
+}, {
 "base": "Node2D",
 "class": &"World",
 "language": &"GDScript",
@@ -66,15 +76,17 @@ _global_script_classes=[{
 }]
 _global_script_class_icons={
 "CommandPack": "",
+"DefaultPack": "",
 "HUD": "",
-"HelperPack": "",
 "Level": "",
 "LevelArea": "",
 "Orb": "",
 "Player": "",
+"PlayerSprite": "",
 "PlayerState": "",
 "State": "",
 "StateMachine": "",
+"TeleorbPack": "",
 "World": ""
 }
 
@@ -95,7 +107,6 @@ Global="*res://global/global.tscn"
 window/size/viewport_width=960
 window/size/viewport_height=540
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
 
 [editor]
 

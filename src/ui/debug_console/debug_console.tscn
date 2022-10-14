@@ -1,13 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://clkak317jm6ub"]
+[gd_scene load_steps=11 format=3 uid="uid://dkcr8x5k5ssoo"]
 
 [ext_resource type="StyleBox" uid="uid://btonwhd5yjpjr" path="res://ui/debug_console/stylebox.tres" id="1_64gx8"]
 [ext_resource type="Script" path="res://ui/debug_console/debug_console.gd" id="1_h5kvy"]
-[ext_resource type="Script" path="res://ui/debug_console/default_packs/helpers.gd" id="2_gd11d"]
+[ext_resource type="Script" path="res://ui/debug_console/packs/default.gd" id="2_tryvb"]
 [ext_resource type="FontFile" uid="uid://c86y774l5w4rj" path="res://fonts/space_mono/SpaceMono-Regular.ttf" id="3_8rbdv"]
+[ext_resource type="Script" path="res://ui/debug_console/packs/teleorb.gd" id="3_gui1i"]
 [ext_resource type="Script" path="res://ui/debug_console/line_edit.gd" id="4_vd180"]
 
-[sub_resource type="Resource" id="Resource_53xmr"]
-script = ExtResource("2_gd11d")
+[sub_resource type="Resource" id="Resource_yossv"]
+script = ExtResource("2_tryvb")
+
+[sub_resource type="Resource" id="Resource_s6qbd"]
+script = ExtResource("3_gui1i")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qemi"]
 bg_color = Color(0.682353, 0.313726, 0.0509804, 0.392157)
@@ -25,7 +29,7 @@ content_margin_bottom = 2.0
 [node name="DebugConsole" type="CanvasLayer"]
 layer = 20
 script = ExtResource("1_h5kvy")
-command_packs = [SubResource("Resource_53xmr")]
+command_packs = [SubResource("Resource_yossv"), SubResource("Resource_s6qbd")]
 
 [node name="DebugConsole" type="Control" parent="."]
 layout_mode = 3
@@ -57,7 +61,7 @@ grow_vertical = 2
 
 [node name="Body" type="RichTextLabel" parent="DebugConsole/Panel/VBoxContainer"]
 offset_right = 822.0
-offset_bottom = 596.0
+offset_bottom = 488.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
@@ -71,9 +75,9 @@ scroll_following = true
 selection_enabled = true
 
 [node name="Edit" type="RichTextLabel" parent="DebugConsole/Panel/VBoxContainer"]
-offset_top = 600.0
+offset_top = 492.0
 offset_right = 822.0
-offset_bottom = 628.0
+offset_bottom = 520.0
 mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("3_8rbdv")
 theme_override_styles/normal = ExtResource("1_64gx8")

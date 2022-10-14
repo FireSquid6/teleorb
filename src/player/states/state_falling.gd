@@ -14,7 +14,7 @@ func _logic(delta: float = -1.0):
 	var input = player.input
 	
 	# move
-	player.run(delta, input["move"], false, 1 / player.air_resistance)
+	player.run(delta, input["move"], false, 1 - player.air_resistance)
 	
 	# go back to moving if on floor
 	if player.is_on_floor():

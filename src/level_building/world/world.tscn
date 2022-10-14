@@ -30,4 +30,4 @@ layer_2/z_index = 0
 layer_2/tile_data = PackedInt32Array()
 
 [node name="Areas" type="Node2D" parent="."]
-visible = false
+modulate = Color(1, 1, 1, 0.392157)

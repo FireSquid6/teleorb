@@ -24,7 +24,6 @@ func _enter(args := [-1]):
 		
 		player.velocity = Vector2.ZERO
 		
-		player.sprite.animation = "teleport"  
 		position = args[0]
 		
 	else:

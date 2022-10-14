@@ -1,9 +1,10 @@
-[gd_scene load_steps=34 format=3 uid="uid://gp0qpdkdtgfn"]
+[gd_scene load_steps=35 format=3 uid="uid://gp0qpdkdtgfn"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_snhna"]
 [ext_resource type="Texture2D" uid="uid://b6fvetaqvqfge" path="res://player/player.png" id="2_clhcy"]
 [ext_resource type="Shape2D" uid="uid://dtu7kkn3wgc6t" path="res://player/player_collision_shape.tres" id="2_jy2uy"]
 [ext_resource type="Script" path="res://shared/state_machine/state_machine.gd" id="3_rv0ji"]
+[ext_resource type="Script" path="res://player/animated_sprite.gd" id="4_q337e"]
 [ext_resource type="Script" path="res://player/states/state_moving.gd" id="4_x4780"]
 [ext_resource type="Script" path="res://player/states/state_falling.gd" id="5_55tsp"]
 [ext_resource type="Script" path="res://player/states/state_jumping.gd" id="5_g8jcl"]
@@ -150,6 +151,7 @@ texture_filter = 1
 frames = SubResource("SpriteFrames_kvlaq")
 animation = &"idle"
 playing = true
+script = ExtResource("4_q337e")
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource("3_rv0ji")
@@ -202,6 +204,6 @@ shape = SubResource("RectangleShape2D_oq756")
 [node name="JumpTimer" type="Timer" parent="Timers"]
 
 [node name="InputCancelTime" type="Timer" parent="Timers"]
-wait_time = 0.3
+wait_time = 0.1
 
 [connection signal="timeout" from="Timers/InputCancelTime" to="." method="_on_input_cancel_time_timeout"]

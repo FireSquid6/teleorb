@@ -24,4 +24,4 @@ func _ready():
 
 
 func goto_level(scene: PackedScene):
-	Console.output("Exiting level {0} and heading to level {1}")
+	Console.output("Exiting level {0} and heading to level {1} ")

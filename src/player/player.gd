@@ -43,11 +43,11 @@ var default_input: Dictionary = {
 @export var walljump_spd: float = 200
 
 @export_group("Y Movement")
-@export var jump_spd: float = 200 # the speed that the player jumps at
-@export var jump_time: float = 0.3  # the amount of time the player jumps for
-@export var jump_grv: float = 450  # the gravity during jumps
-@export var grv: float = 900  # standard gravity
-@export var air_resistance: float = 1  # percent movement is reduced by when moving in air
+@export var jump_spd: float = 225 # the speed that the player jumps at
+@export var jump_time: float = 0.2  # the amount of time the player jumps for
+@export var jump_grv: float = 600  # the gravity during jumps
+@export var grv: float = 1200  # standard gravity
+@export var air_resistance: float = 0.85  # percent movement is reduced by when moving in air
 @export var cyote_time: float = 0.1  # the amount of time the player can still jump while falling
 @export var terminal_velocity: float = 10000  # the maximum velocity the player can reach traveling downwards
 
@@ -56,7 +56,7 @@ var default_input: Dictionary = {
 
 @onready var input: Dictionary = {}  # dictionary for the input each frame
 @onready var state_machine: StateMachine = get_node('StateMachine')  # ref to state machine
-@onready var sprite: AnimatedSprite2D = get_node("AnimatedSprite2d")  # ref to the animated sprite
+@onready var sprite: PlayerSprite = get_node("AnimatedSprite2d")  # ref to the animated sprite
 @onready var walljump_buffer_area: Area2D = $WalljumpBuffer  # ref to the walljump bufer area
 @onready var jump_buffer_area: Area2D = get_node('JumpBufferCollision')  # ref to the area that handles the jump buffer
 @onready var input_cancel_timer: Timer = $Timers/InputCancelTime  # timer for canceling inputs
@@ -78,23 +78,7 @@ func _physics_process(delta):
 	on_wall = is_on_wall()
 	
 	# get input
-	# TODO: abstract this more
-	move = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
-	if canceled_input != 0:
-		move = canceled_input * -1
-	
-	# TODO: make this a class instead of a dict
-	input = {
-		"move" : move,
-		"dash" : Input.is_action_just_pressed("dash") and has_dash,
-		"slide" : Input.is_action_just_pressed("slide") and has_slide,
-		"throw" : Input.is_action_just_pressed("throw") and has_orb,
-		"jump_pressed" : Input.is_action_just_pressed("jump"),
-		"jump" : Input.is_action_pressed("jump"),
-		"angle" : position.angle_to_point(level.cursor.position),
-	}
-	if !mobile:
-		input = default_input
+	input = get_input()
 	
 	# process states
 	var pre_floor = is_on_floor()
@@ -109,67 +93,52 @@ func _physics_process(delta):
 	if collided:
 		canceled_input = 0
 	
+	# process animations
+	sprite.choose_animation({
+		"move": move,
+		"on_wall": is_on_wall(),
+		"state": state_machine.selected_state.name,
+	})
+	
 	# check for player throwing
 	# TODO: Abstract this more
 	if input["throw"]:
-		if can_throw and !orb_thrown:
-			# set booleans
-			orb_thrown = true
-			can_throw = false
-			
-			# create the orb
-			var orb: Orb = orb_scene.instantiate()
-			orb.connect("hit", Callable(self, "_on_orb_hit"))
-			orb.velocity = Vector2(orb_speed, 0).rotated(input["angle"])
-			add_child(orb)
+		throw_orb()
+
+
+func get_input() -> Dictionary:
+	move = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
+	if canceled_input != 0:
+		move = canceled_input * -1
+	
+	# TODO: make this a class instead of a dict
+	var new_input = {
+		"move" : move,
+		"dash" : Input.is_action_just_pressed("dash") and has_dash,
+		"slide" : Input.is_action_just_pressed("slide") and has_slide,
+		"throw" : Input.is_action_just_pressed("throw") and has_orb,
+		"jump_pressed" : Input.is_action_just_pressed("jump"),
+		"jump" : Input.is_action_pressed("jump"),
+		"angle" : position.angle_to_point(level.cursor.position),
+	}
+	if !mobile:
+		new_input = default_input
+	
+	return new_input
+
+
+func throw_orb():
+	if can_throw and !orb_thrown:
+		# set booleans
+		orb_thrown = true
+		can_throw = false
 		
+		# create the orb
+		var orb: Orb = orb_scene.instantiate()
+		orb.connect("hit", Callable(self, "_on_orb_hit"))
+		orb.velocity = Vector2(orb_speed, 0).rotated(input["angle"])
+		add_child(orb)
 
-
-func _on_orb_hit(new_pos: Vector2):
-	# move to state teleport
-	state_machine.change_state("StateTeleport", [new_pos])
-
-
-#func run(delta: float, dir: int, decelerate_above_max_speed: bool = false, acceleration_multiplier: float = 1.0) -> void:
-#	# set animation player xscale to move
-#	if move != 0:
-#		sprite.scale.x = move
-#
-#	# get deceleration and acceleration
-#	var dec := deceleration * delta
-#	var acc := acceleration * delta
-#
-#	# accelerate if moving
-#	if dir != 0:
-#		# decelerate if aboce maximum speed
-#		if (abs(velocity.x) >= running_speed):
-#			if decelerate_above_max_speed and (abs(velocity.x) - dec) > running_speed:
-#				velocity.x -= dec * dir
-#			else:
-#				velocity.x = sign(velocity.x) * running_speed
-#		else:
-#			velocity.x += acc * acceleration_multiplier * dir
-#			if !decelerate_above_max_speed:
-#				velocity.x = clamp(velocity.x, -running_speed, running_speed)
-#	# decelerate if not moving
-#	else:
-#		# snap velocity to 0 if needed
-#		if abs(velocity.x) <= dec * acceleration_multiplier:
-#			velocity.x = 0
-#		else:
-#			velocity.x -= acc * acceleration_multiplier * sign(velocity.x)
-
-#// deceleration
-#if velocity > max speed:
-#  velocity -= deceleration * sign(velocity)
-#  if abs(velocity) < max speed:
-#    velocity = max_speed * sign(velocity)
-#
-#// acceleration
-#if velocity < max speed:
-#  velocity += deceleration * dir
-#  if abs(velocity) > max speed:
-#    velocity = max_speed * dir
 
 func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, acceleration_multiplier: float = 1.0) -> void:
 	# set animation player xscale to move
@@ -177,8 +146,8 @@ func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, ac
 		sprite.scale.x = move
 
 	# get deceleration and acceleration
-	var dec := deceleration * delta
-	var acc := acceleration * delta
+	var dec := deceleration * delta * acceleration_multiplier
+	var acc := acceleration * delta * acceleration_multiplier
 	
 	# make sure the player isn't in a wall
 	var bodies := wall_detector.get_overlapping_bodies()
@@ -230,3 +199,8 @@ func _on_Console_focused():
 
 func _on_Console_unfocused():
 	mobile = true
+
+
+func _on_orb_hit(new_pos: Vector2):
+	# move to state teleport
+	state_machine.change_state("StateTeleport", [new_pos])
