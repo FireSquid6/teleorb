@@ -39,7 +39,7 @@ var default_input: Dictionary = {
 @export var running_speed: float = 200  # the maximum speed the player can accelerate to
 @export var acceleration: float = 3000  # the speed the player accelerates at
 @export var deceleration: float = 2500  # the speed the player slows down at
-@export var max_walljumps: int = 1  # the maximum amount of times the player can walljump
+@export var max_walljumps: int = 3  # the maximum amount of times the player can walljump
 @export var walljump_spd: float = 200
 
 @export_group("Y Movement")
