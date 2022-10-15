@@ -17,6 +17,19 @@ script = ExtResource("1_yorse")
 [node name="Gizmos" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("2_k0fro")]
+running_speed = null
+acceleration = null
+deceleration = null
+max_walljumps = null
+walljump_spd = null
+jump_spd = null
+jump_time = null
+jump_grv = null
+grv = null
+air_resistance = null
+cyote_time = null
+terminal_velocity = null
+orb_speed = null
 
 [node name="Camera" type="Camera2D" parent="Player"]
 current = true

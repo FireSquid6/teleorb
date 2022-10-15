@@ -141,6 +141,19 @@ collision_layer = 2
 floor_stop_on_slope = false
 safe_margin = 0.085
 script = ExtResource("1_snhna")
+running_speed = null
+acceleration = null
+deceleration = null
+max_walljumps = null
+walljump_spd = null
+jump_spd = null
+jump_time = null
+jump_grv = null
+grv = null
+air_resistance = null
+cyote_time = null
+terminal_velocity = null
+orb_speed = null
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
