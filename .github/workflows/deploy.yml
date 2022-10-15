@@ -27,6 +27,7 @@ jobs:
           apt-get update && apt-get install -y rsync
       - name: Web Build
         run: |
+          cd src
           mkdir ./$EXPORT_NAME
           rsync -Rr . ./$EXPORT_NAME
           cd $EXPORT_NAME
