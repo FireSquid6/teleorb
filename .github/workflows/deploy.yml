@@ -8,7 +8,7 @@ on:
 
 env:
   EXPORT_NAME: teleorb
-  GODOT_VERSION: 3.4.2
+  GODOT_VERSION: 4.0
 
 jobs:
   export-web:
@@ -47,10 +47,3 @@ jobs:
           ITCH_GAME: teleorb
           ITCH_USER: firesquid4004
           PACKAGE: project/${{ env.EXPORT_NAME }}/build/web
-
-      - name: Notify Discord Channel
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@0.3.0
-        with:
-          args: "A game update is available at https://NAME-OF-YOUR-USER.itch.io/NAME-OF-YOUR-GAME !"
