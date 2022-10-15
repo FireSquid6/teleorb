@@ -8,7 +8,7 @@ on:
 
 env:
   EXPORT_NAME: teleorb
-  GODOT_VERSION: 4.0
+  GODOT_VERSION: 4.0 beta 2
 
 jobs:
   export-web:
