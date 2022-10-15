@@ -46,6 +46,7 @@ var default_input: Dictionary = {
 @export var jump_spd: float = 225 # the speed that the player jumps at
 @export var jump_time: float = 0.2  # the amount of time the player jumps for
 @export var jump_grv: float = 600  # the gravity during jumps
+@export var grab_grb: float = 200  # the gravity while wallgrabbing
 @export var grv: float = 1200  # standard gravity
 @export var air_resistance: float = 0.85  # percent movement is reduced by when moving in air
 @export var cyote_time: float = 0.1  # the amount of time the player can still jump while falling
@@ -131,6 +132,7 @@ func get_input() -> Dictionary:
 		"jump_pressed" : Input.is_action_just_pressed("jump"),
 		"jump" : Input.is_action_pressed("jump"),
 		"angle" : angle,
+		"wallgrab" : Input.is_action_pressed("grab"),
 	}
 	if !mobile:
 		new_input = default_input

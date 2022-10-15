@@ -10,19 +10,19 @@ layer_0/tile_data = PackedInt32Array(524302, 65536, 2, 458766, 65536, 1, 393230,
 
 [node name="Player" parent="." index="2"]
 position = Vector2(-1, 0)
-running_speed = null
-acceleration = null
-deceleration = null
-max_walljumps = null
-walljump_spd = null
-jump_spd = null
-jump_time = null
-jump_grv = null
-grv = null
-air_resistance = null
-cyote_time = null
-terminal_velocity = null
-orb_speed = null
+running_speed = 200
+acceleration = 3000
+deceleration = 2500
+max_walljumps = 1
+walljump_spd = 200
+jump_spd = 225
+jump_time = 0.2
+jump_grv = 600
+grv = 1200
+air_resistance = 0.85
+cyote_time = 0.1
+terminal_velocity = 10000
+orb_speed = 500
 
 [node name="Camera" parent="Player" index="8"]
 metadata/_edit_lock_ = true

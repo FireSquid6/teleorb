@@ -42,6 +42,8 @@ func choose_animation(decision_data: Dictionary, forced := false) -> bool:
 		new_animation = 'midair'
 		if decision_data["on_wall"]:
 			new_animation = 'wall'
+	elif state == "StateWallgrab":
+		new_animation = 'wall'
 	else:
 		Console.output("Unknown state '{0}' given to player sprite.".format([state]))
 	

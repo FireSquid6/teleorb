@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://gp0qpdkdtgfn"]
+[gd_scene load_steps=36 format=3 uid="uid://gp0qpdkdtgfn"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_snhna"]
 [ext_resource type="Texture2D" uid="uid://b6fvetaqvqfge" path="res://player/player.png" id="2_clhcy"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://player/states/state_falling.gd" id="5_55tsp"]
 [ext_resource type="Script" path="res://player/states/state_jumping.gd" id="5_g8jcl"]
 [ext_resource type="Script" path="res://player/states/state_teleport.gd" id="8_sqbjb"]
+[ext_resource type="Script" path="res://player/states/state_wallgrab.gd" id="10_8n602"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i8tc7"]
 atlas = ExtResource("2_clhcy")
@@ -141,19 +142,6 @@ collision_layer = 2
 floor_stop_on_slope = false
 safe_margin = 0.085
 script = ExtResource("1_snhna")
-running_speed = null
-acceleration = null
-deceleration = null
-max_walljumps = null
-walljump_spd = null
-jump_spd = null
-jump_time = null
-jump_grv = null
-grv = null
-air_resistance = null
-cyote_time = null
-terminal_velocity = null
-orb_speed = null
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
@@ -181,6 +169,12 @@ script = ExtResource("5_55tsp")
 
 [node name="StateTeleport" type="Node" parent="StateMachine"]
 script = ExtResource("8_sqbjb")
+
+[node name="StateWallgrab" type="Node" parent="StateMachine"]
+script = ExtResource("10_8n602")
+
+[node name="GrabTimer" type="Timer" parent="StateMachine/StateWallgrab"]
+wait_time = 0.5
 
 [node name="JumpBufferCollision" type="Area2D" parent="."]
 visible = false
@@ -220,4 +214,5 @@ shape = SubResource("RectangleShape2D_oq756")
 [node name="InputCancelTime" type="Timer" parent="Timers"]
 wait_time = 0.1
 
+[connection signal="timeout" from="StateMachine/StateWallgrab/GrabTimer" to="StateMachine/StateWallgrab" method="_on_grab_timer_timeout"]
 [connection signal="timeout" from="Timers/InputCancelTime" to="." method="_on_input_cancel_time_timeout"]

@@ -35,5 +35,9 @@ func _logic(delta: float = -1.0):
 	if len(overlapping) > 0 and input["jump_pressed"]:
 		player.jump_buffered = true
 	
+	# deal with wallgrab
+	if input["wallgrab"]:
+		machine.change_state("StateWallgrab")
+	
 	# deal with walljump
 	request_walljump()
