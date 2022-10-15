@@ -30,15 +30,15 @@ func change_state(new_state: String, enter_args := [], exit_args := []) -> bool:
 	# some bug in godot 4 is causing this to fail
 	# assert(new_state in possible_states)
 	
-	var old_name = 'none'
-	var new_name = 'none'
+	var old_name := "none"
+	var new_name := "none"
 	
 	# exit out of the old state
 	if get_state(new_state)._can_transition():
 		if selected_state:
 			# run the old state's exit function
 			selected_state._exit(exit_args)
-			selected_state.emit_signal("exitted")
+			selected_state.emit_signal("exited")
 			
 			# edit the state history
 			state_history.insert(0, selected_state.name)
@@ -55,7 +55,7 @@ func change_state(new_state: String, enter_args := [], exit_args := []) -> bool:
 		
 		# output debug
 		if output_changes:
-			print('Switched from ' + old_name + ' to ' + new_name)
+			print("Switched from " + old_name + " to " + new_name)
 		
 		# emit signals
 		emit_signal('state_changed', old_name, new_name)

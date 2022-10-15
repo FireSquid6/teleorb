@@ -6,10 +6,22 @@ class_name Level
 @onready var player: Player = get_node("Player")
 @onready var world: World = get_node("World")
 @onready var hud: HUD = get_node("HUD")
+@onready var cursor: Node2D = get_node("Cursor")
 
 
-signal level_loaded()  # emitted on this object's ready function
+signal level_references_initialized(level: Level)
+signal level_loaded(level: Level)
 
+
+func _enter_tree():
+	# TODO: add level load time print
+	Console.output("[u][color=green]Loading level. . .[/color] \"[color=aqua]{0}[/color]\"[/u]\n".format([name]))
 
 func _ready():
+	emit_signal("level_references_initialized", self)
+	Console.output("[u][color=green]Level loaded successfully in [color=aqua]{1}[/color]ms[/color][/u]".format([name, "x"]))
 	emit_signal("level_loaded", self)
+
+
+func goto_level(scene: PackedScene):
+	Console.output("Exiting level {0} and heading to level {1} ")
