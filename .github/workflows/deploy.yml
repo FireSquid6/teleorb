@@ -8,7 +8,7 @@ on:
 
 env:
   EXPORT_NAME: teleorb
-  GODOT_VERSION: 4.0 beta 2
+  GODOT_VERSION: 4.0
 
 jobs:
   export-web:
@@ -23,7 +23,7 @@ jobs:
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/templates
-          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.beta2 ~/.local/share/godot/templates/${GODOT_VERSION}.beta2
           apt-get update && apt-get install -y rsync
       - name: Web Build
         run: |
