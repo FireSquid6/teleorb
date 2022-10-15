@@ -107,9 +107,20 @@ func _physics_process(delta):
 
 
 func get_input() -> Dictionary:
+	# get move
 	move = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 	if canceled_input != 0:
 		move = canceled_input * -1
+	
+	# get the angle to throw the orb at
+	var angle := 0.0
+	match Global.control_type:
+		Constants.CONTROL_TYPE_KEYBOARD:
+			angle = position.angle_to_point(level.cursor.position)
+		Constants.CONTROL_TYPE_GAMEPAD:
+			angle = Vector2(Global.right_axis_x, Global.right_axis_y).angle()
+		Constants.CONTROL_TYPE_TOUCH:
+			angle = 0
 	
 	# TODO: make this a class instead of a dict
 	var new_input = {
@@ -119,7 +130,7 @@ func get_input() -> Dictionary:
 		"throw" : Input.is_action_just_pressed("throw") and has_orb,
 		"jump_pressed" : Input.is_action_just_pressed("jump"),
 		"jump" : Input.is_action_pressed("jump"),
-		"angle" : position.angle_to_point(level.cursor.position),
+		"angle" : angle,
 	}
 	if !mobile:
 		new_input = default_input

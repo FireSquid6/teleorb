@@ -1,1 +1,25 @@
 extends Node
+class_name GlobalClass
+
+var control_type = Constants.CONTROL_TYPE_KEYBOARD
+var right_axis_x = 0 
+var right_axis_y = 0
+
+
+func _input(event):
+	if (event as InputEventJoypadMotion) or (event as InputEventJoypadButton):
+		control_type = Constants.CONTROL_TYPE_GAMEPAD
+		
+		# if it's the right stick, make sure to grab the correct axis data
+		if event as InputEventJoypadMotion:
+			event = event as InputEventJoypadMotion
+			match event.axis:
+				JOY_AXIS_RIGHT_X:
+					right_axis_x = event.axis_value
+				JOY_AXIS_RIGHT_Y:
+					right_axis_y = event.axis_value
+			
+	elif (event as InputEventKey) or (event as InputEventMouse):
+		control_type = Constants.CONTROL_TYPE_KEYBOARD
+	elif (event as InputEventGesture) or (event as InputEventScreenTouch) or (event as InputEventScreenDrag):
+		control_type = Constants.CONTROL_TYPE_TOUCH
