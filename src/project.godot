@@ -104,7 +104,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Teleorb Definitive"
+config/name="teleorb"
 run/main_scene="res://scenes/levels/tests/movement_test.tscn"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.svg"
@@ -128,6 +128,11 @@ movie_writer/movie_file="C:/Users/jdeis/projects/games/teleorb-definitive/src/mo
 [editor_plugins]
 
 enabled=PackedStringArray()
+
+[github_to_itch]
+
+config/itch_username="firesquid4004"
+config/itch_project_name="teleorb"
 
 [input]
 
