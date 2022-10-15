@@ -29,7 +29,7 @@ func choose_animation(decision_data: Dictionary, forced := false) -> bool:
 	var state = decision_data["state"]
 	
 	# note - this is a bad elif chain because match statements were broken at the time
-	# TODO: add ledge grabbing
+	# TODO: add 
 	if state == 'StateMoving':
 		new_animation = 'walking'
 		if decision_data["move"] == 0:
@@ -37,7 +37,7 @@ func choose_animation(decision_data: Dictionary, forced := false) -> bool:
 	elif state =="StateTeleport":
 		new_animation = 'teleport'
 	elif state == "StateJumping":
-		new_animation = 'midiar'
+		new_animation = 'midair'
 	elif state == "StateFalling":
 		new_animation = 'midair'
 		if decision_data["on_wall"]:

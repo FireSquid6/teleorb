@@ -142,7 +142,7 @@ func throw_orb():
 
 func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, acceleration_multiplier: float = 1.0) -> void:
 	# set animation player xscale to move
-	if move != 0:
+	if move != 0 and canceled_input == 0:
 		sprite.scale.x = move
 
 	# get deceleration and acceleration

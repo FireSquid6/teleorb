@@ -128,10 +128,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0y1ya"]
-size = Vector2(8, 24)
+size = Vector2(8, 11)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ebe0b"]
-size = Vector2(34, 21)
+size = Vector2(22, 21)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oq756"]
 size = Vector2(7.9, 21)
@@ -174,7 +174,7 @@ visible = false
 collision_layer = 0
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="JumpBufferCollision"]
-position = Vector2(0, 24)
+position = Vector2(0, 17.5)
 shape = SubResource("RectangleShape2D_0y1ya")
 
 [node name="WalljumpBuffer" type="Area2D" parent="."]
@@ -194,6 +194,7 @@ position = Vector2(0, 1.5)
 shape = ExtResource("2_jy2uy")
 
 [node name="FloorDetector" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="FloorDetector"]
 position = Vector2(0, 2.5)
