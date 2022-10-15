@@ -4,7 +4,7 @@ name: godot-ci
 
 on:
   push:
-    branches: [main]
+    branches: []
 
 env:
   EXPORT_NAME: teleorb
