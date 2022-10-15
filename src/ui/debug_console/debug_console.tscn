@@ -1,0 +1,106 @@
+[gd_scene load_steps=11 format=3 uid="uid://dkcr8x5k5ssoo"]
+
+[ext_resource type="StyleBox" uid="uid://btonwhd5yjpjr" path="res://ui/debug_console/stylebox.tres" id="1_64gx8"]
+[ext_resource type="Script" path="res://ui/debug_console/debug_console.gd" id="1_h5kvy"]
+[ext_resource type="Script" path="res://ui/debug_console/packs/default.gd" id="2_tryvb"]
+[ext_resource type="FontFile" uid="uid://c13p0rq5k801e" path="res://fonts/space_mono/SpaceMono-Regular.ttf" id="3_8rbdv"]
+[ext_resource type="Script" path="res://ui/debug_console/packs/teleorb.gd" id="3_gui1i"]
+[ext_resource type="Script" path="res://ui/debug_console/line_edit.gd" id="4_vd180"]
+
+[sub_resource type="Resource" id="Resource_yossv"]
+script = ExtResource("2_tryvb")
+
+[sub_resource type="Resource" id="Resource_s6qbd"]
+script = ExtResource("3_gui1i")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qemi"]
+bg_color = Color(0.682353, 0.313726, 0.0509804, 0.392157)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7fd1h"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+
+[node name="DebugConsole" type="CanvasLayer"]
+layer = 20
+script = ExtResource("1_h5kvy")
+command_packs = [SubResource("Resource_yossv"), SubResource("Resource_s6qbd")]
+
+[node name="DebugConsole" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="DebugConsole"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 842.0
+grow_vertical = 2
+size_flags_horizontal = 4
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_3qemi")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugConsole/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Body" type="RichTextLabel" parent="DebugConsole/Panel/VBoxContainer"]
+layout_mode = 2
+offset_right = 822.0
+offset_bottom = 488.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+focus_mode = 2
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+theme_override_fonts/normal_font = ExtResource("3_8rbdv")
+theme_override_styles/normal = ExtResource("1_64gx8")
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+
+[node name="Edit" type="RichTextLabel" parent="DebugConsole/Panel/VBoxContainer"]
+layout_mode = 2
+offset_top = 492.0
+offset_right = 822.0
+offset_bottom = 520.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_8rbdv")
+theme_override_styles/normal = ExtResource("1_64gx8")
+bbcode_enabled = true
+text = "[color=gray]Enter command. . . [/color]"
+fit_content_height = true
+
+[node name="LineEdit" type="LineEdit" parent="DebugConsole/Panel/VBoxContainer/Edit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_fonts/font = ExtResource("3_8rbdv")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7fd1h")
+caret_blink = true
+script = ExtResource("4_vd180")
+
+[connection signal="text_changed" from="DebugConsole/Panel/VBoxContainer/Edit/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_submitted" from="DebugConsole/Panel/VBoxContainer/Edit/LineEdit" to="." method="_on_line_edit_text_submitted"]

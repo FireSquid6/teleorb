@@ -3,6 +3,8 @@ extends PlayerState
 @onready var cyote_time = 0
 
 func _enter(_args := []) -> void:
+	player.sprite.animation = "midair"
+	
 	cyote_time = 0
 	if machine.state_history[0] == "StateMoving":
 		cyote_time = player.cyote_time
@@ -12,7 +14,7 @@ func _logic(delta: float = -1.0):
 	var input = player.input
 	
 	# move
-	player.run(delta, input["move"], false, 1 / player.air_resistance)
+	player.run(delta, input["move"], false, 1 - player.air_resistance)
 	
 	# go back to moving if on floor
 	if player.is_on_floor():
