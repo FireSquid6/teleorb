@@ -214,6 +214,10 @@ func _on_Console_unfocused():
 	mobile = true
 
 
+func kill():
+	pass
+
+
 func _on_orb_hit(new_pos: Vector2):
 	# move to state teleport
 	state_machine.change_state("StateTeleport", [new_pos])
