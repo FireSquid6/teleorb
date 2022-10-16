@@ -12,8 +12,8 @@ signal hit(mask_pos: Vector2)
 
 
 func _ready():
-	mask.position = player.position
-	area.position = player.position
+	mask.position = player.position + (velocity.normalized() * 2)
+	area.position = player.position + (velocity.normalized() * 2)
 
 
 func _physics_process(delta):
