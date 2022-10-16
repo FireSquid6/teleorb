@@ -108,19 +108,19 @@ jobs:
   Publish:
     needs: Release
     if: ${{ contains(github.ref, 'main') }}
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/download-artifact@v2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
 
-        - name: Download + Authorize Butler
-          run: |
-            curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
-            unzip butler.zip
-            chmod +x butler
-            ./butler -V
+      - name: Download + Authorize Butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+          unzip butler.zip
+          chmod +x butler
+          ./butler -V
 
-        - name: Login To Butler
-        run: ./butler login
+      - name: Login To Butler
+      run: ./butler login
 
   Cleanup:
     needs: [Export, Release, Publish]
