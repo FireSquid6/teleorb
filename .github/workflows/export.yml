@@ -47,12 +47,4 @@ jobs:
         generate_release_notes: true
         tag_name: ${{ steps.tag_version.outputs.TAG_VERSION }}
         files: ${{ steps.export.outputs.archive_directory }}/*
-      
-    - name: Itch.io - Publish Game
-      uses: KikimoraGames/itch-publish@v0.0.3
-      with:
-        gameData: ${{ steps.export.outputs.archive_directory }}
-        itchUsername: firesquid4004
-        itchGameId: teleorb
-        buildChannel: win
-        butlerAPIKey: JWVuo79MhZbdGfskCahJCkTFQxiVeO2vAdbYzG5z
+
