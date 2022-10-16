@@ -1,10 +1,8 @@
 # add a meaningless comment
 on: 
-  push:
+  pull_request:
     branches:
       - "release"
-    tags:
-      - "v*"
 
 jobs:
   # job id, can be anything
