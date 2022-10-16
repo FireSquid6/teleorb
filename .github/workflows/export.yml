@@ -21,10 +21,11 @@ jobs:
         fetch-depth: 0
   
     # Automatically stores the tag name for later use
-    - name: get tag from version
+    - name: get version from version.txt
       id: tag_version
-      run: |
-        echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/v}
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ./version.txt
   
     - name: export game
       id: export
@@ -45,14 +46,6 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         generate_release_notes: true
-        tag_name: ${{ steps.tag_version.outputs.TAG_VERSION }}
+        tag_name: ${{ steps.tag_version.outputs.content }}
         files: ${{ steps.export.outputs.archive_directory }}/*
-      
-    - name: Itch.io - Publish Game
-      uses: KikimoraGames/itch-publish@v0.0.3
-      with:
-        gameData: ${{ steps.export.outputs.archive_directory }}
-        itchUsername: firesquid4004
-        itchGameId: teleorb
-        buildChannel: win
-        butlerAPIKey: JWVuo79MhZbdGfskCahJCkTFQxiVeO2vAdbYzG5z
+
