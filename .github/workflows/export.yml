@@ -1,8 +1,8 @@
 # add a meaningless comment
 on: 
   push:
-    tags:
-      - "v*"
+    branches:
+      - "main"
 
 jobs:
   # job id, can be anything
