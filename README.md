@@ -11,4 +11,4 @@ Left Click - throw orb
 Shift - hold wall  
 
 # Contributing
-Each "issue" in the issue tab represents a task that needs to be done. If it's your first time, look for issues marked with the tag "good first issue." It's recommended that you branch off of the "develop" branch and make pull requests to and from it.
+Each "issue" in the issue tab represents a task that needs to be done. If it's your first time, look for issues marked with the tag "good first issue." You can just branch off of "main" to work on the issue. Make sure to pull frequently so no conflicts arrise on main.
