@@ -26,6 +26,7 @@ func choose_animation(decision_data: Dictionary, forced := false) -> bool:
 	
 	# logic
 	var new_animation = 'midair'
+	var new_playing = true
 	var state = decision_data["state"]
 	
 	# note - this is a bad elif chain because match statements were broken at the time
@@ -44,12 +45,16 @@ func choose_animation(decision_data: Dictionary, forced := false) -> bool:
 			new_animation = 'wall'
 	elif state == "StateWallgrab":
 		new_animation = 'wall'
+	elif state == "StateDead":
+		new_animation = 'die'
 	else:
 		Console.output("Unknown state '{0}' given to player sprite.".format([state]))
 	
 	# change anim
 	if new_animation != animation:
 		animation = new_animation
+		if new_playing != playing:
+			playing = new_playing
 		return true
 	
 	return false

@@ -1,4 +1,6 @@
 # add a meaningless comment
+name: export
+
 on: 
   pull_request:
     branches:
@@ -38,6 +40,12 @@ jobs:
         relative_project_path: ./src
         archive_output: true
         use_godot_4: true
+    
+    - name: get patch notes 
+      id: patch_notes
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ./patch-notes.md
 
       # This release action has worked well for me. However, you can most likely use any release action of your choosing.
       # https://github.com/softprops/action-gh-release
@@ -48,4 +56,5 @@ jobs:
         generate_release_notes: true
         tag_name: ${{ steps.tag_version.outputs.content }}
         files: ${{ steps.export.outputs.archive_directory }}/*
+        append_body: ${{ steps.patch_notes.outputs.content }}
 
