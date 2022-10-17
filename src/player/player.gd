@@ -23,6 +23,7 @@ var can_throw := true  # whether the player has an orb to throw
 var orb_thrown := false  # whether the orb is currently in the air or not
 
 var level: Level = null  # ref to the current level
+var respawn_point: Vector2
 
 var mobile: bool = true
 var default_input: Dictionary = {
@@ -68,9 +69,11 @@ var default_input: Dictionary = {
 
 func _enter_tree():
 	level = get_parent()
+	level.connect("room_restarted", Callable(self, "respawn"))
 
 
 func _ready():
+	respawn_point = position
 	Console.connect("focused", Callable(self, "_on_Console_focused"))
 	Console.connect("unfocused", Callable(self, "_on_Console_unfocused"))
 
@@ -215,9 +218,18 @@ func _on_Console_unfocused():
 
 
 func kill():
-	pass
+	state_machine.change_state("StateDead")
 
 
 func _on_orb_hit(new_pos: Vector2):
 	# move to state teleport
 	state_machine.change_state("StateTeleport", [new_pos])
+
+
+func _on_damage_detector_body_entered(body):
+	kill()
+
+
+func respawn():
+	position = respawn_point
+	state_machine.change_state("StateMoving")

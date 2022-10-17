@@ -8,7 +8,6 @@ var position := Vector2.ZERO
 func _ready():
 	await player.ready
 	add_active_signal(player.sprite, "animation_finished", Callable(self, "_on_player_sprite_animation_finished"))
-		
 
 
 func _enter(args := [-1]):
@@ -46,3 +45,8 @@ func _on_player_sprite_animation_finished():
 		AnimatedSprite2D
 		player.sprite.frame = player.sprite.frames.get_frame_count("teleport") - 2
 		played = true
+
+
+func _exit(args := []):
+	played = false
+	player.sprite.speed_scale = 1
