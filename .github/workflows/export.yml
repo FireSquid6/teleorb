@@ -28,19 +28,7 @@ jobs:
       uses: juliangruber/read-file-action@v1
       with:
         path: ./version.txt
-  
-    - name: export game
-      id: export
-      # Use latest version (see releases for all versions)
-      uses: firebelley/godot-export@v4.2.0
-      with:
-        # Defining all the required inputs
-        godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/beta2/Godot_v4.0-beta2_linux.x86_64.zip
-        godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/beta2/Godot_v4.0-beta2_export_templates.tpz
-        relative_project_path: ./src
-        archive_output: true
-        use_godot_4: true
-    
+
     - name: get patch notes 
       id: patch_notes
       uses: juliangruber/read-file-action@v1
@@ -53,6 +41,18 @@ jobs:
         tag: ${{ steps.tag_version.outputs.content }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: export game
+      id: export
+      # Use latest version (see releases for all versions)
+      uses: firebelley/godot-export@v4.2.0
+      with:
+        # Defining all the required inputs
+        godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.0/beta2/Godot_v4.0-beta2_linux.x86_64.zip
+        godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.0/beta2/Godot_v4.0-beta2_export_templates.tpz
+        relative_project_path: ./src
+        archive_output: true
+        use_godot_4: true
+    
       # This release action has worked well for me. However, you can most likely use any release action of your choosing.
       # https://github.com/softprops/action-gh-release
     - name: create release
