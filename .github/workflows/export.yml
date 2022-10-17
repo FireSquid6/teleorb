@@ -51,6 +51,7 @@ jobs:
       uses: rickstaa/action-create-tag@v1.3.9
       with:
         tag: ${{ steps.tag_version.outputs.content }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # This release action has worked well for me. However, you can most likely use any release action of your choosing.
       # https://github.com/softprops/action-gh-release
