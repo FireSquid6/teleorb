@@ -13,8 +13,6 @@ jobs:
       - name: Get latest release tag 
         uses: gregziegan/fetch-latest-release@v2.0.0
         id: tag
-        run: |
-          echo "::set-output name=tag_name"
       
       - name: Get latest release files
 

@@ -1,5 +1,5 @@
 # add a meaningless comment
-name: export
+name: export project and create release
 
 on: 
   pull_request:
