@@ -107,7 +107,8 @@ _global_script_class_icons={
 config/name="teleorb"
 run/main_scene="res://scenes/levels/tests/movement_test.tscn"
 config/features=PackedStringArray("4.0")
-config/icon="res://icon.svg"
+config/icon="res://icon.png"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 

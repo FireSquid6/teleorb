@@ -11,6 +11,8 @@ class_name Level
 
 signal level_references_initialized(level: Level)
 signal level_loaded(level: Level)
+signal room_restarted()
+signal room_changed(new_room: Rect2)
 
 
 func _enter_tree():
@@ -25,3 +27,7 @@ func _ready():
 
 func goto_level(scene: PackedScene):
 	Console.output("Exiting level {0} and heading to level {1} ")
+
+
+func restart_room():
+	emit_signal("room_restarted")

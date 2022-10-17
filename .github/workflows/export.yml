@@ -1,4 +1,6 @@
 # add a meaningless comment
+name: export project and create release
+
 on: 
   pull_request:
     branches:
@@ -26,7 +28,19 @@ jobs:
       uses: juliangruber/read-file-action@v1
       with:
         path: ./version.txt
-  
+
+    - name: get patch notes 
+      id: patch_notes
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ./patch-notes.md
+    
+    - name: create/update tag
+      uses: rickstaa/action-create-tag@v1.3.9
+      with:
+        tag: ${{ steps.tag_version.outputs.content }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
     - name: export game
       id: export
       # Use latest version (see releases for all versions)
@@ -38,7 +52,7 @@ jobs:
         relative_project_path: ./src
         archive_output: true
         use_godot_4: true
-
+    
       # This release action has worked well for me. However, you can most likely use any release action of your choosing.
       # https://github.com/softprops/action-gh-release
     - name: create release
@@ -48,4 +62,5 @@ jobs:
         generate_release_notes: true
         tag_name: ${{ steps.tag_version.outputs.content }}
         files: ${{ steps.export.outputs.archive_directory }}/*
+        append_body: ${{ steps.patch_notes.outputs.content }}
 
