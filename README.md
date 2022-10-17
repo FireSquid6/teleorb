@@ -1,4 +1,4 @@
-This file was last updated on 10/15/22 and may be out of date by the time you read this.
+This file was last updated on 10/16/22 and may be out of date by the time you read this.
 
 # Teleorb
 Teleorb is a 2D precision platformer/metroidvania currently being developed in Godot. FireSquid6 is the primary solo developer, however help would be greatly appreciated. 
