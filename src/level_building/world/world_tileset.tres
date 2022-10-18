@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" load_steps=6 format=3 uid="uid://cpcpsdihdl5bh"]
 
 [ext_resource type="Texture2D" uid="uid://v1g1fdlsqsuo" path="res://level_building/world/foreground.png" id="1_0kxch"]
-[ext_resource type="Texture2D" uid="uid://cad2rmquqklvh" path="res://level_building/world/new_spikes.png" id="2_b7gy4"]
+[ext_resource type="Texture2D" uid="uid://bgtyya7k663jx" path="res://level_building/world/new_spikes.png" id="2_b7gy4"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_7x8tf"]
 tile_data = PackedInt32Array(0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0)

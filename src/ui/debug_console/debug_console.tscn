@@ -40,7 +40,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="DebugConsole"]
-layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 842.0
@@ -50,7 +49,6 @@ mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_3qemi")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DebugConsole/Panel"]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -62,7 +60,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Body" type="RichTextLabel" parent="DebugConsole/Panel/VBoxContainer"]
-layout_mode = 2
 offset_right = 822.0
 offset_bottom = 488.0
 grow_horizontal = 2
@@ -78,7 +75,6 @@ scroll_following = true
 selection_enabled = true
 
 [node name="Edit" type="RichTextLabel" parent="DebugConsole/Panel/VBoxContainer"]
-layout_mode = 2
 offset_top = 492.0
 offset_right = 822.0
 offset_bottom = 520.0
@@ -90,7 +86,6 @@ text = "[color=gray]Enter command. . . [/color]"
 fit_content_height = true
 
 [node name="LineEdit" type="LineEdit" parent="DebugConsole/Panel/VBoxContainer/Edit"]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
