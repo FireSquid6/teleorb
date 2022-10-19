@@ -168,7 +168,8 @@ func fatal_error(reason: String) -> void:
 Teleorb has encountered a fatal error. Please create an issue at https://github.com/FireSquid6/teleorb/issues or email jdeiss06@gmail.com with this error log.
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Note: the following is in BBCode. Parse it with something like http://patorjk.com/bbcode-previewer/.""")
+Note: the following is in BBCode. Parse it with something like http://patorjk.com/bbcode-previewer/.
+[wave amp=50 freq=2][rainbow freq=0.2 sat=10 val=20]I'm going to kill myself :D[/rainbow][/wave]""")
 		file.store_string(console_text)
 		file = null
 		

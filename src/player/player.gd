@@ -12,7 +12,7 @@ var move = 0
 # whether the player has access to certain items
 var has_dash: bool = false
 var has_slide: bool = false
-var has_orb: bool = true
+var has_orb: bool = false
 
 var walljumps_left: int = 0  # the amount of walljumps the player has left
 var jump_buffered: bool = false  # whether a jump input has been buffered or not
@@ -79,8 +79,6 @@ func _ready():
 
 
 func _physics_process(delta):
-	Console.fatal_error("Poop butt lol")
-	
 	on_wall = is_on_wall()
 	
 	# get input

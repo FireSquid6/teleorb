@@ -20,7 +20,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Interactable" instance=ExtResource("1_aw1hl")]
+[node name="Podium" instance=ExtResource("1_aw1hl")]
 script = ExtResource("2_vh6rp")
 
 [node name="CollisionShape2d" parent="." index="0"]
@@ -31,5 +31,3 @@ texture_filter = 1
 position = Vector2(0, -11)
 frames = SubResource("SpriteFrames_5stpl")
 frame = 1
-
-[connection signal="interacted" from="." to="." method="_on_interactable_interacted"]
