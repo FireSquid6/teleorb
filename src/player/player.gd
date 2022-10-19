@@ -79,6 +79,8 @@ func _ready():
 
 
 func _physics_process(delta):
+	Console.fatal_error("Poop butt lol")
+	
 	on_wall = is_on_wall()
 	
 	# get input
