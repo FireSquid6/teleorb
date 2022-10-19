@@ -13,6 +13,7 @@ signal focused()
 var pre_body := ''
 var commands := []
 var closed := false
+var console_text = ''
 
 
 func _ready():
@@ -45,6 +46,8 @@ func _input(event):
 # prints both to the stdout and the rich text label
 # it's recommended you do Console.output() instead of print() or print_rich()
 func output(text: String, use_bbcode: bool = true) -> void:
+	console_text += "\n"+text
+	
 	if use_bbcode:
 		print_rich(text)
 	else:
@@ -146,3 +149,31 @@ func highlight_command(text: String) -> String:
 			bbcode += word + ' '
 	
 	return bbcode
+
+
+# terminates the program due to an error
+func fatal_error(reason: String) -> void:
+	# put error logs in the console
+	output("[color=red]Game terminated due to fatal error:[/color]")
+	output(reason)
+	
+	await get_tree().process_frame
+	
+	# save the console log to a file 
+	var filename := 'user://crash_report.txt'
+	var file: FileAccess = FileAccess.open(filename, FileAccess.WRITE)
+	if FileAccess.get_open_error() == OK:
+		file.store_string("""
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Teleorb has encountered a fatal error. Please create an issue at https://github.com/FireSquid6/teleorb/issues or email jdeiss06@gmail.com with this error log.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Note: the following is in BBCode. Parse it with something like http://patorjk.com/bbcode-previewer/.
+[wave amp=50 freq=2][rainbow freq=0.2 sat=10 val=20]I'm going to kill myself :D[/rainbow][/wave]""")
+		file.store_string(console_text)
+		file = null
+		
+		OS.shell_open(ProjectSettings.globalize_path(filename))
+		
+		# exit the game
+		get_tree().quit()

@@ -1,10 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://cmm1et81jwgah"]
 
 [ext_resource type="Script" path="res://level_building/placeables/interactables/interactable.gd" id="1_rity7"]
-[ext_resource type="Texture2D" uid="uid://du161eu2sesn7" path="res://level_building/placeables/interactables/keycap.png" id="2_vpjb3"]
+[ext_resource type="Texture2D" uid="uid://djaohmbxlxph" path="res://level_building/placeables/interactables/keycap.png" id="2_vpjb3"]
 [ext_resource type="FontFile" uid="uid://5bcjjcl8b5xx" path="res://fonts/rainyhearts/rainyhearts.ttf" id="3_i7qrg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1yaa0"]
+size = Vector2(20, 28)
 
 [sub_resource type="Animation" id="Animation_1b0hd"]
 length = 0.001

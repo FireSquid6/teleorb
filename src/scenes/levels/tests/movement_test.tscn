@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnqms0eu3ppxo"]
+[gd_scene load_steps=5 format=3 uid="uid://dnqms0eu3ppxo"]
 
 [ext_resource type="PackedScene" uid="uid://b4rknw3g4r1ie" path="res://level_building/level_template.tscn" id="1_stm4v"]
-[ext_resource type="PackedScene" uid="uid://cmm1et81jwgah" path="res://level_building/placeables/interactables/interactable.tscn" id="2_nhn4c"]
-[ext_resource type="Texture2D" uid="uid://b0635mx8j5xtr" path="res://icon.png" id="3_8x7xc"]
+[ext_resource type="PackedScene" uid="uid://bldqi7gg6dgjf" path="res://level_building/placeables/interactables/podium/podium.tscn" id="2_sobmn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sejr5"]
 size = Vector2(512, 384)
@@ -24,13 +23,8 @@ shape = SubResource("RectangleShape2D_sejr5")
 position = Vector2(132, -80)
 shape = SubResource("RectangleShape2D_1f0vu")
 
-[node name="Interactable" parent="Gizmos" index="0" instance=ExtResource("2_nhn4c")]
-position = Vector2(59, 16)
-
-[node name="Sprite2d" type="Sprite2D" parent="Gizmos/Interactable" index="1"]
-position = Vector2(2.86102e-06, -10)
-scale = Vector2(0.15625, 0.15625)
-texture = ExtResource("3_8x7xc")
+[node name="Interactable" parent="Gizmos" index="0" instance=ExtResource("2_sobmn")]
+position = Vector2(65, 11)
 
 [node name="Player" parent="." index="2"]
 position = Vector2(-1, 0)
