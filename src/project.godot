@@ -9,6 +9,11 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Interactable",
+"class": &"Checkpoint",
+"language": &"GDScript",
+"path": "res://level_building/placeables/interactables/checkpoint/checkpoint.gd"
+}, {
 "base": "Resource",
 "class": &"CommandPack",
 "language": &"GDScript",
@@ -90,6 +95,7 @@ _global_script_classes=[{
 "path": "res://level_building/world/world.gd"
 }]
 _global_script_class_icons={
+"Checkpoint": "",
 "CommandPack": "",
 "Constants": "",
 "DefaultPack": "",
@@ -111,7 +117,7 @@ _global_script_class_icons={
 [application]
 
 config/name="teleorb"
-run/main_scene="res://scenes/levels/tests/movement_test.tscn"
+run/main_scene="res://scenes/levels/level_1.tscn"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"
 config/windows_native_icon="res://icon.ico"

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqljl2hq5xbn6"]
+[gd_scene load_steps=7 format=3 uid="uid://cqljl2hq5xbn6"]
 
 [ext_resource type="PackedScene" uid="uid://b4rknw3g4r1ie" path="res://level_building/level_template.tscn" id="1_ymfit"]
 [ext_resource type="PackedScene" uid="uid://bldqi7gg6dgjf" path="res://level_building/placeables/interactables/podium/podium.tscn" id="2_u0gol"]
+[ext_resource type="PackedScene" uid="uid://b28tye56gdslm" path="res://level_building/placeables/interactables/checkpoint/checkpoint.tscn" id="3_fgm7m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c8125"]
 size = Vector2(496, 288)
@@ -29,8 +30,17 @@ shape = SubResource("RectangleShape2D_nueyf")
 position = Vector2(1160, -16)
 shape = SubResource("RectangleShape2D_ckec4")
 
-[node name="Podium" parent="Gizmos" index="0" instance=ExtResource("2_u0gol")]
+[node name="Podium" parent="Placeables" index="0" instance=ExtResource("2_u0gol")]
 position = Vector2(-192, -69)
+
+[node name="Checkpoint" parent="Placeables" index="1" instance=ExtResource("3_fgm7m")]
+position = Vector2(312, -64)
+
+[node name="Checkpoint2" parent="Placeables" index="2" instance=ExtResource("3_fgm7m")]
+position = Vector2(888, -64)
+
+[node name="Checkpoint3" parent="Placeables" index="3" instance=ExtResource("3_fgm7m")]
+position = Vector2(38, 16)
 
 [node name="Player" parent="." index="2"]
 position = Vector2(-48, 4)
