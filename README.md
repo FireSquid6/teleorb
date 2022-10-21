@@ -1,4 +1,4 @@
-This file was last updated on 10/19/22 and may be out of date by the time you read this.
+This file was last updated on 10/21/22 and may be out of date by the time you read this.
 
 # Teleorb
 Teleorb is a 2D precision platformer currently being developed in Godot 4. FireSquid6 is the primary solo developer, however given the game's open source nature, anyone can help.  
@@ -15,7 +15,11 @@ On the right side of your screen, you should see a "releases" section. Click the
 
 # Contributing
 ### For programmers
-Look for issues taged with "type: programming" if you want to contribute code. In general, follow the these code conventions:
+Look for issues taged with "type: programming" if you want to contribute code. 
+  
+As of 10/21/2022, the verion of Godot we are using is Godot 4 beta 3. This will most likely be updated to whatever the latest version of Godot is whenever a new build comes out.
+  
+In general, follow the these code conventions:
 - name variables with `snake_case`
 - name classes and nodes with `PascalCase`
 - name constants `UPPER_SNAKE_CASE`
@@ -23,7 +27,10 @@ Look for issues taged with "type: programming" if you want to contribute code. I
 - Naming stuff is hard, but please try your best to make things readable
 
 ### For sprite artists, sound designers, vfx artists, or anyone else who makes assets
-Look for issues taged with "type: art" or "type: sound" and contribute textures, sounds, and UI components to it.
+Look for issues taged with "type: art" or "type: sound" and contribute textures, sounds, and UI components to it.  
+Tip: all non-exported assets are located in the /assets folder. These are primarily done in [Aseprite](https://www.aseprite.org/), a paid software. If you do not have aseprite, you can use something such as [libresprite](https://github.com/LibreSprite/LibreSprite), which is FOSS.  
+  
+If you are reading this and thinking "I want to help, but I have no idea how any of this github or git stuff works," feel free to send discord friend request @FireSquid#8882. I will not respond to friend requests from people I don't have a mutual server with, so join something such as the [Godot discord server](https://discord.gg/Rue49P7jm3) and contact me through direct message.
 
 ### For testers
 Encounterd a bug? Have a new mechanic or feature idea? Just don't undertand something and want to ask a question? Feel free to [create a new issue](https://github.com/FireSquid6/teleorb/issues/new/choose) to suggest your idea, submit your bug report, or ask your question.
