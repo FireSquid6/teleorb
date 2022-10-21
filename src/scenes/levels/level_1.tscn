@@ -35,12 +35,15 @@ position = Vector2(-192, -69)
 
 [node name="Checkpoint" parent="Placeables" index="1" instance=ExtResource("3_fgm7m")]
 position = Vector2(312, -64)
+locked = false
 
 [node name="Checkpoint2" parent="Placeables" index="2" instance=ExtResource("3_fgm7m")]
 position = Vector2(888, -64)
+locked = false
 
 [node name="Checkpoint3" parent="Placeables" index="3" instance=ExtResource("3_fgm7m")]
 position = Vector2(38, 16)
+locked = false
 
 [node name="Player" parent="." index="2"]
 position = Vector2(-48, 4)

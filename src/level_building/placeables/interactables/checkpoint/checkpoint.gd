@@ -13,7 +13,7 @@ func _interacted():
 	
 	if player.current_checkpoint != null:
 		player.current_checkpoint.unlock()
-		player.sprite.frame = 0
+		player.current_checkpoint.sprite.frame = 0
 	
 	player.current_checkpoint = self
 	player.respawn_point = spawn_pos

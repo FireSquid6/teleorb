@@ -25,7 +25,6 @@ animations = [{
 
 [node name="Checkpoint" instance=ExtResource("1_514ig")]
 script = ExtResource("2_yq5m5")
-locked = null
 
 [node name="CollisionShape2d" parent="." index="0"]
 position = Vector2(-1.5, -7)
