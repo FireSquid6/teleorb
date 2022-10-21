@@ -27,7 +27,8 @@ In general, follow the these code conventions:
 - Naming stuff is hard, but please try your best to make things readable
 
 ### For sprite artists, sound designers, vfx artists, or anyone else who makes assets
-Look for issues taged with "type: art" or "type: sound" and contribute textures, sounds, and UI components to it.  
+Look for issues taged with "type: art" or "type: sound" and contribute textures, sounds, and UI components to it.    
+  
 Tip: all non-exported assets are located in the /assets folder. These are primarily done in [Aseprite](https://www.aseprite.org/), a paid software. If you do not have aseprite, you can use something such as [libresprite](https://github.com/LibreSprite/LibreSprite), which is FOSS.  
   
 If you are reading this and thinking "I want to help, but I have no idea how any of this github or git stuff works," feel free to send discord friend request @FireSquid#8882. I will not respond to friend requests from people I don't have a mutual server with, so join something such as the [Godot discord server](https://discord.gg/Rue49P7jm3) and contact me through direct message.
