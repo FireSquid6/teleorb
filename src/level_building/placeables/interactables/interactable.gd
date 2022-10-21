@@ -39,7 +39,8 @@ func lock():
 	locked = true
 	if key_showing:
 		hovered = false
-		animation_player.playback_speed = -1
+		key_showing = false
+		animation_player.play_backwards("fade")
 
 func unlock():
 	locked = false

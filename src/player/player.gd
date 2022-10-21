@@ -65,6 +65,7 @@ var default_input: Dictionary = {
 @onready var orb_scene := preload("res://player/orb/orb.tscn")  # scene instanced for spawning the orb
 @onready var wall_detector: Area2D = $WallDetector
 @onready var floor_detector: Area2D = $FloorDetector
+@onready var current_checkpoint: Checkpoint = null
 
 
 func _enter_tree():
@@ -185,8 +186,6 @@ func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, ac
 				velocity.x = running_speed * sign(velocity.x)
 			else:
 				velocity.x += acc * dir
-	else:
-		push_error("Player stuck in wall. Body: " + str(bodies))
 	
 
 
