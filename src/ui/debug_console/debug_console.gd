@@ -157,8 +157,6 @@ func fatal_error(reason: String) -> void:
 	output("[color=red]Game terminated due to fatal error:[/color]")
 	output(reason)
 	
-	await get_tree().process_frame
-	
 	# save the console log to a file 
 	var filename := 'user://crash_report.txt'
 	var file: FileAccess = FileAccess.open(filename, FileAccess.WRITE)
@@ -173,7 +171,5 @@ Note: the following is in BBCode. Parse it with something like http://patorjk.co
 		file.store_string(console_text)
 		file = null
 		
-		OS.shell_open(ProjectSettings.globalize_path(filename))
-		
-		# exit the game
-		get_tree().quit()
+	# go to crash scene
+	get_tree().change_scene_to_file("res://scenes/crash/crash_scene.tscn")
