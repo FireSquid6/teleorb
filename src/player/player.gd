@@ -186,8 +186,6 @@ func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, ac
 				velocity.x = running_speed * sign(velocity.x)
 			else:
 				velocity.x += acc * dir
-	else:
-		push_error("Player stuck in wall. Body: " + str(bodies))
 	
 
 
