@@ -19,7 +19,6 @@ script = ExtResource("1_kcixg")
 metadata/_edit_lock_ = true
 
 [node name="Panel" type="Panel" parent="."]
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -34,7 +33,6 @@ grow_vertical = 2
 metadata/_edit_lock_ = true
 
 [node name="ConsoleBody" type="RichTextLabel" parent="Panel"]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -51,7 +49,6 @@ bbcode_enabled = true
 selection_enabled = true
 
 [node name="CopyButton" type="Button" parent="Panel"]
-layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -61,7 +58,6 @@ grow_horizontal = 0
 text = "Open Log File"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -72,7 +68,6 @@ offset_bottom = 94.0
 grow_horizontal = 2
 
 [node name="Label" type="Label" parent="VBoxContainer"]
-layout_mode = 2
 offset_right = 546.0
 offset_bottom = 31.0
 theme_override_colors/font_color = Color(1, 0, 0, 1)
@@ -81,7 +76,6 @@ text = "Teleorb has crashed. Please report this bug on github."
 horizontal_alignment = 1
 
 [node name="Fun" type="Label" parent="VBoxContainer"]
-layout_mode = 2
 offset_top = 35.0
 offset_right = 546.0
 offset_bottom = 52.0
@@ -91,7 +85,6 @@ text = "sample text"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -105,7 +98,6 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="ReportBug" type="Button" parent="HBoxContainer"]
-layout_mode = 2
 offset_right = 441.0
 offset_bottom = 56.0
 size_flags_horizontal = 3
@@ -114,7 +106,6 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_q8rfx")
 text = "Report Bug"
 
 [node name="CloseGame" type="Button" parent="HBoxContainer"]
-layout_mode = 2
 offset_left = 445.0
 offset_right = 544.0
 offset_bottom = 56.0

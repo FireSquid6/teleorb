@@ -25,6 +25,10 @@ func _logic(delta: float = -1.0):
 	if cyote_time > 0 and input["jump_pressed"]:
 		machine.change_state("StateJumping")
 	
+	# process the walljump buffer
+	if len(walljump_buffer.get_overlapping_bodies()) and input["jump_pressed"]:
+		player.walljump_buffered = true
+	
 	# fall
 	player.velocity.y += player.grv * delta
 	if player.velocity.y > player.terminal_velocity:
@@ -38,6 +42,3 @@ func _logic(delta: float = -1.0):
 	# deal with wallgrab
 	if input["wallgrab"]:
 		machine.change_state("StateWallgrab")
-	
-	# deal with walljump
-	request_walljump()

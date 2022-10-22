@@ -7,7 +7,7 @@ assignees: FireSquid6
 
 ---
 
-## Describe the improvement you would like to see in the game**
+## Describe the improvement you would like to see in the game
 *example: make the player's sprite not look terrible*
 
 ## Describe the systems (to your best ability) that would be affected

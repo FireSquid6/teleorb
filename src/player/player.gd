@@ -49,7 +49,7 @@ var default_input: Dictionary = {
 @export var jump_grv: float = 600  # the gravity during jumps
 @export var grab_grb: float = 200  # the gravity while wallgrabbing
 @export var grv: float = 1200  # standard gravity
-@export var air_resistance: float = 0.85  # percent movement is reduced by when moving in air
+@export var air_resistance: float = 0.6  # percent movement is reduced by when moving in air
 @export var cyote_time: float = 0.1  # the amount of time the player can still jump while falling
 @export var terminal_velocity: float = 10000  # the maximum velocity the player can reach traveling downwards
 
