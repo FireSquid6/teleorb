@@ -38,4 +38,5 @@ Encounterd a bug? Have a new mechanic or feature idea? Just don't undertand some
 
 ## Branch Guide
 "main" - The primary branch. It contains the latest non-crashing code and may have bugs or be unstable.    
-"release" - A branch that gets PR's from main. Contains the latest stable release. Each time a PR is accepeted to it, a new release is created.
+"release" - A branch that gets PR's from main. Contains the latest stable release. Each time a PR is accepeted to it, a new release is created.  
+All other branches have a specific task made obvious by their name
