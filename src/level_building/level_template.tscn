@@ -14,7 +14,7 @@ script = ExtResource("1_yorse")
 
 [node name="World" parent="." instance=ExtResource("1_r1v6m")]
 
-[node name="Gizmos" type="Node2D" parent="."]
+[node name="Placeables" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("2_k0fro")]
 
@@ -22,8 +22,6 @@ script = ExtResource("1_yorse")
 current = true
 zoom = Vector2(2, 2)
 limit_smoothed = true
-smoothing_enabled = true
-smoothing_speed = 25.0
 script = ExtResource("4_5wpfp")
 
 [node name="Cursor" parent="." instance=ExtResource("5_x2383")]

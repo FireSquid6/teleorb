@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://bldqi7gg6dgjf"]
+
+[ext_resource type="PackedScene" uid="uid://cmm1et81jwgah" path="res://level_building/placeables/interactables/interactable.tscn" id="1_aw1hl"]
+[ext_resource type="Texture2D" uid="uid://b0w3srm4f26jf" path="res://level_building/placeables/interactables/podium/podium.png" id="2_64fll"]
+[ext_resource type="Script" path="res://level_building/placeables/interactables/podium/podium.gd" id="2_vh6rp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7yrlt"]
+atlas = ExtResource("2_64fll")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjt0p"]
+atlas = ExtResource("2_64fll")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5stpl"]
+animations = [{
+"frames": [SubResource("AtlasTexture_7yrlt"), SubResource("AtlasTexture_jjt0p")],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Podium" instance=ExtResource("1_aw1hl")]
+script = ExtResource("2_vh6rp")
+
+[node name="CollisionShape2d" parent="." index="0"]
+position = Vector2(0, -9)
+
+[node name="Podium" type="AnimatedSprite2D" parent="." index="1"]
+texture_filter = 1
+position = Vector2(0, -11)
+frames = SubResource("SpriteFrames_5stpl")
+frame = 1

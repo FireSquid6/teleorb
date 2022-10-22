@@ -12,7 +12,7 @@ var move = 0
 # whether the player has access to certain items
 var has_dash: bool = false
 var has_slide: bool = false
-var has_orb: bool = true
+var has_orb: bool = false
 
 var walljumps_left: int = 0  # the amount of walljumps the player has left
 var jump_buffered: bool = false  # whether a jump input has been buffered or not
@@ -49,7 +49,7 @@ var default_input: Dictionary = {
 @export var jump_grv: float = 600  # the gravity during jumps
 @export var grab_grb: float = 200  # the gravity while wallgrabbing
 @export var grv: float = 1200  # standard gravity
-@export var air_resistance: float = 0.85  # percent movement is reduced by when moving in air
+@export var air_resistance: float = 0.6  # percent movement is reduced by when moving in air
 @export var cyote_time: float = 0.1  # the amount of time the player can still jump while falling
 @export var terminal_velocity: float = 10000  # the maximum velocity the player can reach traveling downwards
 
@@ -65,6 +65,7 @@ var default_input: Dictionary = {
 @onready var orb_scene := preload("res://player/orb/orb.tscn")  # scene instanced for spawning the orb
 @onready var wall_detector: Area2D = $WallDetector
 @onready var floor_detector: Area2D = $FloorDetector
+@onready var current_checkpoint: Checkpoint = null
 
 
 func _enter_tree():
@@ -185,8 +186,6 @@ func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, ac
 				velocity.x = running_speed * sign(velocity.x)
 			else:
 				velocity.x += acc * dir
-	else:
-		push_error("Player stuck in wall. Body: " + str(bodies))
 	
 
 
