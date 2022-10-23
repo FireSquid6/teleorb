@@ -4,7 +4,7 @@ on: release
 env:
   ITCH_USERNAME: firequid4004
   ITCH_GAME_ID: teleorb
-  ITCH_CHANNEL: windows
+  ITCH_CHANNEL: win-linux-mac
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -13,15 +13,12 @@ jobs:
       - name: Get latest release tag 
         uses: gregziegan/fetch-latest-release@v2.0.0
         id: tag
-      
-      - name: Get latest release files
-
 
       - name: Send data to itch.io
         uses: KikimoraGames/itch-publish@v0.0.3
         with:
           butlerApiKey: ${{secrets.BUTLER_API_KEY}}
-          gameData: ./build/${{ matrix.template }}
+          gameData: ./site/static/game/
           itchUsername: ${{env.ITCH_USERNAME}}
           itchGameId: ${{ env.ITCH_GAME_ID }}
           buildChannel: ${{ env.ITCH_CHANNEL }}
