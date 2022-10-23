@@ -2,9 +2,6 @@
 name: export project and create release
 
 on: 
-  push:
-    branches:
-      - "site"
   pull_request:
     branches:
       - "release"
