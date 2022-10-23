@@ -1,0 +1,23 @@
+<div id="download-section" class="download-container">
+    <div id="clone" class="download">
+        <img src="../svg/microsoft.svg">
+    </div>
+</div>
+
+<script defer>
+    // define constants
+    const downloadSection = document.getElementById('download-section');
+    
+    const clone = document.getElementById('clone').cloneNode(true);
+    document.getElementById('clone').remove();
+
+    const addDownloadButton = function(name) {
+        const downloadDiv = clone.cloneNode(true);
+
+        downloadSection.appendChild(downloadDiv)
+    };
+
+    // create the download buttons
+    addDownloadButton("Windows")
+
+</script>

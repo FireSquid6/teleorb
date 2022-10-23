@@ -1,0 +1,19 @@
+.download {
+    grid-area: "download";
+    gap: 4px;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    
+}
+
+.download-container {
+    display: grid;
+    height: 200px;
+    grid-template-areas: "download download download";
+}
+
+.icon {
+    width: 100%;
+    height: 100%;
+}
