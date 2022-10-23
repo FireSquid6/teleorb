@@ -5,5 +5,4 @@ draft: false
 ---
 
 # Teleorb
-{{< game >}}
-*above is the current web demo of the game*  
+This is the homepage!
