@@ -1,23 +1,32 @@
 <div id="download-section" class="download-container">
-    <div id="clone" class="download">
-        <img src="../svg/microsoft.svg">
-    </div>
+
 </div>
 
 <script defer>
     // define constants
     const downloadSection = document.getElementById('download-section');
-    
-    const clone = document.getElementById('clone').cloneNode(true);
-    document.getElementById('clone').remove();
 
-    const addDownloadButton = function(name) {
-        const downloadDiv = clone.cloneNode(true);
+    const addDownloadButton = function(name, class_name, file) {
+        const downloadLink = document.createElement('a')
+        downloadLink.style.color = "black"
+        downloadLink.className = "download"
+        downloadLink.href = "https://github.com/FireSquid6/teleorb/releases/latest/download/" + file
+        
+        const icon = document.createElement('i')
+        icon.className = 'fa-brands fa-5x'
+        icon.classList.add(class_name) 
 
-        downloadSection.appendChild(downloadDiv)
+        const paragraph = document.createElement('p')
+        paragraph.textContent = name
+
+        downloadSection.appendChild(downloadLink);
+        downloadLink.appendChild(icon);
+        downloadLink.appendChild(paragraph);
     };
 
     // create the download buttons
-    addDownloadButton("Windows")
+    addDownloadButton("Windows", 'fa-windows', 'Windows.Desktop.zip');
+    addDownloadButton("Apple", 'fa-apple', 'macOS.zip');
+    addDownloadButton("Linux", 'fa-linux', 'LinuxX11.zip');
 
 </script>
