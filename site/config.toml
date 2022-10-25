@@ -9,13 +9,12 @@ metaDataFormat = "yaml"
 defaultContentLanguageInSubdir= true
 
 [params]
-  description = "Documentation and Builds for Teleorb"
+  description = "A 2d platformer built in Godot."
   author = "Jonathan Deiss"
 
   showVisitedLinks = true
   disableBreadcrumb = false
   disableNextPrev = false
-  disableLandingPageButton = true
   disableMermaid = false
   customMermaidURL = "https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"
   titleSeparator = "::"
@@ -27,9 +26,10 @@ home = [ "HTML", "RSS", "JSON"]
 
 [Languages]
 [Languages.en]
-title = "Documentation for Hugo Learn Theme"
+title = "Teleorb"
 weight = 1
 languageName = "English"
+disableLandingPage = false
 landingPageURL = "/"
 landingPageName = "<i class='fas fa-home'></i> Home"
 
@@ -45,7 +45,7 @@ url = "/showcase"
 weight = 11
 
 [[Languages.en.menu.shortcuts]]
-name = "<i class='fas fa-fw fa-arrow-down'></i> Download"
+name = "<i class='fas fa-fw fa-arrow-down'></i> Downloads"
 identifier = "hugodoc"
 url = "/download"
 weight = 20
