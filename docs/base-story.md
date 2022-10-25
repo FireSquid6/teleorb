@@ -1,11 +1,11 @@
-# Overview
+## Overview
 Teleorb is not a primarily narrative driven game. The story serves as a background as a secondary "B" plot to the main appeal of the game, that being 
 its mechanics. This means that the story should have:
 - Very little dialogue
 - Symbolism and themes through gameplay
 - Player remains in control
 
-# Plot
+## Plot
 The story follows an unnamed student who is transported to and explores the cave world.  
   
 At the start of the game, a cutscene plays where this student is seen bored of the monotony of class. The screen turns to black with the text "Monotony" written on it. The screen moves back to the scene of the classroom after a few seconds, where a portal opens up beneath the student to the caves. The scene shifts to the starting room, with the student falling from the ceiling. They pick up and put on a nearby hard hat, before giving up control to the player.    
