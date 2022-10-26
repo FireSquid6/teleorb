@@ -23,7 +23,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Checkpoint" instance=ExtResource("1_514ig")]
+[node name="Checkpoint" groups=["persistent"] instance=ExtResource("1_514ig")]
 script = ExtResource("2_yq5m5")
 
 [node name="CollisionShape2d" parent="." index="0"]

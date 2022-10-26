@@ -6,8 +6,6 @@
 [node name="World" type="Node2D"]
 script = ExtResource("1_vuo35")
 
-[node name="Background" type="ParallaxLayer" parent="."]
-
 [node name="Map" type="TileMap" parent="."]
 texture_filter = 1
 texture_repeat = 1
