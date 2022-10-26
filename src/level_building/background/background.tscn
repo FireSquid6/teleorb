@@ -6,28 +6,20 @@
 texture_filter = 1
 z_index = -50
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-
-[node name="Bottom" type="ParallaxLayer" parent="ParallaxBackground"]
-
-[node name="TileMap" type="TileMap" parent="ParallaxBackground/Bottom"]
-modulate = Color(0.4, 0.4, 0.4, 1)
+[node name="Bottom" type="TileMap" parent="."]
+modulate = Color(0.3, 0.3, 0.3, 1)
 texture_filter = 1
 tile_set = ExtResource("1_sqo7s")
 format = 2
 
-[node name="Middle" type="ParallaxLayer" parent="ParallaxBackground"]
-modulate = Color(0.6, 0.6, 0.6, 1)
-
-[node name="TileMap" type="TileMap" parent="ParallaxBackground/Middle"]
+[node name="Middle" type="TileMap" parent="."]
+modulate = Color(0.501961, 0.501961, 0.501961, 1)
 texture_filter = 1
 tile_set = ExtResource("1_sqo7s")
 format = 2
 
-[node name="Top" type="ParallaxLayer" parent="ParallaxBackground"]
-modulate = Color(0.8, 0.8, 0.8, 1)
-
-[node name="TileMap" type="TileMap" parent="ParallaxBackground/Top"]
+[node name="Top" type="TileMap" parent="."]
+modulate = Color(0.7, 0.7, 0.7, 1)
 texture_filter = 1
 tile_set = ExtResource("1_sqo7s")
 format = 2
