@@ -218,4 +218,5 @@ grab={
 
 [rendering]
 
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 vulkan/rendering/back_end=1

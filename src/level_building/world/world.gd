@@ -53,6 +53,15 @@ func _process(delta):
 				break
 
 
+# builds an image to use as lighting for a given area
+func create_light_image(rect: Rect2, tilemap: TileMap):
+	var image: Image = Image.new()
+	image.create(rect.size.x, rect.size.y, true, Image.FORMAT_RGBA4444)
+	
+	
+	return image
+
+
 func collision_shape_2d_to_rect2(collision_shape: CollisionShape2D) -> Rect2:
 	var pos: Vector2 = Vector2(-1, -1)
 	var end: Vector2 = Vector2(-1, -1)

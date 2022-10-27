@@ -1,3 +1,7 @@
+DirectionalLight2D
+PointLight2D
+LightOccluder2D
+CanvasModulate
 TileMap
 ParallaxLayer
 ParallaxBackground
