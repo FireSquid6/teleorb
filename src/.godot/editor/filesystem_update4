@@ -9,3 +9,4 @@ res://player/player.tscn
 res://level_building/placeables/interactables/checkpoint/checkpoint.tscn
 res://level_building/world/world.tscn
 res://level_building/background/torch/torch.tscn
+res://level_building/world/world.gd
