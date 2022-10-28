@@ -6,28 +6,31 @@
 texture_filter = 1
 z_index = -50
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="Levels" type="Node2D" parent="."]
 
-[node name="Bottom" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="Bottom" type="Node2D" parent="Levels"]
+modulate = Color(0.3, 0.3, 0.3, 1)
+texture_filter = 1
 
-[node name="TileMap" type="TileMap" parent="ParallaxBackground/Bottom"]
-modulate = Color(0.4, 0.4, 0.4, 1)
+[node name="TileMap" type="TileMap" parent="Levels/Bottom"]
 texture_filter = 1
 tile_set = ExtResource("1_sqo7s")
 format = 2
 
-[node name="Middle" type="ParallaxLayer" parent="ParallaxBackground"]
-modulate = Color(0.6, 0.6, 0.6, 1)
+[node name="Middle" type="Node2D" parent="Levels"]
+modulate = Color(0.5, 0.5, 0.5, 1)
+texture_filter = 1
 
-[node name="TileMap" type="TileMap" parent="ParallaxBackground/Middle"]
+[node name="TileMap" type="TileMap" parent="Levels/Middle"]
 texture_filter = 1
 tile_set = ExtResource("1_sqo7s")
 format = 2
 
-[node name="Top" type="ParallaxLayer" parent="ParallaxBackground"]
-modulate = Color(0.8, 0.8, 0.8, 1)
+[node name="Top" type="Node2D" parent="Levels"]
+modulate = Color(0.7, 0.7, 0.7, 1)
+texture_filter = 1
 
-[node name="TileMap" type="TileMap" parent="ParallaxBackground/Top"]
+[node name="TileMap" type="TileMap" parent="Levels/Top"]
 texture_filter = 1
 tile_set = ExtResource("1_sqo7s")
 format = 2
