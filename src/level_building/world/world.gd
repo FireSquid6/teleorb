@@ -81,6 +81,7 @@ func create_light_texture(rect: Rect2, tilemap: TileMap, layer: int = 0, blend: 
 	var tile_size: Vector2i = tilemap.tile_set.tile_size;
 	var start_cell: Vector2i = Vector2i(rect.position) / tile_size;
 	var cells: Vector2i = Vector2i(rect.size) / tile_size;
+	var used_cells: Array[Vector2i] = tilemap.get_used_cells(layer)
 	
 	# iterates through the rows and columns of the tilemap
 	for column in cells.x:
@@ -91,14 +92,24 @@ func create_light_texture(rect: Rect2, tilemap: TileMap, layer: int = 0, blend: 
 			var x: int = x_cell * tile_size.x
 			var y: int = y_cell * tile_size.y
 			
-			if tilemap.get_cell_tile_data(layer, Vector2i(x_cell, y_cell)) != null:
-				var fill_rect = Rect2(Vector2(x, y), tile_size)
+			if !(Vector2i(x_cell, y_cell) in used_cells):
+				var pos: Vector2i = (Vector2i(x_cell, y_cell) - start_cell) * tile_size
+				assert(pos.x >= 0 and pos.y >= 0)
+				
+				var fill_rect: Rect2 = Rect2(pos, tile_size)
+				
+				Console.output("Cell ({0},{1}) is empty. Rect {2} filled.".format([x_cell, y_cell, str(fill_rect)]))
+				
 				lightmap.fill_rect(fill_rect, Color.WHITE)
+			else:
+				Console.output("Cell ({0},{1}) is full.".format([x_cell, y_cell]))
+	
+	Console.output(str(used_cells))
 	
 	# blend the edges of the lightmap out
 #	var value: float = 1.0
 #	var black := Color.BLACK
-#	while value > 0.0:
+#	while value > 0.0:`
 #		var color = Color(value, value, value)
 #		for x in range(rect.size.x):
 #			for y in range(rect.size.y):
