@@ -113,6 +113,20 @@ func create_light_texture(rect: Rect2, tilemap: TileMap, layer: int = 0, blend: 
 				var fill_rect: Rect2 = Rect2(pos, tile_size)
 				lightmap.fill_rect(fill_rect, Color.WHITE)
 	
+	# fade out the light
+	var value: float = 1.0 - blend
+	while value > 0:
+		var pixels_to_color = []
+		for x in range(lightmap.get_width()):
+			for y in range(lightmap.get_height()):
+				var pixel := lightmap.get_pixel(x, y)
+				if pixel.is_equal_approx(Color.BLACK) and should_fill_pixel(lightmap, x, y):
+					pixels_to_color.append(Vector2i(x, y))
+		
+		for pixel in pixels_to_color:
+			lightmap.set_pixelv(pixel, Color(value, value, value))
+		
+		value -= blend
 	
 	return lightmap
 
@@ -123,10 +137,6 @@ func should_fill_pixel(image: Image, x: int, y: int) -> bool:
 		[x + 1, y],
 		[x, y - 1],
 		[x, y + 1],
-		[x + 1, y + 1],
-		[x - 1, y - 1],
-		[x + 1, y - 1],
-		[x - 1, y + 1,],
 	]
 	
 	var white_neighbors = 0  # is it politcally correct to use this variable name?
@@ -136,8 +146,8 @@ func should_fill_pixel(image: Image, x: int, y: int) -> bool:
 		var xx = edge[0]
 		var yy = edge[1]
 		
-		if xx > 0 and xx < image_width and yy > 0 and yy < image_height:
-			if image.get_pixel(xx, yy) == Color.WHITE:
+		if xx >= 0 and xx < image_width and yy >= 0 and yy < image_height:
+			if image.get_pixel(xx, yy).v > 0:
 				white_neighbors += 1
 	
-	return ((white_neighbors > 0) and (white_neighbors != 8))
+	return white_neighbors > 0

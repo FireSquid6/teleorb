@@ -83,6 +83,7 @@ sources/0 = SubResource("TileSetAtlasSource_r2drc")
 sources/1 = SubResource("TileSetAtlasSource_8oy40")
 
 [node name="World" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_vuo35")
 
 [node name="Occluders" type="TileMap" parent="."]
@@ -93,6 +94,7 @@ format = 2
 layer_0/name = "World"
 
 [node name="Opaque" type="TileMap" parent="."]
+texture_filter = 1
 tile_set = SubResource("TileSet_uhi0c")
 format = 2
 layer_0/name = "Layer"
@@ -101,3 +103,4 @@ layer_0/name = "Layer"
 modulate = Color(1, 1, 1, 0.196078)
 
 [node name="Lights" type="Node2D" parent="."]
+texture_filter = 1
