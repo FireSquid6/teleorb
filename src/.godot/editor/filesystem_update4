@@ -1,11 +1,13 @@
-res://level_building/background/background.tscn
+res://level_building/background/torch/torch.tscn
 res://level_building/world/world_tileset.tres
 res://level_building/background/backgrount_tileset.tres
 res://scenes/levels/level_1.tscn
+res://level_building/level.gd
+res://level_building/world/world.tscn
+res://level_building/world/world.gd
 res://scenes/levels/tests/movement_test.tscn
 res://ui/debug_console/debug_console.tscn
 res://level_building/level_template.tscn
 res://player/player.tscn
 res://level_building/placeables/interactables/checkpoint/checkpoint.tscn
-res://level_building/world/world.tscn
-res://level_building/background/torch/torch.tscn
+res://level_building/background/background.tscn

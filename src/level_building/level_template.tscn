@@ -36,6 +36,10 @@ metadata/cull = false
 [node name="HUD" parent="." groups=["persistent"] instance=ExtResource("4_kxrjr")]
 metadata/cull = false
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color(0.25098, 0.25098, 0.25098, 1)
+
 [connection signal="level_loaded" from="." to="Player" method="_on_level_level_loaded"]
 
 [editable path="Background"]
