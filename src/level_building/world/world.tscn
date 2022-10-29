@@ -85,17 +85,19 @@ sources/1 = SubResource("TileSetAtlasSource_8oy40")
 [node name="World" type="Node2D"]
 script = ExtResource("1_vuo35")
 
-[node name="Walls" type="TileMap" parent="."]
+[node name="Occluders" type="TileMap" parent="."]
 texture_filter = 1
 texture_repeat = 1
 tile_set = ExtResource("2_sswmj")
 format = 2
 layer_0/name = "World"
 
-[node name="Instances" type="TileMap" parent="."]
+[node name="Opaque" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_uhi0c")
 format = 2
 layer_0/name = "Layer"
 
 [node name="Areas" type="Node2D" parent="."]
 modulate = Color(1, 1, 1, 0.196078)
+
+[node name="Lights" type="Node2D" parent="."]

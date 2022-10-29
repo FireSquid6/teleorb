@@ -5,13 +5,17 @@ class_name World
 @onready var shape_containers: Node2D = $Areas
 @onready var level: Level = get_parent()
 @onready var camera: Camera2D = $"../Player/Camera"
-@onready var tilemap: TileMap = $Map
+@onready var tilemap: TileMap = $Occluders
+@onready var light_container: Node2D = $Lights
 var player: Player
 var camera_shapes: Array[Rect2] = []  # an array of shape 2D's used to define different rooms for the camera
 var light_textures: Array[Texture] = []  # an array of textures for lighting
 var active_rectangle: Rect2 = Rect2(0, 0, 0, 0)
 
 var camera_area_output_string = "CollisionShape2D of [color=green](position = {0}, size = {1})[/color] converted to Rect2 of [color=green](position = {2}, end = {3})[/color]"
+
+@export var ambient_light_color: Color = Color(0.4, 0.4, 0.4)
+@export var ambient_light_energy: float = 1.25
 
 func _ready():
 	await level.level_references_initialized
@@ -31,20 +35,26 @@ func _ready():
 	
 	# generate light textures from the camera areas, and put a light there
 	Console.output('[color=green]Generating light textures:[/color]')
+	var image_index = 0
 	for shape in camera_shapes:
 		shape = shape as Rect2
 		var image := create_light_texture(shape, tilemap)
 		
 		var light: PointLight2D = PointLight2D.new()
+		
 		light.texture= ImageTexture.create_from_image(image)
+		
+		image.save_png("user://image_{0}.png".format([image_index]))
 		light.position = shape.position + (shape.size / 2)
-		add_child(light)
+		light.color = ambient_light_color
+		light.energy = ambient_light_energy
+		light.light_mask = 0
 		
-		Console.output("Light created at {0}.".format([light.position]))
+		light_container.add_child(light)
 		
-		# add some sort of caching system in the future?
-		image.save_png("user://image-cache/image.png")
-	Console.output('')
+		Console.output("Light created at {0}.".format([light.position])) 
+		image_index += 1
+	Console.output('[color=green]Light textures successfully generated![/color]')
 	
 	shape_containers.queue_free()
 
@@ -102,20 +112,6 @@ func create_light_texture(rect: Rect2, tilemap: TileMap, layer: int = 0, blend: 
 				
 				var fill_rect: Rect2 = Rect2(pos, tile_size)
 				lightmap.fill_rect(fill_rect, Color.WHITE)
-	
-	# TODO: have the image blend a little bit outwards
-	# blend the edges of the lightmap out
-#	var value: float = 1.0
-#	var black := Color.BLACK
-#	while value > 0.0:
-#		var color = Color(value, value, value)
-#		for x in range(rect.size.x):
-#			for y in range(rect.size.y):
-#				# I should find a better way to do this
-#				if should_fill_pixel(lightmap, x, y):
-#					lightmap.set_pixel(x, y, color)
-#
-#		value -= blend
 	
 	
 	return lightmap

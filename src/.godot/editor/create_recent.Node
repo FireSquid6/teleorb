@@ -1,9 +1,9 @@
+PointLight2D
+Node2D
 TileMap
 CanvasModulate
 DirectionalLight2D
 LightOccluder2D
-PointLight2D
-Node2D
 Node
 ParallaxLayer
 ParallaxBackground
