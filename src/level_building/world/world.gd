@@ -14,8 +14,9 @@ var active_rectangle: Rect2 = Rect2(0, 0, 0, 0)
 
 var camera_area_output_string = "CollisionShape2D of [color=green](position = {0}, size = {1})[/color] converted to Rect2 of [color=green](position = {2}, end = {3})[/color]"
 
-@export var ambient_light_color: Color = Color(0.4, 0.4, 0.4)
-@export var ambient_light_energy: float = 1.25
+@export var ambient_light_color: Color = Color(0.4, 0.4, 0.4)  # color of ambient lighst
+@export var ambient_light_energy: float = 1.0  # energy to give ambient lights
+@export var skip_lighting: bool = false  # whether to skip creating ambient lighting or not
 
 func _ready():
 	await level.level_references_initialized
@@ -35,26 +36,31 @@ func _ready():
 	
 	# generate light textures from the camera areas, and put a light there
 	Console.output('[color=green]Generating light textures:[/color]')
-	var image_index = 0
-	for shape in camera_shapes:
-		shape = shape as Rect2
-		var image := create_light_texture(shape, tilemap)
+	
+	if skip_lighting and OS.is_debug_build():
+		Console.output('[color=red]skip_lighting is true. Aborting light generation. . .[/color]')
+	else:
+		var image_index = 0
+		for shape in camera_shapes:
+			shape = shape as Rect2
+			var image := create_light_texture(shape, tilemap)
+			
+			var light: PointLight2D = PointLight2D.new()
+			
+			light.texture= ImageTexture.create_from_image(image)
+			
+			image.save_png("user://image_{0}.png".format([image_index]))
+			light.position = shape.position + (shape.size / 2)
+			light.color = ambient_light_color
+			light.energy = ambient_light_energy
+			light.light_mask = 0
+			
+			light_container.add_child(light)
+			
+			Console.output("Light created at {0}.".format([light.position])) 
+			image_index += 1
 		
-		var light: PointLight2D = PointLight2D.new()
-		
-		light.texture= ImageTexture.create_from_image(image)
-		
-		image.save_png("user://image_{0}.png".format([image_index]))
-		light.position = shape.position + (shape.size / 2)
-		light.color = ambient_light_color
-		light.energy = ambient_light_energy
-		light.light_mask = 0
-		
-		light_container.add_child(light)
-		
-		Console.output("Light created at {0}.".format([light.position])) 
-		image_index += 1
-	Console.output('[color=green]Light textures successfully generated![/color]')
+		Console.output('[color=green]Light textures successfully generated![/color]')
 	
 	shape_containers.queue_free()
 

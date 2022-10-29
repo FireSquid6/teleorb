@@ -24,8 +24,10 @@ func _enter_tree():
 
 func _ready():
 	emit_signal("level_references_initialized", self)
-	canvas_modulate.visible = true
-	Console.output("[u][color=green]Level loaded successfully in [color=aqua]{1}[/color]ms[/color][/u]".format([name, "x"]))
+	
+	canvas_modulate.visible = !world.skip_lighting
+	
+	Console.output("\n[u][color=green]Level loaded successfully!")
 	emit_signal("level_loaded", self)
 
 
