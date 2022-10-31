@@ -6,7 +6,6 @@ class_name Level
 @onready var player: Player = get_node("Player")
 @onready var world: World = get_node("World")
 @onready var hud: HUD = get_node("HUD")
-@onready var cursor: Node2D = get_node("Cursor")
 @onready var canvas_modulate: CanvasModulate = $CanvasModulate
 
 
@@ -17,8 +16,6 @@ signal room_changed(new_room: Rect2)
 
 
 func _enter_tree():
-	OS.shell_open(ProjectSettings.globalize_path("user://"))
-	
 	# TODO: add level load time print
 	Console.output("[u][color=green]Loading level. . .[/color] \"[color=aqua]{0}[/color]\"[/u]\n".format([name]))
 

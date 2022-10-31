@@ -109,6 +109,15 @@ func _physics_process(delta):
 	# TODO: Abstract this more
 	if input["throw"]:
 		throw_orb()
+	
+	# change the color of the cursor
+	# this is hardcoded and should be changed later
+	# TODO: make this code not a mess of conditionals
+	if has_orb:
+		if can_throw and !orb_thrown:
+			Cursor.set_color(Color(0, 1, 0))
+		else:
+			Cursor.set_color(Color(1, 0, 0))
 
 
 func get_input() -> Dictionary:
@@ -121,7 +130,7 @@ func get_input() -> Dictionary:
 	var angle := 0.0
 	match Global.control_type:
 		Constants.CONTROL_TYPE_KEYBOARD:
-			angle = position.angle_to_point(level.cursor.position)
+			angle = position.angle_to_point(Cursor.position)
 		Constants.CONTROL_TYPE_GAMEPAD:
 			angle = Vector2(Global.right_axis_x, Global.right_axis_y).angle()
 		Constants.CONTROL_TYPE_TOUCH:

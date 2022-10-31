@@ -126,6 +126,7 @@ config/windows_native_icon="res://icon.ico"
 
 Console="*res://ui/debug_console/debug_console.tscn"
 Global="*res://global/global.tscn"
+Cursor="*res://cursor/cursor.tscn"
 
 [display]
 
