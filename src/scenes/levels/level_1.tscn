@@ -50,8 +50,5 @@ position = Vector2(38, 16)
 [node name="Player" parent="." index="3"]
 position = Vector2(-48, 4)
 
-[node name="Cursor" parent="." index="4"]
-position = Vector2(-18, 70)
-
 [editable path="Background"]
 [editable path="World"]

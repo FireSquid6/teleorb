@@ -29,3 +29,8 @@ static func get_key_image(key: int, pressed: bool = false, ):
 	var keyboard_extras: Texture2D = preload("res://shared/input_hint/keyboard_extras.png")
 	
 	
+# How this should work:
+# takes the name of an input action and the current control type (probably an enum?) as inputs for the function
+# returns a texture as the output
+# uses the events in that action combined with the current control state to decide what image to return
+# InputEvent.get_text()?

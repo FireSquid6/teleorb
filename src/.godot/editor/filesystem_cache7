@@ -1,8 +1,8 @@
 0b7126e0c6e86d3ec295a72f5aa6e0bd
-::res://::1667188194
+::res://::1667361569
 export_presets.cfg::TextFile::-1::1666911703::0::1::::<><>::
 icon.png::CompressedTexture2D::215097171935997498::1666911703::1666911703::1::::<><>::
-::res://cursor/::1667187682
+::res://cursor/::1667360256
 cursor.gd::GDScript::-1::1667187682::0::1::::<>Node2D<>::
 cursor.png::CompressedTexture2D::1682415807700415775::1667187682::1667187682::1::::<><>::
 cursor.tscn::PackedScene::4215128856192818555::1667187682::0::1::::<><>::res://cursor/cursor.gd<>uid://x78e310df5qp
@@ -27,9 +27,9 @@ global.tscn::PackedScene::6268782565719314166::1666911703::0::1::::<><>::res://g
 camera.gd::GDScript::-1::1667185160::0::1::::<>Camera2D<>::
 level.gd::GDScript::-1::1667187682::0::1::::Level<>Node2D<>::
 level_template.tscn::PackedScene::4457623155343776276::1667187682::0::1::::<><>::uid://bycyewd3cxndk<>res://level_building/level.gd<>uid://bovnsovxjm3yb<>uid://gp0qpdkdtgfn<>res://level_building/camera.gd<>uid://hxl4sqm7pvxl
-::res://level_building/background/::1667188194
+::res://level_building/background/::1667188388
 background.png::CompressedTexture2D::3986209438696995049::1666911703::1666911703::1::::<><>::
-background.tscn::PackedScene::3413238661482403249::1667188194::0::1::::<><>::uid://dbr44ilec3wyl
+background.tscn::PackedScene::3413238661482403249::1667188388::0::1::::<><>::uid://dbr44ilec3wyl
 backgrount_tileset.tres::TileSet::7266358334715012051::1667188194::0::1::::<><>::uid://bw17j03yonid2
 ::res://level_building/background/torch/::1667074600
 torch.tscn::PackedScene::-1::1667074600::0::1::::<><>::uid://b5scf4ek2lbd
@@ -56,11 +56,11 @@ world_tileset.tres::TileSet::2790640568726084148::1667188194::0::1::::<><>::uid:
 ::res://level_building/world/area/::1666911703
 area.gd::GDScript::-1::1666911703::0::1::::LevelArea<>Area2D<>::
 area.tscn::PackedScene::8148897249897209158::1666911703::0::1::::<><>::res://level_building/world/area/area.gd
-::res://player/::1667187682
+::res://player/::1667189337
 animated_sprite.gd::GDScript::-1::1667185160::0::1::::PlayerSprite<>AnimatedSprite2D<>::
 player.gd::GDScript::-1::1667187682::0::1::::Player<>CharacterBody2D<>::
 player.png::CompressedTexture2D::4573879923965436596::1666911703::1666911703::1::::<><>::
-player.tscn::PackedScene::453646018604513431::1667187570::0::1::::<><>::res://player/player.gd<>uid://b6fvetaqvqfge<>uid://dtu7kkn3wgc6t<>res://shared/state_machine/state_machine.gd<>res://player/animated_sprite.gd<>res://player/states/state_moving.gd<>res://player/states/state_falling.gd<>res://player/states/state_jumping.gd<>res://player/states/state_teleport.gd<>res://player/states/state_wallgrab.gd<>res://player/states/state_dead.gd
+player.tscn::PackedScene::453646018604513431::1667189337::0::1::::<><>::res://player/player.gd<>uid://b6fvetaqvqfge<>uid://dtu7kkn3wgc6t<>res://shared/state_machine/state_machine.gd<>res://player/animated_sprite.gd<>res://player/states/state_moving.gd<>res://player/states/state_falling.gd<>res://player/states/state_jumping.gd<>res://player/states/state_teleport.gd<>res://player/states/state_wallgrab.gd<>res://player/states/state_dead.gd
 player_collision_shape.tres::RectangleShape2D::8536098983608479113::1666911703::0::1::::<><>::
 ::res://player/orb/::1667187682
 orb.gd::GDScript::-1::1667185160::0::1::::Orb<>Node<>::
@@ -84,8 +84,8 @@ level_1.tscn::PackedScene::5919138547269277109::1667187570::0::1::::<><>::uid://
 ::res://scenes/levels/tests/::1667187570
 movement_test.tscn::PackedScene::8105509130851871120::1667187570::0::1::::<><>::uid://b4rknw3g4r1ie
 ::res://shared/::1667188152
-::res://shared/input_hint/::1667188218
-input_hint.gd::GDScript::-1::1667188194::0::1::::InputHint<>Object<>::
+::res://shared/input_hint/::1667189337
+input_hint.gd::GDScript::-1::1667189337::0::1::::InputHint<>Object<>::
 keyboard_base.png::CompressedTexture2D::6996312418257863730::1667188218::1667188218::1::::<><>::
 keyboard_extras.png::CompressedTexture2D::1035466294688083281::1667188212::1667188212::1::::<><>::
 ::res://shared/light_textures/::1667074600

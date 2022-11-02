@@ -24,7 +24,7 @@ func _ready():
 	
 	canvas_modulate.visible = !world.skip_lighting
 	
-	Console.output("\n[u][color=green]Level loaded successfully!")
+	Console.output("\n[u][color=green]Level loaded successfully![/color]")
 	emit_signal("level_loaded", self)
 
 
@@ -32,10 +32,9 @@ func goto_level(scene: PackedScene):
 	Console.output("Exiting level {0} and heading to level {1} ")
 
 
-func _process(delta):
-	if Input.is_action_just_pressed('reset'):
-		Console.fatal_error("I pressed the restart button!")
-
-
 func restart_room():
 	emit_signal("room_restarted")
+
+
+func _input(event: InputEvent):
+	Console.output(event.as_text())
