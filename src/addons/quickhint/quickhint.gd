@@ -28,7 +28,7 @@ static func load_input_image(event: InputEvent) -> Texture:
 		
 	elif event as InputEventKey:
 		event = event as InputEventKey
-		filepath = images_path + "key_" + event.as_text().to_lower() + ".png"
+		filepath = images_path + "key_" + event.as_text().to_lower().split(" ")[0] + ".png"
 		
 		
 	

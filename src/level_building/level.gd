@@ -34,7 +34,3 @@ func goto_level(scene: PackedScene):
 
 func restart_room():
 	emit_signal("room_restarted")
-
-
-func _input(event: InputEvent):
-	Console.output(event.as_text())
