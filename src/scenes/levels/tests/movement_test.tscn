@@ -25,8 +25,5 @@ position = Vector2(-1, 0)
 [node name="Camera" parent="Player" index="9"]
 metadata/_edit_lock_ = true
 
-[node name="Cursor" parent="." index="4"]
-position = Vector2(-1, 0)
-
 [editable path="Background"]
 [editable path="World"]
