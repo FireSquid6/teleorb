@@ -143,6 +143,8 @@ collision_layer = 2
 floor_stop_on_slope = false
 safe_margin = 0.085
 script = ExtResource("1_snhna")
+jump_height = 48.0
+time_to_peak = 0.4
 
 [node name="CollisionShape2d" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1.5)
@@ -224,8 +226,6 @@ position = Vector2(0, 1.5)
 shape = ExtResource("2_jy2uy")
 
 [node name="Timers" type="Node" parent="."]
-
-[node name="JumpTimer" type="Timer" parent="Timers"]
 
 [node name="InputCancelTime" type="Timer" parent="Timers"]
 wait_time = 0.1
