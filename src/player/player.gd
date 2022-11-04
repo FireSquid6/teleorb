@@ -44,11 +44,12 @@ var default_input: Dictionary = {
 @export var walljump_spd: float = 200
 
 @export_group("Y Movement")
-@export var jump_spd: float = 225 # the speed that the player jumps at
-@export var jump_time: float = 0.2  # the amount of time the player jumps for
-@export var jump_grv: float = 600  # the gravity during jumps
+@export var jump_height: float = 64  # the height of the player's jump
+@export var time_to_peak: float = 0.5  # the time it will take for the player to rise to the peak
+@export var time_to_descent: float = 0.25  # the time it will take for the player to fall from the peak to the floor
+
 @export var grab_grb: float = 200  # the gravity while wallgrabbing
-@export var grv: float = 1200  # standard gravity
+
 @export var air_resistance: float = 0.6  # percent movement is reduced by when moving in air
 @export var cyote_time: float = 0.1  # the amount of time the player can still jump while falling
 @export var terminal_velocity: float = 10000  # the maximum velocity the player can reach traveling downwards
@@ -66,6 +67,10 @@ var default_input: Dictionary = {
 @onready var wall_detector: Area2D = $WallDetector
 @onready var floor_detector: Area2D = $FloorDetector
 @onready var current_checkpoint: Checkpoint = null
+
+@onready var jump_spd: float = ((2.0 * jump_height) / time_to_peak) * -1 # the speed that the player jumps at
+@onready var jump_grv: float = ((-2.0 * jump_height) / (time_to_peak * time_to_peak)) * -1  # the gravity during jumps
+@onready var grv: float = ((-2.0 * jump_height) / (time_to_descent * time_to_descent)) * -1  # standard gravity
 
 
 func _enter_tree():
