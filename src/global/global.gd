@@ -2,6 +2,9 @@ extends Node
 class_name GlobalClass
 
 var control_type = Constants.CONTROL_TYPE_KEYBOARD
+
+# these values are used by the player to determine what direction the orb should be thrown in
+# this should be refactored later
 var right_axis_x = 0 
 var right_axis_y = 0
 
@@ -21,5 +24,3 @@ func _input(event):
 			
 	elif (event as InputEventKey) or (event as InputEventMouse):
 		control_type = Constants.CONTROL_TYPE_KEYBOARD
-	elif (event as InputEventGesture) or (event as InputEventScreenTouch) or (event as InputEventScreenDrag):
-		control_type = Constants.CONTROL_TYPE_TOUCH
