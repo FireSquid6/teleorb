@@ -1,4 +1,5 @@
 extends PlayerState
+# state when the player is holding the jump key and moving up
 
 
 func _enter(_args := []) -> void:

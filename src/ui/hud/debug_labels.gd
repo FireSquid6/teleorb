@@ -4,6 +4,12 @@ extends VBoxContainer
 var labels := []  # list of debug labels
 
 
+func _process(_delta) -> void:
+	for label in labels:
+		label = label as DebugLabel
+		label.update()
+
+
 # adds a new debug label
 # automatically tracks the property
 func add_debug_label(object: Object, property_name: String, custom_label: String = "") -> void:
@@ -11,12 +17,6 @@ func add_debug_label(object: Object, property_name: String, custom_label: String
 	node.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(node)
 	labels.append(DebugLabel.new(object, property_name, node, custom_label))
-
-
-func _process(_delta) -> void:
-	for label in labels:
-		label = label as DebugLabel
-		label.update()
 
 
 # class for each debug label

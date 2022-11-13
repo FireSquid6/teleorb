@@ -1,9 +1,10 @@
-extends Interactable
 class_name Checkpoint
+extends Interactable
+# checkpoint object. The player can interact with it to set it as the new spawnpoint
 
 
-@onready var sprite: AnimatedSprite2D = $Sprite
-@onready var spawn_pos: Vector2 = $SpawnPos.global_position
+@onready var _sprite: AnimatedSprite2D = $Sprite
+@onready var _spawn_pos: Vector2 = $SpawnPos.global_position
 
 
 # TODO: make the enabling and disabling of the checkpoint two different functions
@@ -16,7 +17,7 @@ func _interacted():
 		player.current_checkpoint.sprite.frame = 0
 	
 	player.current_checkpoint = self
-	player.respawn_point = spawn_pos
+	player.respawn_point = _spawn_pos
 	
 	lock()
-	sprite.frame = 1
+	_sprite.frame = 1

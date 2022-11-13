@@ -1,20 +1,20 @@
 extends PlayerState
-
+# state for when the player is grabbing the wall
 
 var slipping = false
-@onready var grab_timer: Timer = $GrabTimer
-@onready var move_dir: int
+@onready var _grab_timer: Timer = $GrabTimer
+@onready var _move_dir: int
 
 
 func _enter(args := []):
 	player.velocity = Vector2.ZERO
 	slipping = false
-	grab_timer.start()
+	_grab_timer.start()
 	
 	for i in player.get_slide_collision_count():
 		var slide: KinematicCollision2D = player.get_slide_collision(i)
 		if abs(slide.get_normal().x) == 1:
-			move_dir = -slide.get_normal().x
+			_move_dir = -slide.get_normal().x
 			break
 
 
@@ -28,9 +28,9 @@ func _logic(delta := 0.0):
 	if (input["jump_pressed"] or player.walljump_buffered) and player.walljumps_left > 0:
 		player.walljumps_left -= 1
 		player.walljump_buffered = false
-		player.velocity.x = player.walljump_spd * -move_dir
+		player.velocity.x = player.walljump_spd * -_move_dir
 		
-		player.cancel_dir(move_dir)
+		player.cancel_dir(_move_dir)
 		
 		machine.change_state("StateJumping")
 		
