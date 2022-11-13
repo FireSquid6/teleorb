@@ -1,22 +1,26 @@
-extends Node2D
 class_name World
+extends Node2D
+# contains all walls, decoration objects, and lights
+# handles the generation of lightmaps at the start of a level
 
+
+@export var ambient_light_color: Color = Color(0.4, 0.4, 0.4)  # color of ambient lighst
+@export var ambient_light_energy: float = 1.0  # energy to give ambient lights
+@export var skip_lighting: bool = false  # whether to skip creating ambient lighting or not
+
+var player: Player
+var camera_shapes: Array[Rect2] = []  # an array of shape 2D's used to define different rooms for the camera
+var light_textures: Array[Texture] = []  # an array of textures for lighting
+var active_rectangle: Rect2 = Rect2(0, 0, 0, 0)
+
+var _camera_area_output_string = "CollisionShape2D of [color=green](position = {0}, size = {1})[/color] converted to Rect2 of [color=green](position = {2}, end = {3})[/color]"
 
 @onready var shape_containers: Node2D = $Areas
 @onready var level: Level = get_parent()
 @onready var camera: Camera2D = $"../Player/Camera"
 @onready var tilemap: TileMap = $Occluders
 @onready var light_container: Node2D = $Lights
-var player: Player
-var camera_shapes: Array[Rect2] = []  # an array of shape 2D's used to define different rooms for the camera
-var light_textures: Array[Texture] = []  # an array of textures for lighting
-var active_rectangle: Rect2 = Rect2(0, 0, 0, 0)
 
-var camera_area_output_string = "CollisionShape2D of [color=green](position = {0}, size = {1})[/color] converted to Rect2 of [color=green](position = {2}, end = {3})[/color]"
-
-@export var ambient_light_color: Color = Color(0.4, 0.4, 0.4)  # color of ambient lighst
-@export var ambient_light_energy: float = 1.0  # energy to give ambient lights
-@export var skip_lighting: bool = false  # whether to skip creating ambient lighting or not
 
 func _ready():
 	await level.level_references_initialized
@@ -30,7 +34,7 @@ func _ready():
 		var rect2: Rect2 = collision_shape_2d_to_rect2(collision_shape)
 		camera_shapes.append(rect2)
 		
-		Console.output(camera_area_output_string.format([collision_shape.position, collision_shape.shape.size, rect2.position, rect2.end]))
+		Console.output(_camera_area_output_string.format([collision_shape.position, collision_shape.shape.size, rect2.position, rect2.end]))
 	
 	Console.output('')
 	
@@ -126,7 +130,7 @@ func create_light_texture(rect: Rect2, tilemap: TileMap, layer: int = 0, blend: 
 		for x in range(lightmap.get_width()):
 			for y in range(lightmap.get_height()):
 				var pixel := lightmap.get_pixel(x, y)
-				if pixel.is_equal_approx(Color.BLACK) and should_fill_pixel(lightmap, x, y):
+				if pixel.is_equal_approx(Color.BLACK) and _should_fill_pixel(lightmap, x, y):
 					pixels_to_color.append(Vector2i(x, y))
 		
 		for pixel in pixels_to_color:
@@ -137,7 +141,7 @@ func create_light_texture(rect: Rect2, tilemap: TileMap, layer: int = 0, blend: 
 	return lightmap
 
 
-func should_fill_pixel(image: Image, x: int, y: int) -> bool:
+func _should_fill_pixel(image: Image, x: int, y: int) -> bool:
 	var edges = [
 		[x - 1, y],
 		[x + 1, y],
