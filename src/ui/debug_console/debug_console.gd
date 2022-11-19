@@ -21,18 +21,6 @@ var _pre_body := ''
 @onready var _edit_display: RichTextLabel = $DebugConsole/Panel/VBoxContainer/Edit
 
 
-func _input(event):
-	if !closed:
-		event = event as InputEventKey
-		if event:
-			if event.physical_keycode == _key and event.pressed:
-				visible = !visible
-				if visible:
-					emit_signal("focused")
-					_edit.grab_focus()
-				else:
-					emit_signal("unfocused")
-
 func _ready():
 	visible = false
 	_body.clear()
@@ -45,6 +33,19 @@ func _ready():
 	for pack in command_packs:
 		pack = pack as CommandPack
 		commands.append_array(pack.get_commands())
+
+
+func _input(event):
+	if !closed:
+		event = event as InputEventKey
+		if event:
+			if event.physical_keycode == _key and event.pressed:
+				visible = !visible
+				if visible:
+					emit_signal("focused")
+					_edit.grab_focus()
+				else:
+					emit_signal("unfocused")
 
 
 # prints both to the stdout and the rich text label
@@ -109,34 +110,6 @@ func get_command(name: String) -> Dictionary:
 	}
 
 
-# metadata should look something like the following:
-# name: <command-name>
-# description: <command-description>
-# arguments: [{
-#	name: <argument-name>
-#	description: <argument-description>
-#	possible-values: <possible-values>
-#	default-value: <default-value>
-# }]
-func add_command(command: Dictionary) -> void:
-	commands.append(command)
-
-
-func _on_line_edit_text_submitted(new_text):
-	output(run_command(new_text))
-	_edit.text = ''
-	_on_line_edit_text_changed('')
-
-
-func _on_line_edit_text_changed(new_text: String):
-	# parse the text
-	var bbcode := highlight_command(new_text)
-	
-	# give that text to the edit
-	_edit_display.clear()
-	_edit_display.append_text(bbcode)
-
-
 func highlight_command(text: String) -> String:
 	var bbcode := ''
 	var words := text.split(" ")
@@ -177,3 +150,31 @@ Note: the following is in BBCode. Parse it with something like http://patorjk.co
 		
 	# go to crash scene
 	get_tree().change_scene_to_file("res://scenes/crash/crash_scene.tscn")
+
+
+# metadata should look something like the following:
+# name: <command-name>
+# description: <command-description>
+# arguments: [{
+#	name: <argument-name>
+#	description: <argument-description>
+#	possible-values: <possible-values>
+#	default-value: <default-value>
+# }]
+func add_command(command: Dictionary) -> void:
+	commands.append(command)
+
+
+func _on_line_edit_text_submitted(new_text):
+	output(run_command(new_text))
+	_edit.text = ''
+	_on_line_edit_text_changed('')
+
+
+func _on_line_edit_text_changed(new_text: String):
+	# parse the text
+	var bbcode := highlight_command(new_text)
+	
+	# give that text to the edit
+	_edit_display.clear()
+	_edit_display.append_text(bbcode)
