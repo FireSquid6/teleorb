@@ -22,8 +22,5 @@ shape = SubResource("RectangleShape2D_1f0vu")
 [node name="Player" parent="." index="3"]
 position = Vector2(-1, 0)
 
-[node name="Camera" parent="Player" index="9"]
-metadata/_edit_lock_ = true
-
 [editable path="Background"]
 [editable path="World"]
