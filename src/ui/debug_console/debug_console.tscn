@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dkcr8x5k5ssoo"]
+[gd_scene load_steps=10 format=3 uid="uid://dkcr8x5k5ssoo"]
 
 [ext_resource type="StyleBox" uid="uid://btonwhd5yjpjr" path="res://ui/debug_console/stylebox.tres" id="1_64gx8"]
 [ext_resource type="Script" path="res://ui/debug_console/debug_console.gd" id="1_h5kvy"]
 [ext_resource type="Script" path="res://ui/debug_console/packs/default.gd" id="2_tryvb"]
 [ext_resource type="FontFile" uid="uid://c13p0rq5k801e" path="res://fonts/space_mono/SpaceMono-Regular.ttf" id="3_8rbdv"]
 [ext_resource type="Script" path="res://ui/debug_console/packs/teleorb.gd" id="3_gui1i"]
-[ext_resource type="Script" path="res://ui/debug_console/line_edit.gd" id="4_vd180"]
 
 [sub_resource type="Resource" id="Resource_yossv"]
 script = ExtResource("2_tryvb")
@@ -95,7 +94,6 @@ theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_fonts/font = ExtResource("3_8rbdv")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_7fd1h")
 caret_blink = true
-script = ExtResource("4_vd180")
 
 [connection signal="text_changed" from="DebugConsole/Panel/VBoxContainer/Edit/LineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_submitted" from="DebugConsole/Panel/VBoxContainer/Edit/LineEdit" to="." method="_on_line_edit_text_submitted"]

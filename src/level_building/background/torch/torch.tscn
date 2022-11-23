@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Texture2D" uid="uid://b5scf4ek2lbd" path="res://shared/light_textures/light_circle_64.png" id="1_5hq8g"]
+
+[node name="Torch" type="PointLight2D"]
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.392157)
+texture = ExtResource("1_5hq8g")

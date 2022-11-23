@@ -1,25 +1,30 @@
 extends CanvasLayer
+# global singleton for the in-game console
+# can be opened by pressing F12
 
 
-var key = KEY_F12
-@export var command_packs: Array[CommandPack] = []
-@export var only_show_if_debug_mode: bool = true
 signal unfocused()
 signal focused()
 
-@onready var body: RichTextLabel = $DebugConsole/Panel/VBoxContainer/Body
-@onready var edit: LineEdit = $DebugConsole/Panel/VBoxContainer/Edit/LineEdit
-@onready var edit_display: RichTextLabel = $DebugConsole/Panel/VBoxContainer/Edit
-var pre_body := ''
+@export var command_packs: Array[CommandPack] = []
+@export var only_show_if_debug_mode: bool = true
+
 var commands := []
 var closed := false
 var console_text = ''
 
+var _key = KEY_F12
+var _pre_body := ''
+
+@onready var _body: RichTextLabel = $DebugConsole/Panel/VBoxContainer/Body
+@onready var _edit: LineEdit = $DebugConsole/Panel/VBoxContainer/Edit/LineEdit
+@onready var _edit_display: RichTextLabel = $DebugConsole/Panel/VBoxContainer/Edit
+
 
 func _ready():
 	visible = false
-	body.clear()
-	body.append_text(pre_body)
+	_body.clear()
+	_body.append_text(_pre_body)
 	
 	if (!OS.is_debug_build()) and only_show_if_debug_mode:
 		closed = true
@@ -34,11 +39,11 @@ func _input(event):
 	if !closed:
 		event = event as InputEventKey
 		if event:
-			if event.physical_keycode == key and event.pressed:
+			if event.physical_keycode == _key and event.pressed:
 				visible = !visible
 				if visible:
 					emit_signal("focused")
-					edit.grab_focus()
+					_edit.grab_focus()
 				else:
 					emit_signal("unfocused")
 
@@ -53,10 +58,10 @@ func output(text: String, use_bbcode: bool = true) -> void:
 	else:
 		print(text)
 	
-	if body:
-		body.append_text("\n"+text)
+	if _body:
+		_body.append_text("\n"+text)
 	else:
-		pre_body += "\n"+text
+		_pre_body += "\n"+text
 
 
 func run_command(text: String) -> String:
@@ -105,34 +110,6 @@ func get_command(name: String) -> Dictionary:
 	}
 
 
-# metadata should look something like the following:
-# name: <command-name>
-# description: <command-description>
-# arguments: [{
-#	name: <argument-name>
-#	description: <argument-description>
-#	possible-values: <possible-values>
-#	default-value: <default-value>
-# }]
-func add_command(command: Dictionary) -> void:
-	commands.append(command)
-
-
-func _on_line_edit_text_submitted(new_text):
-	output(run_command(new_text))
-	edit.text = ''
-	_on_line_edit_text_changed('')
-
-
-func _on_line_edit_text_changed(new_text: String):
-	# parse the text
-	var bbcode := highlight_command(new_text)
-	
-	# give that text to the edit
-	edit_display.clear()
-	edit_display.append_text(bbcode)
-
-
 func highlight_command(text: String) -> String:
 	var bbcode := ''
 	var words := text.split(" ")
@@ -173,3 +150,31 @@ Note: the following is in BBCode. Parse it with something like http://patorjk.co
 		
 	# go to crash scene
 	get_tree().change_scene_to_file("res://scenes/crash/crash_scene.tscn")
+
+
+# metadata should look something like the following:
+# name: <command-name>
+# description: <command-description>
+# arguments: [{
+#	name: <argument-name>
+#	description: <argument-description>
+#	possible-values: <possible-values>
+#	default-value: <default-value>
+# }]
+func add_command(command: Dictionary) -> void:
+	commands.append(command)
+
+
+func _on_line_edit_text_submitted(new_text):
+	output(run_command(new_text))
+	_edit.text = ''
+	_on_line_edit_text_changed('')
+
+
+func _on_line_edit_text_changed(new_text: String):
+	# parse the text
+	var bbcode := highlight_command(new_text)
+	
+	# give that text to the edit
+	_edit_display.clear()
+	_edit_display.append_text(bbcode)

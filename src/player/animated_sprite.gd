@@ -1,5 +1,8 @@
-extends AnimatedSprite2D
 class_name PlayerSprite
+extends AnimatedSprite2D
+# the player's animated sprite
+# it will choose a new animation based on a decision data dictionary provided by the player
+
 
 
 const decision_data_template = {

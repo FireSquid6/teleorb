@@ -1,5 +1,8 @@
-extends Resource
+# an easy way to extend the commands offered by the cheat console
+# simply extent the get_commands() method, and
 class_name CommandPack
+extends Resource
+
 
 
 # should be overridden by child objects

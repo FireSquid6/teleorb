@@ -3,7 +3,7 @@ name: Bug Report
 about: Give us info on a bug so we can fix it
 title: "[BUG]"
 labels: bug
-assignees: FireSquid6
+assignees: 
 
 ---
 

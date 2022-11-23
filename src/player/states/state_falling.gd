@@ -1,6 +1,8 @@
 extends PlayerState
+# state whenever the player is midair, but not jumping
 
 @onready var cyote_time = 0
+
 
 func _enter(_args := []) -> void:
 	player.sprite.animation = "midair"
@@ -10,7 +12,7 @@ func _enter(_args := []) -> void:
 		cyote_time = player.cyote_time
 
 
-func _logic(delta: float = -1.0):
+func _logic(delta: float = -1.0) -> void:
 	var input = player.input
 	
 	# move
@@ -26,7 +28,7 @@ func _logic(delta: float = -1.0):
 		machine.change_state("StateJumping")
 	
 	# process the walljump buffer
-	if len(walljump_buffer.get_overlapping_bodies()) and input["jump_pressed"]:
+	if len(_walljump_buffer.get_overlapping_bodies()) and input["jump_pressed"]:
 		player.walljump_buffered = true
 	
 	# fall
