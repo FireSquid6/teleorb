@@ -28,6 +28,7 @@ current = true
 zoom = Vector2(2, 2)
 limit_smoothed = true
 script = ExtResource("4_5wpfp")
+metadata/_edit_lock_ = true
 
 [node name="HUD" parent="." groups=["persistent"] instance=ExtResource("4_kxrjr")]
 metadata/cull = false

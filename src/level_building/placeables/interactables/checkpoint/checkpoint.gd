@@ -3,7 +3,7 @@ extends Interactable
 # checkpoint object. The player can interact with it to set it as the new spawnpoint
 
 
-@onready var _sprite: AnimatedSprite2D = $Sprite
+@onready var sprite: AnimatedSprite2D = $Sprite
 @onready var _spawn_pos: Vector2 = $SpawnPos.global_position
 
 
@@ -20,4 +20,4 @@ func _interacted():
 	player.respawn_point = _spawn_pos
 	
 	lock()
-	_sprite.frame = 1
+	sprite.frame = 1

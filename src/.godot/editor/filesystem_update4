@@ -9,3 +9,5 @@ res://level_building/placeables/interactables/checkpoint/checkpoint.tscn
 res://level_building/world/world.tscn
 res://level_building/background/background.tscn
 res://global/global.tscn
+res://level_building/placeables/interactables/checkpoint/checkpoint.gd
+res://player/player.gd
