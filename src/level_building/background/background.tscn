@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://bovnsovxjm3yb"]
+
+[ext_resource type="TileSet" uid="uid://dbr44ilec3wyl" path="res://level_building/background/backgrount_tileset.tres" id="1_sqo7s"]
+
+[node name="Background" type="Node2D"]
+texture_filter = 1
+z_index = -50
+
+[node name="Levels" type="Node2D" parent="."]
+
+[node name="Bottom" type="Node2D" parent="Levels"]
+modulate = Color(0.3, 0.3, 0.3, 1)
+texture_filter = 1
+
+[node name="TileMap" type="TileMap" parent="Levels/Bottom"]
+texture_filter = 1
+tile_set = ExtResource("1_sqo7s")
+format = 2
+
+[node name="Middle" type="Node2D" parent="Levels"]
+modulate = Color(0.5, 0.5, 0.5, 1)
+texture_filter = 1
+
+[node name="TileMap" type="TileMap" parent="Levels/Middle"]
+texture_filter = 1
+tile_set = ExtResource("1_sqo7s")
+format = 2
+
+[node name="Top" type="Node2D" parent="Levels"]
+modulate = Color(0.7, 0.7, 0.7, 1)
+texture_filter = 1
+
+[node name="TileMap" type="TileMap" parent="Levels/Top"]
+texture_filter = 1
+tile_set = ExtResource("1_sqo7s")
+format = 2

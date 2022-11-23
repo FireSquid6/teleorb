@@ -1,8 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cmm1et81jwgah"]
+[gd_scene load_steps=6 format=3 uid="uid://cmm1et81jwgah"]
 
 [ext_resource type="Script" path="res://level_building/placeables/interactables/interactable.gd" id="1_rity7"]
-[ext_resource type="Texture2D" uid="uid://djaohmbxlxph" path="res://level_building/placeables/interactables/keycap.png" id="2_vpjb3"]
-[ext_resource type="FontFile" uid="uid://5bcjjcl8b5xx" path="res://fonts/rainyhearts/rainyhearts.ttf" id="3_i7qrg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1yaa0"]
 size = Vector2(20, 28)
@@ -83,17 +81,6 @@ editor_description = "This is a placeholder until a better version is created wi
 modulate = Color(1, 1, 1, 0)
 texture_filter = 1
 position = Vector2(0, -10)
-texture = ExtResource("2_vpjb3")
-
-[node name="Label" type="Label" parent="Key"]
-offset_left = -4.0
-offset_top = -8.0
-offset_right = 4.0
-offset_bottom = 10.0
-theme_override_fonts/font = ExtResource("3_i7qrg")
-theme_override_font_sizes/font_size = 15
-text = "E"
-metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

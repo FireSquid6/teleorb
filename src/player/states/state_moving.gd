@@ -1,4 +1,5 @@
 extends PlayerState
+# state when the player is moving on the ground
 
 
 func _enter(_args := []) -> void:
@@ -13,7 +14,7 @@ func _enter(_args := []) -> void:
 	player.can_throw = true
 
 
-func _logic(delta: float = -1.0):
+func _logic(delta: float = -1.0) -> void:
 	var input = player.input
 	
 	# accelerate based on the player's movements

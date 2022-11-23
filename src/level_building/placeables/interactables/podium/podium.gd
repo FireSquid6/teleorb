@@ -1,18 +1,19 @@
 extends Interactable
+# A podium interactable used for giving the player new abilities. Once interacted with, it turns off forever.
 
 
-@onready var sprite: AnimatedSprite2D = $Podium
+@onready var _sprite: AnimatedSprite2D = $Podium
 
 
 func _interacted():
 	lock()
 	
 	var player: Player = get_tree().current_scene.player
-	match sprite.frame:
+	match _sprite.frame:
 		1:
 			player.has_orb = true
 		_:
-			Console.terminate("[color=red]Some messed up stuff is happening. Look in \"res://level_building/interactables/podium/podium.gd\". The podium had a frame of {0} when interacted with[/color]".format([sprite.frame]))
+			Console.terminate("[color=red]Some messed up stuff is happening. Look in \"res://level_building/interactables/podium/podium.gd\". The podium had a frame of {0} when interacted with[/color]".format([_sprite.frame]))
 	
-	sprite.frame = 0
+	_sprite.frame = 0
 	

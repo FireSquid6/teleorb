@@ -1,11 +1,12 @@
 extends PlayerState
+# state when the player is in its teleport animation
 
 
-var played := false
-var position := Vector2.ZERO
+var _played := false
+var position := Vector2.ZERO  # position the player should be moved to. Needs to be set by another object
 
 
-func _ready():
+func _ready() -> void:
 	await player.ready
 	add_active_signal(player.sprite, "animation_finished", Callable(self, "_on_player_sprite_animation_finished"))
 
@@ -32,9 +33,9 @@ func _enter(args := [-1]):
 
 
 func _on_player_sprite_animation_finished():
-	if played:
+	if _played:
 		machine.change_state("StateFalling")
-		played = false
+		_played = false
 		
 		player.sprite.speed_scale = 1
 	else:
@@ -44,9 +45,9 @@ func _on_player_sprite_animation_finished():
 		player.position = position
 		AnimatedSprite2D
 		player.sprite.frame = player.sprite.frames.get_frame_count("teleport") - 2
-		played = true
+		_played = true
 
 
 func _exit(args := []):
-	played = false
+	_played = false
 	player.sprite.speed_scale = 1

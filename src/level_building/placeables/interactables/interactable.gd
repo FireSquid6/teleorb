@@ -1,13 +1,26 @@
-extends Area2D
 class_name Interactable
+extends Area2D
+# class for level objects the player will interact with
+# checkpoints, podiums, etc.
 
 
-signal interacted()
-var key_showing := false
-var hovered := false  # whether the player is hovering over the interactable or not
+
+signal interacted()  # fires when the interactable is interact with 
+
 @export var locked := false  # if the interactable is locked, it cannot be interacted with
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+var hovered := false  # whether the player is hovering over the interactable or not
+
+var _key_showing := false
+
+@onready var _animation_player: AnimationPlayer = $AnimationPlayer
+@onready var _key_image: Sprite2D = $Key
+
+
+func _ready() -> void:
+	var event: InputEvent = InputMap.action_get_events("interact")[0]
+	
+	_key_image.texture = QuickHint.load_input_image(event)
 
 func _physics_process(delta) -> void:
 	if Input.is_action_just_pressed("interact") and hovered:
@@ -15,32 +28,32 @@ func _physics_process(delta) -> void:
 		emit_signal("intercted")
 
 
-func _on_interactable_body_entered(_body = null):
+func _on_interactable_body_entered(_body = null) -> void:
 	if !locked:
 		hovered = true
-		animation_player.play("fade")
-		key_showing = true
+		_animation_player.play("fade")
+		_key_showing = true
 
 
-func _on_interactable_body_exited(_body = null):
+func _on_interactable_body_exited(_body = null) -> void:
 	if !locked:
 		hovered = false
-		animation_player.play_backwards("fade")
-		key_showing = false
+		_animation_player.play_backwards("fade")
+		_key_showing = false
 
 
 # virtual method
-func _interacted():
+func _interacted() -> void:
 	pass
 
 
 # prevents this interactable from being interacted with
-func lock():
+func lock() -> void:
 	locked = true
-	if key_showing:
+	if _key_showing:
 		hovered = false
-		key_showing = false
-		animation_player.play_backwards("fade")
+		_key_showing = false
+		_animation_player.play_backwards("fade")
 
-func unlock():
+func unlock() -> void:
 	locked = false

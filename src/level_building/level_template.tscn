@@ -2,32 +2,43 @@
 
 [ext_resource type="PackedScene" uid="uid://bycyewd3cxndk" path="res://level_building/world/world.tscn" id="1_r1v6m"]
 [ext_resource type="Script" path="res://level_building/level.gd" id="1_yorse"]
+[ext_resource type="PackedScene" uid="uid://bovnsovxjm3yb" path="res://level_building/background/background.tscn" id="2_5dius"]
 [ext_resource type="PackedScene" uid="uid://gp0qpdkdtgfn" path="res://player/player.tscn" id="2_k0fro"]
 [ext_resource type="Script" path="res://level_building/camera.gd" id="4_5wpfp"]
 [ext_resource type="PackedScene" uid="uid://hxl4sqm7pvxl" path="res://ui/hud/hud.tscn" id="4_kxrjr"]
-[ext_resource type="PackedScene" uid="uid://b1b3s6hwx7hk2" path="res://cursor/cursor.tscn" id="5_x2383"]
 
 [node name="Level" type="Node2D"]
 texture_filter = 1
 texture_repeat = 1
 script = ExtResource("1_yorse")
 
-[node name="World" parent="." instance=ExtResource("1_r1v6m")]
+[node name="Background" parent="." groups=["persistent"] instance=ExtResource("2_5dius")]
+metadata/cull = false
+
+[node name="World" parent="." groups=["persistent"] instance=ExtResource("1_r1v6m")]
+metadata/cull = false
 
 [node name="Placeables" type="Node2D" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("2_k0fro")]
+[node name="Player" parent="." groups=["persistent"] instance=ExtResource("2_k0fro")]
+metadata/cull = false
 
-[node name="Camera" type="Camera2D" parent="Player"]
+[node name="Camera" type="Camera2D" parent="Player" groups=["persistent"]]
 current = true
 zoom = Vector2(2, 2)
 limit_smoothed = true
+position_smoothing_enabled = true
 script = ExtResource("4_5wpfp")
+metadata/_edit_lock_ = true
 
-[node name="Cursor" parent="." instance=ExtResource("5_x2383")]
+[node name="HUD" parent="." groups=["persistent"] instance=ExtResource("4_kxrjr")]
+metadata/cull = false
 
-[node name="HUD" parent="." instance=ExtResource("4_kxrjr")]
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color(0.25098, 0.25098, 0.25098, 1)
 
 [connection signal="level_loaded" from="." to="Player" method="_on_level_level_loaded"]
 
+[editable path="Background"]
 [editable path="World"]

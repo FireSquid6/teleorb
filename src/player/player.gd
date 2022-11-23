@@ -1,6 +1,29 @@
-extends CharacterBody2D
 class_name Player
+extends CharacterBody2D
+# player.tscn/Player
+# controls the player node
 
+
+@export_group("X Movement")
+@export var running_speed: float = 200  # the maximum speed the player can accelerate to
+@export var acceleration: float = 3000  # the speed the player accelerates at
+@export var deceleration: float = 2500  # the speed the player slows down at
+@export var max_walljumps: int = 4  # the maximum amount of times the player can walljump
+@export var walljump_spd: float = 200
+
+@export_group("Y Movement")
+@export var jump_height: float = 64  # the height of the player's jump
+@export var time_to_peak: float = 0.5  # the time it will take for the player to rise to the peak
+@export var time_to_descent: float = 0.25  # the time it will take for the player to fall from the peak to the floor
+
+@export var grab_grb: float = 200  # the gravity while wallgrabbing
+
+@export var air_resistance: float = 0.6  # percent movement is reduced by when moving in air
+@export var cyote_time: float = 0.1  # the amount of time the player can still jump while falling
+@export var terminal_velocity: float = 10000  # the maximum velocity the player can reach traveling downwards
+
+@export_group("Orb")
+@export var orb_speed: float = 500
 
 # debug stuff
 var on_wall = false
@@ -36,50 +59,35 @@ var default_input: Dictionary = {
 	"angle" : false,
 }
 
-@export_group("X Movement")
-@export var running_speed: float = 200  # the maximum speed the player can accelerate to
-@export var acceleration: float = 3000  # the speed the player accelerates at
-@export var deceleration: float = 2500  # the speed the player slows down at
-@export var max_walljumps: int = 3  # the maximum amount of times the player can walljump
-@export var walljump_spd: float = 200
-
-@export_group("Y Movement")
-@export var jump_spd: float = 225 # the speed that the player jumps at
-@export var jump_time: float = 0.2  # the amount of time the player jumps for
-@export var jump_grv: float = 600  # the gravity during jumps
-@export var grab_grb: float = 200  # the gravity while wallgrabbing
-@export var grv: float = 1200  # standard gravity
-@export var air_resistance: float = 0.6  # percent movement is reduced by when moving in air
-@export var cyote_time: float = 0.1  # the amount of time the player can still jump while falling
-@export var terminal_velocity: float = 10000  # the maximum velocity the player can reach traveling downwards
-
-@export_group("Orb")
-@export var orb_speed: float = 500
-
 @onready var input: Dictionary = {}  # dictionary for the input each frame
-@onready var state_machine: StateMachine = get_node('StateMachine')  # ref to state machine
+@onready var _state_machine: StateMachine = get_node('StateMachine')  # ref to state machine
 @onready var sprite: PlayerSprite = get_node("AnimatedSprite2d")  # ref to the animated sprite
 @onready var walljump_buffer_area: Area2D = $WalljumpBuffer  # ref to the walljump bufer area
 @onready var jump_buffer_area: Area2D = get_node('JumpBufferCollision')  # ref to the area that handles the jump buffer
 @onready var input_cancel_timer: Timer = $Timers/InputCancelTime  # timer for canceling inputs
-@onready var orb_scene := preload("res://player/orb/orb.tscn")  # scene instanced for spawning the orb
+@onready var _orb_scene := preload("res://player/orb/orb.tscn")  # scene instanced for spawning the orb
 @onready var wall_detector: Area2D = $WallDetector
 @onready var floor_detector: Area2D = $FloorDetector
 @onready var current_checkpoint: Checkpoint = null
 
+@onready var jump_spd: float = ((2.0 * jump_height) / time_to_peak) * -1 # the speed that the player jumps at
+@onready var jump_grv: float = ((-2.0 * jump_height) / (time_to_peak * time_to_peak)) * -1  # the gravity during jumps
+@onready var grv: float = ((-2.0 * jump_height) / (time_to_descent * time_to_descent)) * -1  # standard gravity
 
-func _enter_tree():
-	level = get_parent()
-	level.connect("room_restarted", Callable(self, "respawn"))
 
 
-func _ready():
+func _ready() -> void:
 	respawn_point = position
 	Console.connect("focused", Callable(self, "_on_Console_focused"))
 	Console.connect("unfocused", Callable(self, "_on_Console_unfocused"))
 
 
-func _physics_process(delta):
+func _enter_tree() -> void:
+	level = get_parent()
+	level.connect("room_restarted", Callable(self, "respawn"))
+
+
+func _physics_process(delta) -> void:
 	on_wall = is_on_wall()
 	
 	# get input
@@ -88,8 +96,8 @@ func _physics_process(delta):
 	# process states
 	var pre_floor = is_on_floor()
 	
-	state_machine.process_logc(delta)
-	current_state = state_machine.selected_state.name
+	_state_machine.process_logc(delta)
+	current_state = _state_machine.selected_state.name
 	
 	on_floor = str(pre_floor) + " | " + str(is_on_floor())
 	
@@ -102,13 +110,22 @@ func _physics_process(delta):
 	sprite.choose_animation({
 		"move": move,
 		"on_wall": is_on_wall(),
-		"state": state_machine.selected_state.name,
+		"state": _state_machine.selected_state.name,
 	})
 	
 	# check for player throwing
 	# TODO: Abstract this more
 	if input["throw"]:
 		throw_orb()
+	
+	# change the color of the cursor
+	# this is hardcoded and should be changed later
+	# TODO: make this code not a mess of conditionals
+	if has_orb:
+		if can_throw and !orb_thrown:
+			Cursor.set_color(Color(0, 1, 0))
+		else:
+			Cursor.set_color(Color(1, 0, 0))
 
 
 func get_input() -> Dictionary:
@@ -121,7 +138,7 @@ func get_input() -> Dictionary:
 	var angle := 0.0
 	match Global.control_type:
 		Constants.CONTROL_TYPE_KEYBOARD:
-			angle = position.angle_to_point(level.cursor.position)
+			angle = position.angle_to_point(Cursor.position)
 		Constants.CONTROL_TYPE_GAMEPAD:
 			angle = Vector2(Global.right_axis_x, Global.right_axis_y).angle()
 		Constants.CONTROL_TYPE_TOUCH:
@@ -144,17 +161,21 @@ func get_input() -> Dictionary:
 	return new_input
 
 
-func throw_orb():
+func throw_orb() -> bool:
 	if can_throw and !orb_thrown:
 		# set booleans
 		orb_thrown = true
 		can_throw = false
 		
 		# create the orb
-		var orb: Orb = orb_scene.instantiate()
+		var orb: Orb = _orb_scene.instantiate()
 		orb.connect("hit", Callable(self, "_on_orb_hit"))
 		orb.velocity = Vector2(orb_speed, 0).rotated(input["angle"])
 		add_child(orb)
+		
+		return true
+	
+	return false
 
 
 func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, acceleration_multiplier: float = 1.0) -> void:
@@ -186,20 +207,28 @@ func run(delta: float, dir: int, decelerate_if_above_max_speed: bool = false, ac
 				velocity.x = running_speed * sign(velocity.x)
 			else:
 				velocity.x += acc * dir
-	
+
+
+func kill() -> void:
+	_state_machine.change_state("StateDead")
+
+
+func respawn() -> void:
+	position = respawn_point
+	_state_machine.change_state("StateMoving")
 
 
 # stops an input from being pressed for a given amount of time
-func cancel_dir(dir: int):
+func cancel_dir(dir: int) -> void:
 	canceled_input = dir
 	input_cancel_timer.start()
 
 
-func _on_input_cancel_time_timeout():
+func _on_input_cancel_time_timeout() -> void:
 	canceled_input = 0
 
 
-func _on_level_level_loaded(level: Level):
+func _on_level_level_loaded(level: Level) -> void:
 	level.hud.add_debug_label(self, "velocity", "V = ")
 	level.hud.add_debug_label(self, "on_wall", "OnWall = ")
 	level.hud.add_debug_label(self, "current_state", "State = ")
@@ -208,27 +237,18 @@ func _on_level_level_loaded(level: Level):
 	level.hud.add_debug_label(self, "on_floor", "OnFloor = ")
 
 
-func _on_Console_focused():
+func _on_Console_focused() -> void:
 	mobile = false
 
 
-func _on_Console_unfocused():
+func _on_Console_unfocused() -> void:
 	mobile = true
 
 
-func kill():
-	state_machine.change_state("StateDead")
-
-
-func _on_orb_hit(new_pos: Vector2):
+func _on_orb_hit(new_pos: Vector2) -> void:
 	# move to state teleport
-	state_machine.change_state("StateTeleport", [new_pos])
+	_state_machine.change_state("StateTeleport", [new_pos])
 
 
-func _on_damage_detector_body_entered(body):
+func _on_damage_detector_body_entered(body) -> void:
 	kill()
-
-
-func respawn():
-	position = respawn_point
-	state_machine.change_state("StateMoving")
