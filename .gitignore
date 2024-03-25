@@ -1,9 +1,1 @@
-
-node_modules
-
-
-.godot
-.import
-export.cfg
-export_presets.cfg
-exports
+.envrc
