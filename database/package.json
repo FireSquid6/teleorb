@@ -1,0 +1,30 @@
+{
+  "name": "warden",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run scripts/dev.ts",
+    "migrate": "bunx drizzle-kit generate:sqlite",
+    "seed": "bun run scripts/seed.ts",
+    "studio": "bunx drizzle-kit studio",
+    "reset": "bun run scripts/reset.ts",
+    "resume": "bun run scripts/resume.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "drizzle-kit": "^0.20.14"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.0.2",
+    "@elysiajs/eden": "^1.0.5",
+    "@lucia-auth/adapter-drizzle": "^1.0.5",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.30.3",
+    "elysia": "^1.0.4",
+    "lucia": "^3.1.1",
+    "oslo": "^1.1.3"
+  }
+}
