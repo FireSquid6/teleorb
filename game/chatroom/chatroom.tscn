@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://n0el2d24r1pc"]
+
+[ext_resource type="Script" path="res://chatroom/chatroom.gd" id="1_6fmqu"]
+
+[node name="Chatroom" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6fmqu")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 36.0
+offset_right = 509.0
+offset_bottom = 79.0
+placeholder_text = "type your message here..."
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 517.0
+offset_top = 37.0
+offset_right = 678.0
+offset_bottom = 79.0
+text = "Send"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

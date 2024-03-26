@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://3r0wq03yfm8h"]
+
+[ext_resource type="Script" path="res://chat/chat.gd" id="1_p78hp"]
+
+[node name="Chat" type="Node"]
+script = ExtResource("1_p78hp")
