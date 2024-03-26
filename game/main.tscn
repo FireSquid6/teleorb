@@ -39,5 +39,13 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Become the Server"
 
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 378.0
+offset_top = 411.0
+offset_right = 789.0
+offset_bottom = 445.0
+placeholder_text = "Enter IP"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

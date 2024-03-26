@@ -2,11 +2,9 @@ extends Node
 
 var peer = null
 
-const IP_ADDRESS = "192.168.1.14"
-
-func connect_to_server():
+func connect_to_server(ip: String):
 	peer = ENetMultiplayerPeer.new()
-	peer.create_client(IP_ADDRESS, 3412)
+	peer.create_client(ip, 3412)
 	multiplayer.multiplayer_peer = peer
 	multiplayer.connected_to_server.connect(_on_connect)
 
