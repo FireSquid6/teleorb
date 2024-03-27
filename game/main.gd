@@ -1,13 +1,20 @@
-extends Control
+extends Node
+class_name Main
 
-var chatroom_scene = preload("res://chatroom/chatroom.tscn")
-var server_scene = preload("res://server_console/server_console.tscn")
+@onready var ui: Control = $UI
+@onready var level_container: Node = $Level
 
-func _on_button_pressed():
-	Client.connect_to_server($TextEdit.text)
-	get_tree().change_scene_to_packed(chatroom_scene)
+func start_game():
+	ui.hide()
+	get_tree().paused = false
+	
+	if multiplayer.is_server():
+		change_level.call_deferred(load("res://level/level.tscn"))
 
 
-func _on_button_2_pressed():
-	Server.start_server()
-	get_tree().change_scene_to_packed(server_scene)
+func change_level(scene: PackedScene):
+	var level = $Level
+	for c in level.get_children():
+		level.remove_child(c)
+		c.queue_free()
+	level.add_child(scene.instantiate())

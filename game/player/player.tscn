@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcuo4m1c4q33f"]
+
+[ext_resource type="Script" path="res://player/player.gd" id="1_ijn6n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wy1r1"]
+size = Vector2(48, 48)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jg22j"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:scale")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_ijn6n")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(-24, -24, -24, 24, 24, 24, 24, -24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wy1r1")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_jg22j")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -46.0
+offset_top = -63.0
+offset_right = 46.0
+offset_bottom = -27.0
+horizontal_alignment = 1
+vertical_alignment = 1

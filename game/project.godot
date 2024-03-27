@@ -21,6 +21,10 @@ Client="*res://client/client.tscn"
 Server="*res://server/server.tscn"
 Chat="*res://chat/chat.tscn"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/wakatime/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="mobile"

@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2f3ncwm7mvjb"]
+
+[ext_resource type="Script" path="res://level/level.gd" id="1_w22ld"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nembk"]
+size = Vector2(1932, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_invui"]
+size = Vector2(38, 342)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4t1n0"]
+size = Vector2(38, 342)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_w22ld")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player/player.tscn")
+spawn_path = NodePath("../Players")
+spawn_limit = 16
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(257, 375)
+shape = SubResource("RectangleShape2D_nembk")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1197, 186)
+shape = SubResource("RectangleShape2D_invui")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-690, 186)
+shape = SubResource("RectangleShape2D_4t1n0")
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-24, 176, -24, 248, 40, 248, 40, 176)
+
+[connection signal="spawned" from="MultiplayerSpawner" to="MultiplayerSpawner" method="_on_spawned"]
