@@ -15,7 +15,7 @@ func _enter_tree():
 func _ready() -> void:
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
-		$Polygon2D.color = Color(0, 1, 0)
+		$Sprite2D.modulate = Color(0, 1, 0)
 	$Label.text = str(name)
 
 func _physics_process(delta: float) -> void:
