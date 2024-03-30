@@ -1,10 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcuo4m1c4q33f"]
+[gd_scene load_steps=12 format=3 uid="uid://dcuo4m1c4q33f"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_ijn6n"]
 [ext_resource type="Texture2D" uid="uid://03ohavn28une" path="res://assets/player.png" id="2_5vy5v"]
+[ext_resource type="Script" path="res://player/player_stats.gd" id="2_dsn58"]
+[ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="3_g75xk"]
+[ext_resource type="Script" path="res://player/states/walking.gd" id="4_3grwa"]
+[ext_resource type="Script" path="res://player/states/jumping.gd" id="6_8iham"]
+[ext_resource type="Script" path="res://player/states/falling.gd" id="7_6varq"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wy1r1"]
-size = Vector2(16, 24)
+[sub_resource type="Resource" id="Resource_b5nqx"]
+script = ExtResource("2_dsn58")
+max_walk_speed = 200.0
+stopping_acceleration = 800.0
+walking_acceleration = 1500.0
+airstrafing_acceleration = 750.0
+airstopping_acceleration = 750.0
+walljump_speed = 500.0
+jump_speed = 400.0
+jump_time = 0.3
+coyote_time = 0.25
+fall_gravity = 1600.0
+jump_gravity = 800.0
+orb_speed = 1000.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jg22j"]
 properties/0/path = NodePath(".:position")
@@ -14,11 +31,17 @@ properties/1/path = NodePath(".:scale")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_ijn6n")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wy1r1"]
+size = Vector2(16, 24)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_wy1r1")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a8ucl"]
+size = Vector2(16, 28)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_buffer")]
+collision_layer = 2
+script = ExtResource("1_ijn6n")
+initial_stats = SubResource("Resource_b5nqx")
+_buffer = NodePath("Buffer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_5vy5v")
@@ -37,3 +60,37 @@ offset_right = 46.0
 offset_bottom = -27.0
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("3_g75xk")
+current_state = NodePath("Falling")
+
+[node name="Walking" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("4_3grwa")
+
+[node name="Jumping" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_jumping_timer")]
+script = ExtResource("6_8iham")
+_jumping_timer = NodePath("JumpingTimer")
+
+[node name="JumpingTimer" type="Timer" parent="FiniteStateMachine/Jumping"]
+one_shot = true
+
+[node name="Falling" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_coyote_timer")]
+script = ExtResource("7_6varq")
+_coyote_timer = NodePath("CoyoteTimer")
+
+[node name="CoyoteTimer" type="Timer" parent="FiniteStateMachine/Falling"]
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wy1r1")
+
+[node name="Buffer" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Buffer"]
+position = Vector2(0, 26)
+shape = SubResource("RectangleShape2D_a8ucl")
+debug_color = Color(0.980392, 0, 0.392157, 0.419608)
+
+[connection signal="coyote_time" from="FiniteStateMachine/Walking" to="FiniteStateMachine/Falling" method="_on_walking_coyote_time"]
