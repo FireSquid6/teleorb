@@ -89,9 +89,9 @@ func walljump(vspd: float, hspd: float) -> int:
 func _area_overlaps(area: Area2D) -> bool:
 	return area.get_overlapping_areas().size() > 0 or area.get_overlapping_bodies().size() > 0
 
-
 func wants_walljump():
-	return is_on_wall() and _inputs.walljump_pressed
+	var close_enough = _area_overlaps(_left_wall_detector) or _area_overlaps(_right_wall_detector)
+	return close_enough and _inputs.walljump_pressed
 
 func jump():
 	velocity.y = _stats.jump_speed * -1

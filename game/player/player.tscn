@@ -49,10 +49,10 @@ size = Vector2(56, 24)
 size = Vector2(56, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i7yco"]
-size = Vector2(1, 24)
+size = Vector2(2, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jipun"]
-size = Vector2(1, 24)
+size = Vector2(2, 24)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_inputs", "_left_wall_detector", "_right_wall_detector")]
 collision_layer = 2
@@ -157,7 +157,7 @@ debug_color = Color(0.972549, 0, 0.435294, 0.419608)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetectors/Left"]
-position = Vector2(-8.5, 0)
+position = Vector2(-9, 0)
 shape = SubResource("RectangleShape2D_i7yco")
 debug_color = Color(0.576471, 0.384314, 1, 0.419608)
 
@@ -165,7 +165,7 @@ debug_color = Color(0.576471, 0.384314, 1, 0.419608)
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetectors/Right"]
-position = Vector2(8.5, 0)
+position = Vector2(9, 0)
 shape = SubResource("RectangleShape2D_jipun")
 debug_color = Color(0.576471, 0.384314, 1, 0.419608)
 
