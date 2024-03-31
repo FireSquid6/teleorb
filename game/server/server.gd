@@ -5,6 +5,7 @@ var peer = null
 const PORT = 3412
 const MAX_CLIENTS = 24  # subject to change
 var dedicated = false
+var running = false
 const DEDICATED_SERVER_JSON = "res://dedicated-server.json" 
 
 func _init() -> void:
@@ -24,6 +25,7 @@ func start_server():
 	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	print(IP.get_local_addresses())
+	running = true
 
 
 func peer_connected(id: int):
