@@ -16,4 +16,6 @@ layer_0/tile_data = PackedInt32Array(458763, 65536, 2, 393227, 458752, 4, 327691
 
 [node name="Players" type="Node2D" parent="."]
 
+[node name="Orbs" type="Node2D" parent="."]
+
 [connection signal="spawned" from="MultiplayerSpawner" to="MultiplayerSpawner" method="_on_spawned"]

@@ -9,6 +9,7 @@ func _ready() -> void:
 	_jumping_timer.connect("timeout", _on_jumping_timer_timeout)
 
 func _on_jumping_timer_timeout() -> void:
+	print("timeout")
 	fsm.change_state("Falling")
 
 func on_enter():
@@ -20,6 +21,7 @@ func on_enter():
 	
 	var dir = p.walljump(stats.walljump_vertical_speed, stats.walljump_horizontal_speed)
 	inputs.force_direction(stats.walljump_cancel_time, dir * -1)
+	_jumping_timer.start()
 
 
 func on_physics_process(delta: float) -> void:
@@ -27,12 +29,13 @@ func on_physics_process(delta: float) -> void:
 	var stats = p.get_stats()
 	
 	if not inputs.jump_held:
+		print("let go")
 		fsm.change_state("Falling")
 		return
 	
 	p.velocity.y += stats.jump_gravity * delta
-	print(p.velocity.y)
 	
 	if p.velocity.y >= 0:
+		print("falling too fast")
 		fsm.change_state("Falling")
 		return

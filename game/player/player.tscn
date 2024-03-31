@@ -23,9 +23,9 @@ jump_time = 0.3
 coyote_time = 0.25
 walljump_horizontal_speed = 275.0
 walljump_vertical_speed = 400.0
-walljump_cancel_time = 0.2
-fall_gravity = 2400.0
-jump_gravity = 400.0
+walljump_cancel_time = 0.4
+fall_gravity = 2200.0
+jump_gravity = 800.0
 orb_speed = 1000.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jg22j"]
