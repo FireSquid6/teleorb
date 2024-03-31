@@ -20,7 +20,9 @@ func on_physics_process(delta: float):
 	
 	if in_coyote_time and inputs.jump_pressed:
 		fsm.change_state("Jumping")
-		
+	
+	if p.wants_walljump():
+		fsm.change_state("Walljumping")
 	
 	p.handle_horizontal_movement(stats.airstrafing_acceleration * delta, stats.airstopping_acceleration * delta, inputs.move_direction, stats.max_walk_speed, false)
 	p.velocity.y += stats.fall_gravity * delta
@@ -33,3 +35,12 @@ func _on_walking_coyote_time() -> void:
 
 func _on_coyote_timer_timeout() -> void:
 	in_coyote_time = false
+
+
+func on_enter():
+	var inputs = p.get_inputs()
+	inputs.walljump_buffer.consume()
+	inputs.jump_buffer.consume()
+	
+	inputs.walljump_buffer.listen()
+	inputs.jump_buffer.listen()

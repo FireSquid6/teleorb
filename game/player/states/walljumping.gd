@@ -1,28 +1,26 @@
 extends StateMachineState
-class_name PlayerStateJumping
 
 @onready var p: Player = get_parent().get_parent()
 @export var _jumping_timer: Timer
-var _hit_speed = false
 
 func _ready() -> void:
 	var stats = p.get_stats()
 	_jumping_timer.wait_time = stats.jump_time
 	_jumping_timer.connect("timeout", _on_jumping_timer_timeout)
 
-func on_enter() -> void:
+func _on_jumping_timer_timeout() -> void:
+	fsm.change_state("Falling")
+
+func on_enter():
 	var inputs = p.get_inputs()
-	_hit_speed = false
-	
-	_jumping_timer.start()
-	p.jump()
+	var stats = p.get_stats()
 	
 	inputs.walljump_buffer.consume()
-	inputs.walljump_buffer.listen()
 	inputs.jump_buffer.consume()
+	
+	var dir = p.walljump(stats.walljump_vertical_speed, stats.walljump_horizontal_speed)
+	inputs.force_direction(stats.walljump_cancel_time, dir * -1)
 
-func on_exit() -> void:
-	var inputs = p.get_inputs()
 
 func on_physics_process(delta: float) -> void:
 	var inputs = p.get_inputs()
@@ -32,15 +30,9 @@ func on_physics_process(delta: float) -> void:
 		fsm.change_state("Falling")
 		return
 	
-	if p.wants_walljump():
-		fsm.change_state("Walljumping")
-	
 	p.velocity.y += stats.jump_gravity * delta
+	print(p.velocity.y)
 	
 	if p.velocity.y >= 0:
 		fsm.change_state("Falling")
 		return
-
-
-func _on_jumping_timer_timeout() -> void:
-	fsm.change_state("Falling")

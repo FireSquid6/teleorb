@@ -2,12 +2,14 @@ extends CharacterBody2D
 class_name Player
 
 @export var initial_stats: PlayerStats
-var _stats: PlayerStats
-@export var _buffer: Area2D
-
-var id = -1  # multiplayer peer id
-
+@export var _inputs: PlayerInputs
+@export var _left_wall_detector: Area2D
+@export var _right_wall_detector: Area2D
 @onready var fsm: FiniteStateMachine = $FiniteStateMachine
+
+var _stats: PlayerStats
+var id := -1  # multiplayer peer id
+var gravity_direction := 1
 
 func _set_stats(stats: PlayerStats):
 	_stats = stats
@@ -29,7 +31,7 @@ func _physics_process(delta: float) -> void:
 	# this will be changed later
 	if !is_multiplayer_authority():
 		return
-	
+	_inputs.update()
 	fsm.physics_process(delta)
 	$Label.text = str(velocity.x) + "\n" + str(velocity.y) + "\n" + str(fsm.current_state.name)
 	
@@ -37,16 +39,8 @@ func _physics_process(delta: float) -> void:
 
 
 func get_inputs() -> PlayerInputs:
-	var inputs = PlayerInputs.new()
-	
-	inputs.move_direction = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
-	inputs.jump_pressed = Input.is_action_just_pressed("jump")
-	inputs.jump_held = Input.is_action_pressed("jump")
-	inputs.jump_buffered = false # TODO
-	inputs.slide_held = Input.is_action_pressed("slide")
-	inputs.slide_buffered = false # TODO
-	
-	return inputs
+	# this is a private "read only" variable so that no other objects can set it
+	return _inputs
 
 
 func get_stats() -> PlayerStats:
@@ -77,16 +71,40 @@ func handle_horizontal_movement(moving_acceleration: float, stopping_acceleratio
 		else:
 			_slow_down(moving_acceleration)
 
+
+func walljump(vspd: float, hspd: float) -> int:
+	velocity.y = vspd * -1
+	var dir = 0
+	if _area_overlaps(_left_wall_detector):
+		dir = 1
+	elif _area_overlaps(_right_wall_detector):
+		dir = -1
+	else:
+		print("Error: tried to walljump while not on a wall")
+		return 0
+	
+	velocity.x = hspd * dir
+	return dir
+
+func _area_overlaps(area: Area2D) -> bool:
+	return area.get_overlapping_areas().size() > 0 or area.get_overlapping_bodies().size() > 0
+
+
+func wants_walljump():
+	return is_on_wall() and _inputs.walljump_pressed
+
+func jump():
+	velocity.y = _stats.jump_speed * -1
+
+func _handle_walljump():
+	if not is_on_wall():
+		return
+	
+	var inputs = get_inputs()
+	
+
 func _slow_down(stopping_acceleration: float):
 	if abs(velocity.x) - stopping_acceleration < 0:
 		velocity.x = 0
 	else:
 		velocity.x -= stopping_acceleration * sign(velocity.x)
-
-class PlayerInputs:
-	var move_direction: int
-	var jump_pressed: bool
-	var jump_held: bool
-	var jump_buffered: bool
-	var slide_held: bool
-	var slide_buffered: bool

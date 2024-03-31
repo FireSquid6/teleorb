@@ -1,26 +1,31 @@
-[gd_scene load_steps=12 format=3 uid="uid://dcuo4m1c4q33f"]
+[gd_scene load_steps=19 format=3 uid="uid://dcuo4m1c4q33f"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_ijn6n"]
 [ext_resource type="Texture2D" uid="uid://03ohavn28une" path="res://assets/player.png" id="2_5vy5v"]
 [ext_resource type="Script" path="res://player/player_stats.gd" id="2_dsn58"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="3_g75xk"]
+[ext_resource type="Script" path="res://player/player_inputs.gd" id="3_hh52s"]
 [ext_resource type="Script" path="res://player/states/walking.gd" id="4_3grwa"]
+[ext_resource type="Script" path="res://player/input_buffer.gd" id="4_6q7b6"]
 [ext_resource type="Script" path="res://player/states/jumping.gd" id="6_8iham"]
 [ext_resource type="Script" path="res://player/states/falling.gd" id="7_6varq"]
+[ext_resource type="Script" path="res://player/states/walljumping.gd" id="10_y4sb7"]
 
 [sub_resource type="Resource" id="Resource_b5nqx"]
 script = ExtResource("2_dsn58")
-max_walk_speed = 200.0
+max_walk_speed = 250.0
 stopping_acceleration = 800.0
-walking_acceleration = 1500.0
-airstrafing_acceleration = 750.0
+walking_acceleration = 2500.0
+airstrafing_acceleration = 1500.0
 airstopping_acceleration = 750.0
-walljump_speed = 500.0
 jump_speed = 400.0
 jump_time = 0.3
 coyote_time = 0.25
-fall_gravity = 1600.0
-jump_gravity = 800.0
+walljump_horizontal_speed = 275.0
+walljump_vertical_speed = 400.0
+walljump_cancel_time = 0.2
+fall_gravity = 2400.0
+jump_gravity = 400.0
 orb_speed = 1000.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jg22j"]
@@ -35,13 +40,46 @@ properties/1/replication_mode = 1
 size = Vector2(16, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a8ucl"]
-size = Vector2(16, 28)
+size = Vector2(14, 36)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_buffer")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_06ydu"]
+size = Vector2(56, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_40yyv"]
+size = Vector2(56, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i7yco"]
+size = Vector2(1, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jipun"]
+size = Vector2(1, 24)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_inputs", "_left_wall_detector", "_right_wall_detector")]
 collision_layer = 2
 script = ExtResource("1_ijn6n")
 initial_stats = SubResource("Resource_b5nqx")
-_buffer = NodePath("Buffer")
+_inputs = NodePath("PlayerInputs")
+_left_wall_detector = NodePath("WallDetectors/Left")
+_right_wall_detector = NodePath("WallDetectors/Right")
+
+[node name="PlayerInputs" type="Node" parent="." node_paths=PackedStringArray("jump_buffer", "walljump_buffer", "_force_timer")]
+script = ExtResource("3_hh52s")
+jump_buffer = NodePath("JumpBuffer")
+walljump_buffer = NodePath("WalljumpBuffer")
+_force_timer = NodePath("ForceTimer")
+
+[node name="JumpBuffer" type="Node" parent="PlayerInputs" node_paths=PackedStringArray("_buffer_area")]
+script = ExtResource("4_6q7b6")
+input_name = "jump"
+_buffer_area = NodePath("../../FloorBuffer")
+
+[node name="WalljumpBuffer" type="Node" parent="PlayerInputs" node_paths=PackedStringArray("_buffer_area")]
+script = ExtResource("4_6q7b6")
+input_name = "jump"
+_buffer_area = NodePath("../../WallBuffer")
+
+[node name="ForceTimer" type="Timer" parent="PlayerInputs"]
+one_shot = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_5vy5v")
@@ -82,15 +120,53 @@ _coyote_timer = NodePath("CoyoteTimer")
 [node name="CoyoteTimer" type="Timer" parent="FiniteStateMachine/Falling"]
 one_shot = true
 
+[node name="Walljumping" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("_jumping_timer")]
+script = ExtResource("10_y4sb7")
+_jumping_timer = NodePath("JumpingTimer")
+
+[node name="JumpingTimer" type="Timer" parent="FiniteStateMachine/Walljumping"]
+one_shot = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_wy1r1")
 
-[node name="Buffer" type="Area2D" parent="."]
+[node name="FloorBuffer" type="Area2D" parent="."]
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Buffer"]
-position = Vector2(0, 26)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorBuffer"]
+position = Vector2(0, 30)
 shape = SubResource("RectangleShape2D_a8ucl")
 debug_color = Color(0.980392, 0, 0.392157, 0.419608)
+
+[node name="WallBuffer" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallBuffer"]
+position = Vector2(36, 0)
+shape = SubResource("RectangleShape2D_06ydu")
+debug_color = Color(0.972549, 0, 0.435294, 0.419608)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="WallBuffer"]
+position = Vector2(-36, 0)
+shape = SubResource("RectangleShape2D_40yyv")
+debug_color = Color(0.972549, 0, 0.435294, 0.419608)
+
+[node name="WallDetectors" type="Node2D" parent="."]
+
+[node name="Left" type="Area2D" parent="WallDetectors"]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetectors/Left"]
+position = Vector2(-8.5, 0)
+shape = SubResource("RectangleShape2D_i7yco")
+debug_color = Color(0.576471, 0.384314, 1, 0.419608)
+
+[node name="Right" type="Area2D" parent="WallDetectors"]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetectors/Right"]
+position = Vector2(8.5, 0)
+shape = SubResource("RectangleShape2D_jipun")
+debug_color = Color(0.576471, 0.384314, 1, 0.419608)
 
 [connection signal="coyote_time" from="FiniteStateMachine/Walking" to="FiniteStateMachine/Falling" method="_on_walking_coyote_time"]
