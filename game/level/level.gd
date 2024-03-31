@@ -14,7 +14,7 @@ func _ready():
 	for id in multiplayer.get_peers():
 		add_player(id)
 	
-	if not OS.has_feature("dedicated_server"):
+	if not Server.dedicated:
 		add_player(1)
 
 
