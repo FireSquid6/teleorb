@@ -1,6 +1,8 @@
 # How Dedicated Servers Work
 
-1. When the game starts, it checks for a `dedicated-server.json` file
+1. When the game starts, it checks for a json file in either:
+   1. The path in the environment variable `TELEORB_SERVER_JSON_PATH`
+   2. `<config-directory>/teleorb-dedicated-server.json` where `<config-directory>` is whatever your system returns from `OS.get_config_dir()` (typically `~/.config`)
 2. If that file doesn't exist, it runs as normal
 3. If the file exists (and is enabled), a dedicated server is started
 
