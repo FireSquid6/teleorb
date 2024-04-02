@@ -19,7 +19,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3.3.0
 
-      - name: export and publish game
+      - name: export and publishPush gameserver container to registry game
         id: export
         # Use latest version (see releases for all versions)
         uses: firebelley/godot-export@v5.2.0
@@ -52,9 +52,9 @@ jobs:
           token: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
       - name: log in to DO registry
         run: doctl registry login --expiry-seconds 600
-      - name: go to correct directory
-        run: "cd game"
       - name: build image
+        working-directory: "game"
         run: docker build --pull -t registry.digitalocean.com/teleorb/server:${{ github.ref_name }} .
       - name: push image
+        working-directory: "game"
         run: docker push registry.digitalocean.com/teleorb/server:${{ github.ref_name }}
