@@ -3,8 +3,6 @@
 FROM oven/bun:1 as base
 WORKDIR /usr/src/app
 
-ARG binary_tag
-
 # install dependencies into temp directory
 # this will cache them and speed up future builds
 FROM base AS install
@@ -28,6 +26,13 @@ FROM base AS release
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/index.ts .
 COPY --from=prerelease /usr/src/app/package.json .
+
+# install the binary
+FROM alpine:latest as unzipper
+ARG BINARY_TAG
+RUN apk add unzip wget curl
+COPY get-bin.sh .
+RUN ./get-bin.sh $BINARY_TAG
 
 # run the app
 USER bun
