@@ -39,22 +39,21 @@ jobs:
           generateReleaseNotes: true
           tag: ${{ github.ref_name }}
           artifacts: ${{ steps.export.outputs.archive_directory }}/*
-  # push_registry:
-  #   runs-on: ubuntu-latest
-  #   name: Push gameserver container to registry
-  #   steps:
-  #     - name: checkout
-  #       uses: actions/checkout@v3.3.0
-  #     - name: install doctl
-  #       uses: digitalocean/action-doctl@v2
-  #       with:
-  #         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-  #     - name: log in to DO registry
-  #       run: doctl registry login --expiry-seconds 600
-  #     - name: go to correct directory
-  #       run: "cd server"
-  #     - name: build image
-  #       run: docker build # todo
-  #     - name: push image
-  #       run: docker push # todo
-  #
+  push_registry:
+    runs-on: ubuntu-latest
+    name: Push gameserver container to registry
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3.3.0
+      - name: install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: log in to DO registry
+        run: doctl registry login --expiry-seconds 600
+      - name: go to correct directory
+        run: "cd server"
+      - name: build image
+        run: docker build --pull -t registry.digitalocean.com/teleorb/server:${{ github.ref_name }} .
+      - name: push image
+        run: docker push registry.digitalocean.com/teleorb/server:${{ github.ref_name }}
