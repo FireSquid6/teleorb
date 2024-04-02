@@ -42,13 +42,14 @@ jobs:
   push_registry:
     runs-on: ubuntu-latest
     name: Push gameserver container to registry
+    permissions: read-all
     steps:
       - name: checkout
         uses: actions/checkout@v3.3.0
       - name: install doctl
         uses: digitalocean/action-doctl@v2
         with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          token: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
       - name: log in to DO registry
         run: doctl registry login --expiry-seconds 600
       - name: go to correct directory
