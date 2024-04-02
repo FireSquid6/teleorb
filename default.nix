@@ -22,7 +22,6 @@ with nixpkgs; mkShell {
     doctl
 
     patchelf
-
     # You'll also need Godot 4 installed if you're making the server or the game
     # This isn't specified in the default.nix because Godot is a desktop app
   ];

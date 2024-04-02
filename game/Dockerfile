@@ -9,8 +9,8 @@ ENV RELEASE_NAME="stable"
 ENV GODOT_GAME_NAME="teleorb"
 ENV EXPORT_PRESET="Server"
 
-RUN mkdir /buildspace
-RUN mkdir /app
+RUN mkdir /buildspace \
+    && mkdir /server
 
 RUN wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_export_templates.tpz
 RUN wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_linux.x86_64.zip
@@ -28,8 +28,12 @@ RUN godot -e --quit --display-driver headless
 
 WORKDIR /buildspace
 COPY . .
-RUN godot --export-pack --display-driver headless ${EXPORT_PRESET} ${GODOT_GAME_NAME}.pck
-RUN mv ${GODOT_GAME_NAME}.pck /app/
+RUN godot --headless --export-release ${EXPORT_PRESET} ${GODOT_GAME_NAME} \
+    && mv ${GODOT_GAME_NAME}.pck /server/ \
+    && mv ${GODOT_GAME_NAME} /server/
 
-WORKDIR /app
-CMD godot --main-pack ${GODOT_GAME_NAME}.pck
+WORKDIR /server
+RUN rm -rf /buildspace \
+    && rm -rf ~/.cache ~/.config ~/.local \
+    && rm /usr/local/bin/godot
+CMD ./${GODOT_GAME_NAME}
