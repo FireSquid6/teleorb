@@ -1,11 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://dyqart1j72ay5"]
+[gd_scene load_steps=3 format=3 uid="uid://dyqart1j72ay5"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_slcep"]
 [ext_resource type="Script" path="res://ui.gd" id="2_cmcby"]
-[ext_resource type="PackedScene" uid="uid://bxeypkvnbs5kn" path="res://hud/hud.tscn" id="3_pgjds"]
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" node_paths=PackedStringArray("menu", "level_container")]
 script = ExtResource("1_slcep")
+menu = NodePath("Menu")
+level_container = NodePath("Level")
 
 [node name="Menu" type="Control" parent="."]
 layout_mode = 3
@@ -51,8 +52,6 @@ offset_top = 411.0
 offset_right = 789.0
 offset_bottom = 445.0
 placeholder_text = "127.0.0.1"
-
-[node name="HUD" parent="." instance=ExtResource("3_pgjds")]
 
 [node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://level/level.tscn")

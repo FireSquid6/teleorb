@@ -40,4 +40,5 @@ RUN ./get-bin.sh $BINARY_TAG
 # run the app
 FROM release as final
 EXPOSE 3000/tcp
+EXPOSE 3412
 ENTRYPOINT [ "bun", "run", "index.ts" ]

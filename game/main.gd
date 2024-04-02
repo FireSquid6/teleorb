@@ -1,11 +1,11 @@
 extends Node
 class_name Main
 
-@export var ui: Control
+@export var menu: Node
 @export var level_container: Node
 
 func start_game():
-	ui.queue_free()
+	menu.queue_free()
 	get_tree().paused = false
 	
 	if multiplayer.is_server():
