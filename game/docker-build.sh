@@ -11,4 +11,4 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
-docker build --pull --build-arg BINARY_TAG=$VERSION -t registry.digitalocean.com/teleorb/server:$VERSION .
+docker build --pull -t registry.digitalocean.com/teleorb/server:$VERSION .

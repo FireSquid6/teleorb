@@ -28,7 +28,7 @@ RUN godot -e --quit --display-driver headless
 
 WORKDIR /buildspace
 COPY . .
-RUN godot --export-pack --rendering-driver opengl3 ${EXPORT_PRESET} ${GODOT_GAME_NAME}.pck
+RUN godot --export-pack --display-driver headless ${EXPORT_PRESET} ${GODOT_GAME_NAME}.pck
 RUN mv ${GODOT_GAME_NAME}.pck /app/
 
 WORKDIR /app
