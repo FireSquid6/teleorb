@@ -15,3 +15,4 @@ const process = Bun.spawn(["bash", "./run-bin.sh"], {
   stdout: "inherit",
   stderr: "inherit",
 });
+process.unref();

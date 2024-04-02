@@ -26,6 +26,8 @@ FROM base AS release
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/index.ts .
 COPY --from=prerelease /usr/src/app/package.json .
+COPY --from=prerelease /usr/src/app/run-bin.sh .
+COPY --from=prerelease /usr/src/app/bin bin
 
 # install the binary
 FROM alpine:latest as unzipper
