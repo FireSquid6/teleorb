@@ -8,6 +8,7 @@ WORKDIR /usr/src/app
 FROM base AS install
 RUN mkdir -p /temp/dev
 COPY package.json bun.lockb /temp/dev/
+COPY get-bin.sh .
 RUN cd /temp/dev && bun install --frozen-lockfile
 
 # install with --production (exclude devDependencies)
@@ -32,8 +33,10 @@ FROM alpine:latest as unzipper
 ARG BINARY_TAG
 RUN apk add unzip wget curl
 COPY get-bin.sh .
+COPY run-bin.sh .
 RUN ./get-bin.sh $BINARY_TAG
 
 # run the app
+FROM release as final
 EXPOSE 3000/tcp
 ENTRYPOINT [ "bun", "run", "index.ts" ]

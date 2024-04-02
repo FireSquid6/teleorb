@@ -7,7 +7,7 @@ VERSION=$1
 
 # if version is not provided, exit
 if [ -z "$VERSION" ]; then
-    echo "No version provided"
+    echo "No version provided. exiting"
     exit 1
 fi
 
