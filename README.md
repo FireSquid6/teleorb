@@ -18,3 +18,26 @@ All deployments are done through [fly.io](https://fly.io)
 - Please use the terms `speed` and `velocity` appropriately when naming variables. `acceleration` could refer to a scalar or vector quantity.
 - Start private methods and variables (those only meant to be internal) with an underscore or make them a single character long
 - Don't explain _what_ the code is doing in comments, explain _why_ the code is doing
+
+# Versioning
+
+Versions look like the following:
+
+```
+ERA-VERSION-HOTFIX
+```
+
+These could be:
+
+```
+alpha-1-2
+beta-1-0  # you always need a trailing 0
+
+```
+
+`HOTFIX` changes every time a small patch is made and resets whenver `VERSION` increases. `VERSION` increases whenever new features are added and resets whenever `ERA` changes. `ERA` changes whenever I feel like it.
+
+## Era naming
+
+- If it's a greek letter (alpha, beta, etc), it's a prelrelease
+- If it's a greek god (zeus, athena, zephyr), it's a
