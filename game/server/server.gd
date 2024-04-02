@@ -1,21 +1,45 @@
 extends Node
 
 
-var peer = null
 const PORT = 3412
 const MAX_CLIENTS = 24  # subject to change
-var dedicated = false
+const ENV_VARIABLE = "TELEORB_SERVER_JSON_PATH"
+
+var peer = null
+var isDedicatedServer = false
+var serverConfig: Dictionary = {}
 var running = false
-const DEDICATED_SERVER_JSON = "res://dedicated-server.json" 
+
 
 func _init() -> void:
-	if FileAccess.file_exists(DEDICATED_SERVER_JSON):
-		var string = FileAccess.get_file_as_string(DEDICATED_SERVER_JSON)
+	var path = _get_json_filepath()
+	print("Server singleton initialized")
+	if FileAccess.file_exists(path):
+		print("Found path for dedicated server json: " + path)
+		var string = FileAccess.get_file_as_string(path)
 		var serverJson = JSON.parse_string(string)
 		
-		dedicated = serverJson["enabled"]
+		isDedicatedServer = serverJson["enabled"]
+		serverConfig = serverJson
+	else:
+		print("No dedicated server json path found")
+
+func _ready() -> void:
+	if isDedicatedServer and OS.has_feature("dedicated_server"):
+		print("Detected a dedicated server environment. Automatically starting the server.")
+
+
+func _get_json_filepath():
+	if OS.has_environment(ENV_VARIABLE):
+		return OS.get_environment(ENV_VARIABLE)
+	else:
+		var configPath = OS.get_config_dir()
+		return configPath + "/teleorb-dedicated-server.json"
+
 
 func start_server():
+	print("\nStarting server...")
+	
 	peer = ENetMultiplayerPeer.new()
 	peer.create_server(PORT, MAX_CLIENTS)
 	if peer.get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED:
@@ -29,8 +53,8 @@ func start_server():
 
 
 func peer_connected(id: int):
-	print("Player connected " + str(id))
+	print("Player connected: " + str(id))
 
 
 func peer_disconnected(id: int):
-	print("Player disconnected " + str(id))
+	print("Player disconnected: " + str(id))
