@@ -6,7 +6,7 @@
 [node name="World" type="Node2D"]
 script = ExtResource("1_w22ld")
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player/player.tscn")
 spawn_path = NodePath("../Players")
 spawn_limit = 16
@@ -18,4 +18,4 @@ layer_0/tile_data = PackedInt32Array(458763, 65536, 2, 393227, 458752, 4, 327691
 
 [node name="Orbs" type="Node2D" parent="."]
 
-[connection signal="spawned" from="MultiplayerSpawner" to="MultiplayerSpawner" method="_on_spawned"]
+[connection signal="spawned" from="PlayerSpawner" to="PlayerSpawner" method="_on_spawned"]

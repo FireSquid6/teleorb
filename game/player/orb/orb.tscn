@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://ck2nc0l3nwd8j"]
+
+[ext_resource type="Script" path="res://player/orb/orb.gd" id="1_a7s60"]
+[ext_resource type="Shape2D" uid="uid://df27jf1iqh52l" path="res://player/player_collision_shape.tres" id="2_xgcwo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ylco8"]
+radius = 5.0
+
+[node name="Orb" type="Area2D"]
+script = ExtResource("1_a7s60")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(1, 0, 0, 1)
+polygon = PackedVector2Array(0, -5, -5, -3, -5, 3, 0, 5, 5, 3, 5, -3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ylco8")
+debug_color = Color(0.72549, 0.243137, 1, 0.419608)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = ExtResource("2_xgcwo")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
