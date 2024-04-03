@@ -15,14 +15,17 @@ var gravity_direction := 1
 var orb_thrown = false
 var orb: Orb = null
 var has_orb = true
+var level: Level
 
 signal spawn_orb(orb: Orb)
-
 
 func _set_stats(stats: PlayerStats):
 	_stats = stats
 
 func _enter_tree():
+	# todo: make this not terrible
+	level = get_parent().get_parent()
+	
 	_set_stats(initial_stats)
 	
 	id = str(name).to_int()
@@ -33,14 +36,15 @@ func throw_orb() -> bool:
 	if not (has_orb and not orb_thrown):
 		return false
 	
-	print("has orb and stuff")
 	has_orb = false
 	orb_thrown = true
 	orb = _orb_scene.instantiate()
 	emit_signal("spawn_orb", orb)
+	level.add_orb(orb)
 	orb.connect("hit", _on_orb_hit)
 	orb.connect("destroyed", _on_orb_destroyed)
 	
+	orb.throw(position, Vector2(-1, 0), _stats.orb_speed, _stats.orb_lifespan)
 	return true
 
 
@@ -76,7 +80,6 @@ func _physics_process(delta: float) -> void:
 	_inputs.update()
 	
 	if _inputs.throw_pressed:
-		print("throwing orb")
 		throw_orb()
 	fsm.physics_process(delta)
 	$Label.text = str(velocity.x) + "\n" + str(velocity.y) + "\n" + str(fsm.current_state.name)
@@ -126,7 +129,7 @@ func walljump(vspd: float, hspd: float) -> int:
 	elif _area_overlaps(_right_wall_detector):
 		dir = -1
 	else:
-		print("Error: tried to walljump while not on a wall")
+		push_error("Error: tried to walljump while not on a wall")
 		return 0
 	
 	velocity.x = hspd * dir
@@ -154,7 +157,3 @@ func _slow_down(stopping_acceleration: float):
 		velocity.x = 0
 	else:
 		velocity.x -= stopping_acceleration * sign(velocity.x)
-
-
-func _on_spawn_orb(orb: Orb) -> void:
-	print(orb)

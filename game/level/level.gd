@@ -1,4 +1,5 @@
 extends Node2D
+class_name Level
 
 
 func _ready():
@@ -14,7 +15,7 @@ func _ready():
 	if not Server.isDedicatedServer:
 		add_player(1)
 
-func _on_player_throw_orb(orb: Orb):
+func add_orb(orb: Orb):
 	print("on player throw orb")
 	$Orbs.add_child(orb)
 
@@ -26,12 +27,11 @@ func _exit_tree():
 
 
 func add_player(id: int):
-	var character: Player = preload("res://player/player.tscn").instantiate()
+	var player: Player = preload("res://player/player.tscn").instantiate()
 	# Set player id.
-	character.name = str(id)
-	print("connecting signal")
-	$Players.add_child(character, true)
-	character.connect("spawn_orb", _on_player_throw_orb)
+	player.name = str(id)
+	$Players.add_child(player, true)
+	
 
 
 func remove_player(id: int):

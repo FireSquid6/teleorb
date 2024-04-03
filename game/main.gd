@@ -2,7 +2,7 @@ extends Node
 class_name Main
 
 @export var menu: Node
-@export var level_container: Node
+@export var world: Node
 
 func start_game():
 	menu.queue_free()
@@ -13,8 +13,7 @@ func start_game():
 
 
 func change_level(scene: PackedScene):
-	var level = $Level
-	for c in level.get_children():
-		level.remove_child(c)
+	for c in world.get_children():
+		world.remove_child(c)
 		c.queue_free()
-	level.add_child(scene.instantiate())
+	world.add_child(scene.instantiate())

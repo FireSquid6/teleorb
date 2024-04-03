@@ -26,7 +26,8 @@ walljump_vertical_speed = 400.0
 walljump_cancel_time = 0.4
 fall_gravity = 2200.0
 jump_gravity = 800.0
-orb_speed = 1000.0
+orb_speed = 50.0
+orb_lifespan = 10.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_jg22j"]
 properties/0/path = NodePath(".:position")

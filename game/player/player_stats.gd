@@ -27,3 +27,4 @@ class_name PlayerStats
 
 @export_group("Orb") 
 @export var orb_speed: float
+@export var orb_lifespan: float
