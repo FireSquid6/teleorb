@@ -7,9 +7,17 @@ class_name Player
 @export var _right_wall_detector: Area2D
 @onready var fsm: FiniteStateMachine = $FiniteStateMachine
 
+var _orb_scene: PackedScene = preload("res://player/orb/orb.tscn")
 var _stats: PlayerStats
 var id := -1  # multiplayer peer id
 var gravity_direction := 1
+
+var orb_thrown = false
+var orb: Orb = null
+var has_orb = true
+
+signal spawn_orb(orb: Orb)
+
 
 func _set_stats(stats: PlayerStats):
 	_stats = stats
@@ -19,6 +27,40 @@ func _enter_tree():
 	
 	id = str(name).to_int()
 	set_multiplayer_authority(id)
+
+
+func throw_orb() -> bool:
+	if not (has_orb and not orb_thrown):
+		return false
+	
+	print("has orb and stuff")
+	has_orb = false
+	orb_thrown = true
+	orb = _orb_scene.instantiate()
+	emit_signal("spawn_orb", orb)
+	orb.connect("hit", _on_orb_hit)
+	orb.connect("destroyed", _on_orb_destroyed)
+	
+	return true
+
+
+func _on_orb_hit(position: Vector2):
+	print("hit")
+	
+	_deref_orb()
+
+
+func _on_orb_destroyed(position: Vector2):
+	print("destroyed")
+	
+	_deref_orb()
+
+
+func _deref_orb():
+	orb.disconnect("destroyed", _on_orb_destroyed)
+	orb.disconnect("hit", _on_orb_hit)
+	orb_thrown = false
+	orb = null
 
 func _ready() -> void:
 	if is_multiplayer_authority():
@@ -32,6 +74,10 @@ func _physics_process(delta: float) -> void:
 	if !is_multiplayer_authority():
 		return
 	_inputs.update()
+	
+	if _inputs.throw_pressed:
+		print("throwing orb")
+		throw_orb()
 	fsm.physics_process(delta)
 	$Label.text = str(velocity.x) + "\n" + str(velocity.y) + "\n" + str(fsm.current_state.name)
 	
@@ -108,3 +154,7 @@ func _slow_down(stopping_acceleration: float):
 		velocity.x = 0
 	else:
 		velocity.x -= stopping_acceleration * sign(velocity.x)
+
+
+func _on_spawn_orb(orb: Orb) -> void:
+	print(orb)

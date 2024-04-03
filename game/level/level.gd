@@ -1,9 +1,6 @@
 extends Node2D
 
 
-const SPAWN_RANDOM := 5.0
-
-
 func _ready():
 	if not multiplayer.is_server():
 		return
@@ -17,6 +14,9 @@ func _ready():
 	if not Server.isDedicatedServer:
 		add_player(1)
 
+func _on_player_throw_orb(orb: Orb):
+	print("on player throw orb")
+	$Orbs.add_child(orb)
 
 func _exit_tree():
 	if not multiplayer.is_server():
@@ -26,10 +26,12 @@ func _exit_tree():
 
 
 func add_player(id: int):
-	var character = preload("res://player/player.tscn").instantiate()
+	var character: Player = preload("res://player/player.tscn").instantiate()
 	# Set player id.
 	character.name = str(id)
+	print("connecting signal")
 	$Players.add_child(character, true)
+	character.connect("spawn_orb", _on_player_throw_orb)
 
 
 func remove_player(id: int):

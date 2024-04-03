@@ -7,6 +7,7 @@ var walljump_pressed: bool = false  # this is different from jump pressed for bu
 var jump_held: bool = false
 var slide_pressed: bool = false
 var slide_held: bool = false
+var throw_pressed: bool = false
 
 @export var jump_buffer: InputBuffer
 @export var walljump_buffer: InputBuffer
@@ -50,3 +51,4 @@ func update():
 	
 	slide_pressed = Input.is_action_just_pressed("slide")
 	slide_held = Input.is_action_pressed("slide")
+	throw_pressed = Input.is_action_just_pressed("throw")
