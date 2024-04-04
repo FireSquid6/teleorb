@@ -2,7 +2,12 @@ extends Node
 class_name Main
 
 @export var menu: Node
-@export var world: Node
+@export var ui_canvas: CanvasLayer
+@export var level_container: Node
+
+func _ready() -> void:
+	World.main = self
+
 
 func start_game():
 	menu.queue_free()
@@ -10,10 +15,20 @@ func start_game():
 	
 	if multiplayer.is_server():
 		change_level.call_deferred(load("res://level/level.tscn"))
+	
+	if Server.is_dedicated_server:
+		set_ui(preload("res://ui/dedicated_server/dedicated-server.tscn").instantiate())
 
+# TODO: Add all levels to the LevelSpawner node
+
+func set_ui(node: Node):
+	for c in ui_canvas.get_children():
+		ui_canvas.remove_child(c)
+		c.queue_free()
+	ui_canvas.add_child(node)
 
 func change_level(scene: PackedScene):
-	for c in world.get_children():
-		world.remove_child(c)
+	for c in level_container.get_children():
+		level_container.remove_child(c)
 		c.queue_free()
-	world.add_child(scene.instantiate())
+	level_container.add_child(scene.instantiate())

@@ -3,12 +3,15 @@
 [ext_resource type="Script" path="res://main.gd" id="1_slcep"]
 [ext_resource type="Script" path="res://ui.gd" id="2_cmcby"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("menu", "world")]
+[node name="Main" type="Node" node_paths=PackedStringArray("menu", "ui_canvas", "level_container")]
 script = ExtResource("1_slcep")
-menu = NodePath("Menu")
-world = NodePath("World")
+menu = NodePath("CanvasLayer/Menu")
+ui_canvas = NodePath("CanvasLayer")
+level_container = NodePath("LevelContainer")
 
-[node name="Menu" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Menu" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_cmcby")
 
-[node name="Button" type="Button" parent="Menu"]
+[node name="Button" type="Button" parent="CanvasLayer/Menu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -32,7 +35,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Connect"
 
-[node name="Button2" type="Button" parent="Menu"]
+[node name="Button2" type="Button" parent="CanvasLayer/Menu"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -45,7 +48,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Become the Server"
 
-[node name="TextEdit" type="TextEdit" parent="Menu"]
+[node name="TextEdit" type="TextEdit" parent="CanvasLayer/Menu"]
 layout_mode = 0
 offset_left = 378.0
 offset_top = 411.0
@@ -53,12 +56,12 @@ offset_right = 789.0
 offset_bottom = 445.0
 placeholder_text = "127.0.0.1"
 
-[node name="WorldSpawner" type="MultiplayerSpawner" parent="."]
+[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://level/level.tscn")
-spawn_path = NodePath("../World")
+spawn_path = NodePath("../LevelContainer")
 spawn_limit = 1
 
-[node name="World" type="Node" parent="."]
+[node name="LevelContainer" type="Node" parent="."]
 
-[connection signal="pressed" from="Menu/Button" to="Menu" method="_on_button_pressed"]
-[connection signal="pressed" from="Menu/Button2" to="Menu" method="_on_button_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Menu/Button" to="CanvasLayer/Menu" method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Menu/Button2" to="CanvasLayer/Menu" method="_on_button_2_pressed"]

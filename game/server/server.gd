@@ -6,8 +6,8 @@ const MAX_CLIENTS = 24  # subject to change
 const ENV_VARIABLE = "TELEORB_SERVER_JSON_PATH"
 
 var peer = null
-var isDedicatedServer = false
-var serverConfig: Dictionary = {}
+var is_dedicated_server = false
+var server_config: Dictionary = {}
 var running = false
 
 
@@ -19,13 +19,13 @@ func _init() -> void:
 		var string = FileAccess.get_file_as_string(path)
 		var serverJson = JSON.parse_string(string)
 		
-		isDedicatedServer = serverJson["enabled"]
-		serverConfig = serverJson
+		is_dedicated_server = serverJson["enabled"]
+		server_config = serverJson
 	else:
 		Log.out("No dedicated server json path found")
 
 func _ready() -> void:
-	if isDedicatedServer and OS.has_feature("dedicated_server"):
+	if is_dedicated_server and OS.has_feature("dedicated_server"):
 		Log.out("Detected a dedicated server environment. Automatically starting the server.")
 	multiplayer.allow_object_decoding = true
 

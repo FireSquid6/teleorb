@@ -21,6 +21,7 @@ Log="*res://log/log.tscn"
 Server="*res://server/server.tscn"
 Client="*res://client/client.tscn"
 Chat="*res://chat/chat.tscn"
+World="*res://world/world.tscn"
 
 [editor_plugins]
 

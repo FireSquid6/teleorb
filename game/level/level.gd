@@ -6,6 +6,7 @@ class_name Level
 @export var _player_scene: PackedScene
 
 func _ready():
+	World.curret_level = self
 	if not multiplayer.is_server():
 		return
 	
@@ -15,7 +16,7 @@ func _ready():
 	for id in multiplayer.get_peers():
 		_add_player(id)
 	
-	if not Server.isDedicatedServer:
+	if not Server.is_dedicated_server:
 		_add_player(1)
 
 
