@@ -11,6 +11,7 @@ ENV GODOT_GAME_NAME="teleorb"
 ENV EXPORT_PRESET="Server"
 
 RUN mkdir /buildspace && mkdir /server
+WORKDIR /buildspace
 
 RUN wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_export_templates.tpz
 RUN wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_linux.x86_64.zip
@@ -26,10 +27,9 @@ RUN mkdir ~/.cache \
 
 RUN godot -e --quit --display-driver headless
 
-WORKDIR /buildspace
 RUN godot --headless --export-release ${EXPORT_PRESET} ${GODOT_GAME_NAME} 
-RUN mv ${GODOT_GAME_NAME}.pck /server/ \
-    && mv ${GODOT_GAME_NAME} /server/
+RUN ls
+RUN mv ${GODOT_GAME_NAME} /server/
 
 # Runtime Stage
 FROM alpine:latest as runtime
