@@ -20,7 +20,6 @@ func throw(pos: Vector2, direction: Vector2, spd: float, lifespan: float):
 	position = pos
 	
 	velocity = direction * speed
-	Log.out("Orb position is: " + str(position))
 	_timer.wait_time = lifespan
 
 
@@ -39,7 +38,7 @@ func _on_timeout():
 
 
 func destroy():
-	emit_signal("destroyed", _follower.position)
+	emit_signal("destroyed", position + _orb.position + _follower.position)
 	kill()
 
 # physics processs:
@@ -48,8 +47,7 @@ func destroy():
 # - check if collided
 
 func _touched_something() -> void:
-	Log.out("touched something")
-	emit_signal("hit", _follower.position)
+	emit_signal("hit", position + _orb.position + _follower.position)
 	kill()
 
 func _area_overlaps(area: Area2D) -> bool:

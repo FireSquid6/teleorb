@@ -19,8 +19,7 @@ _wall_detector = NodePath("Orb/InWallDetector")
 _orb = NodePath("Orb")
 
 [node name="Orb" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 17
+collision_layer = 16
 
 [node name="Polygon2D" type="Polygon2D" parent="Orb"]
 color = Color(1, 0, 0, 1)

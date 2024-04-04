@@ -11,8 +11,8 @@ entities = NodePath("Entities")
 _orb_scene = ExtResource("2_sovtg")
 _player_scene = ExtResource("3_h55b5")
 
-[node name="EntitySpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://player/orb/orb.tscn", "res://player/player.tscn")
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player/player.tscn")
 spawn_path = NodePath("../Entities")
 
 [node name="Foreground" parent="." instance=ExtResource("2_rsk8g")]
@@ -20,4 +20,4 @@ layer_0/tile_data = PackedInt32Array(458763, 65536, 2, 393227, 458752, 4, 327691
 
 [node name="Entities" type="Node2D" parent="."]
 
-[connection signal="spawned" from="EntitySpawner" to="." method="_on_entity_spawner_spawned"]
+[connection signal="spawned" from="PlayerSpawner" to="." method="_on_entity_spawner_spawned"]

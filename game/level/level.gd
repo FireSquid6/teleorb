@@ -61,7 +61,3 @@ func _remove_player(id: int):
 	if not entities.has_node(str(id)):
 		return
 	entities.get_node(str(id)).queue_free()
-
-
-func _on_entity_spawner_spawned(node: Node) -> void:
-	Log.out("Spawned something")

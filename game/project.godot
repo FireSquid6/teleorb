@@ -61,6 +61,13 @@ jump={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Terrain"
+2d_physics/layer_2="Players"
+2d_physics/layer_3="Spikess"
+2d_physics/layer_5="Orbs"
+
 [rendering]
 
 renderer/rendering_method="mobile"

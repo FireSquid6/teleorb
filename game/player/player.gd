@@ -43,21 +43,21 @@ func throw_orb() -> bool:
 	orb = level.find_entity_by_name(orb_id)
 	Log.out("Found orb: " + str(orb))
 	
-	#orb.connect("hit", _on_orb_hit)
-	#orb.connect("destroyed", _on_orb_destroyed)
+	orb.connect("hit", _on_orb_hit)
+	orb.connect("destroyed", _on_orb_destroyed)
 	orbs_thrown += 1
 	
 
 	return true
 
 
-func _on_orb_hit(position: Vector2):
-	Log.out("hit")
+func _on_orb_hit(pos: Vector2):
+	position = pos
 	
 	_deref_orb()
 
 
-func _on_orb_destroyed(position: Vector2):
+func _on_orb_destroyed(pos: Vector2):
 	Log.out("destroyed")
 	
 	_deref_orb()
