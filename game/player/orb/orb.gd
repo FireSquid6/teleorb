@@ -16,6 +16,7 @@ func _ready():
 	_timer.connect("timeout", _on_timeout)
 
 func throw(pos: Vector2, direction: Vector2, spd: float, lifespan: float):
+	Log.out(str(direction))
 	speed = spd
 	position = pos
 	

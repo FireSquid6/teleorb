@@ -25,7 +25,7 @@ func _add_orb(pos: Vector2, direction: Vector2, orb_speed: float, orb_lifespan: 
 	Log.out("running add orb function on: " + str(multiplayer.get_unique_id()))
 	var orb = _orb_scene.instantiate()
 	
-	orb.throw(pos, Vector2(-1, 0), orb_speed, orb_lifespan)
+	orb.throw(pos, direction, orb_speed, orb_lifespan)
 	entities.add_child(orb, true)
 	orb.name = id
 

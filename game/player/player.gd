@@ -38,7 +38,8 @@ func throw_orb() -> bool:
 	orb_thrown = true
 	
 	var orb_id := str(name) + "-" + str(orbs_thrown)
-	level.add_orb(self, Vector2(-1, 0), orb_id)
+	var direction = (get_global_mouse_position() - position).normalized()
+	level.add_orb(self, direction, orb_id)
 	
 	orb = level.find_entity_by_name(orb_id)
 	Log.out("Found orb: " + str(orb))
@@ -77,7 +78,6 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# players that aren't the multiplayer authority do not do any physics processing
-	# this will be changed later
 	if !is_multiplayer_authority():
 		return
 	_inputs.update()
