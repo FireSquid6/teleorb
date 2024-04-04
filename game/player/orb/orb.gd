@@ -58,9 +58,9 @@ func kill():
 	queue_free()
 
 
-func _on_orb_area_entered(area: Area2D) -> void:
+func _on_orb_area_entered() -> void:
 	_touched_something()
 
 
-func _on_orb_body_entered(body: Node2D) -> void:
+func _on_orb_body_entered() -> void:
 	_touched_something()

@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://b03ejyd2sje7s"]
+
+[ext_resource type="Script" path="res://ui/title_screen/title_screen.gd" id="1_c5qtb"]
+
+[node name="TitleScreen" type="Control" node_paths=PackedStringArray("_text_edit")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c5qtb")
+_text_edit = NodePath("TextEdit")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_top = 344.0
+offset_right = 128.0
+offset_bottom = 384.0
+grow_horizontal = 2
+placeholder_text = "127.0.0.1"
+
+[node name="Direct Connection" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -72.0
+offset_top = 312.0
+offset_right = 75.0
+offset_bottom = 343.0
+grow_horizontal = 2
+text = "Direct Connect"
+
+[node name="Create Server" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_top = 160.0
+offset_right = 128.0
+offset_bottom = 256.0
+grow_horizontal = 2
+text = "Start a Server"
+
+[connection signal="pressed" from="Direct Connection" to="." method="_on_direct_connection_pressed"]
+[connection signal="pressed" from="Create Server" to="." method="_on_create_server_pressed"]

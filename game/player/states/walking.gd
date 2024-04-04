@@ -25,7 +25,6 @@ func on_physics_process(delta: float) -> void:
 
 
 func on_enter() -> void:
-	var inputs = p.get_inputs()
 	p.has_orb = true
 	#inputs.walljump_buffer.cancel()
 	#inputs.jump_buffer.cancel()

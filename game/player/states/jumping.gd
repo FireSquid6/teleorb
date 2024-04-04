@@ -21,9 +21,6 @@ func on_enter() -> void:
 	inputs.walljump_buffer.listen()
 	inputs.jump_buffer.consume()
 
-func on_exit() -> void:
-	var inputs = p.get_inputs()
-
 func on_physics_process(delta: float) -> void:
 	var inputs = p.get_inputs()
 	var stats = p.get_stats()

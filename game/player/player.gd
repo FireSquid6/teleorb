@@ -152,8 +152,6 @@ func _handle_walljump():
 	if not is_on_wall():
 		return
 	
-	var inputs = get_inputs()
-	
 
 func _slow_down(stopping_acceleration: float):
 	if abs(velocity.x) - stopping_acceleration < 0:

@@ -18,6 +18,8 @@ func start_game():
 	
 	if Server.is_dedicated_server:
 		set_ui(preload("res://ui/dedicated_server/dedicated-server.tscn").instantiate())
+	else:
+		set_ui(preload("res://ui/hud/hud.tscn").instantiate())
 
 # TODO: Add all levels to the LevelSpawner node
 
