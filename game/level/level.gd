@@ -15,6 +15,7 @@ func _ready():
 	if not Server.isDedicatedServer:
 		add_player(1)
 
+@rpc("any_peer")
 func add_orb(orb: Orb):
 	print("on player throw orb")
 	$Orbs.add_child(orb)

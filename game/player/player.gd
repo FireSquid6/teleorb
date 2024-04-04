@@ -40,7 +40,8 @@ func throw_orb() -> bool:
 	orb_thrown = true
 	orb = _orb_scene.instantiate()
 	emit_signal("spawn_orb", orb)
-	level.add_orb(orb)
+	
+	level.rpc("add_orb", orb)
 	orb.connect("hit", _on_orb_hit)
 	orb.connect("destroyed", _on_orb_destroyed)
 	

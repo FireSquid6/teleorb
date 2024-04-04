@@ -1,9 +1,10 @@
-extends Area2D
+extends Node2D
 class_name Orb
 
 @export var _follower: CharacterBody2D
 @export var _timer: Timer
 @export var _wall_detector: Area2D
+@export var _orb: Area2D
 
 signal hit(pos: Vector2)
 signal destroyed(pos: Vector2)
@@ -24,10 +25,13 @@ func throw(pos: Vector2, direction: Vector2, spd: float, lifespan: float):
 
 
 func _physics_process(delta) -> void:
-	position += velocity * delta
+	_orb.position += velocity * delta
 	
-	_follower.velocity = (position - _follower.position).normalized() * speed * delta
-	_follower.move_and_slide()
+	if _area_overlaps(_wall_detector):
+		_follower.velocity = (position - _follower.position) / delta
+		_follower.move_and_slide()
+	else:
+		_follower.position = _orb.position
 
 
 func _on_timeout():
@@ -43,7 +47,7 @@ func destroy():
 # - move and slide follower
 # - check if collided
 
-func _touched_something(node) -> void:
+func _touched_something() -> void:
 	print("touched something")
 	emit_signal("hit", _follower.position)
 	kill()
@@ -54,9 +58,10 @@ func _area_overlaps(area: Area2D) -> bool:
 func kill():
 	queue_free()
 
-func _on_body_entered(body) -> void:
-	_touched_something(body)
+
+func _on_orb_area_entered(area: Area2D) -> void:
+	_touched_something()
 
 
-func _on_area_entered(area) -> void:
-	_touched_something(area)
+func _on_orb_body_entered(body: Node2D) -> void:
+	_touched_something()

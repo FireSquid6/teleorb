@@ -12,6 +12,7 @@ spawn_path = NodePath("../Players")
 spawn_limit = 16
 
 [node name="OrbSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player/orb/orb.tscn")
 spawn_path = NodePath("../Orbs")
 spawn_limit = 100
 
