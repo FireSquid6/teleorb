@@ -48,4 +48,5 @@ offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "some information"
-visible_ratio = -0.0625
+visible_characters = 0
+visible_ratio = 0.0

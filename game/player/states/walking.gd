@@ -9,6 +9,7 @@ signal coyote_time
 
 func on_physics_process(delta: float) -> void:
 	var inputs = p.get_inputs()
+	p.has_orb = true
 	if inputs.jump_pressed:
 		fsm.change_state("Jumping")
 		return

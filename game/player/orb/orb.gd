@@ -27,7 +27,7 @@ func _physics_process(delta) -> void:
 	_orb.position += velocity * delta
 	
 	if _area_overlaps(_wall_detector):
-		_follower.velocity = (position - _follower.position) / delta
+		_follower.velocity = (_orb.position - _follower.position) / delta
 		_follower.move_and_slide()
 	else:
 		_follower.position = _orb.position
@@ -47,7 +47,7 @@ func destroy():
 # - check if collided
 
 func _touched_something() -> void:
-	emit_signal("hit", position + _orb.position + _follower.position)
+	emit_signal("hit", _follower.global_position)
 	kill()
 
 func _area_overlaps(area: Area2D) -> bool:
