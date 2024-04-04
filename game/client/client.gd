@@ -14,5 +14,5 @@ func connect_to_server(ip: String):
 
 
 func _on_connect():
-	print("connected to server")
+	Log.out("connected to server")
 	emit_signal("connected")

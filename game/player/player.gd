@@ -7,17 +7,15 @@ class_name Player
 @export var _right_wall_detector: Area2D
 @onready var fsm: FiniteStateMachine = $FiniteStateMachine
 
-var _orb_scene: PackedScene = preload("res://player/orb/orb.tscn")
 var _stats: PlayerStats
 var id := -1  # multiplayer peer id
 var gravity_direction := 1
 
+var orbs_thrown = 0
 var orb_thrown = false
 var orb: Orb = null
 var has_orb = true
 var level: Level
-
-signal spawn_orb(orb: Orb)
 
 func _set_stats(stats: PlayerStats):
 	_stats = stats
@@ -38,25 +36,29 @@ func throw_orb() -> bool:
 	
 	has_orb = false
 	orb_thrown = true
-	orb = _orb_scene.instantiate()
-	emit_signal("spawn_orb", orb)
 	
-	level.rpc("add_orb", orb)
-	orb.connect("hit", _on_orb_hit)
-	orb.connect("destroyed", _on_orb_destroyed)
+	var orb_id := str(name) + "-" + str(orbs_thrown)
+	level.add_orb(self, Vector2(-1, 0), orb_id)
 	
-	orb.throw(position, Vector2(-1, 0), _stats.orb_speed, _stats.orb_lifespan)
+	orb = level.find_entity_by_name(orb_id)
+	Log.out("Found orb: " + str(orb))
+	
+	#orb.connect("hit", _on_orb_hit)
+	#orb.connect("destroyed", _on_orb_destroyed)
+	orbs_thrown += 1
+	
+
 	return true
 
 
 func _on_orb_hit(position: Vector2):
-	print("hit")
+	Log.out("hit")
 	
 	_deref_orb()
 
 
 func _on_orb_destroyed(position: Vector2):
-	print("destroyed")
+	Log.out("destroyed")
 	
 	_deref_orb()
 

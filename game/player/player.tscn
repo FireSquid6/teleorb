@@ -170,5 +170,4 @@ position = Vector2(9, 0)
 shape = SubResource("RectangleShape2D_jipun")
 debug_color = Color(0.576471, 0.384314, 1, 0.419608)
 
-[connection signal="spawn_orb" from="." to="." method="_on_spawn_orb"]
 [connection signal="coyote_time" from="FiniteStateMachine/Walking" to="FiniteStateMachine/Falling" method="_on_walking_coyote_time"]

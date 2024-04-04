@@ -20,7 +20,7 @@ func throw(pos: Vector2, direction: Vector2, spd: float, lifespan: float):
 	position = pos
 	
 	velocity = direction * speed
-	print(velocity)
+	Log.out("Orb position is: " + str(position))
 	_timer.wait_time = lifespan
 
 
@@ -48,7 +48,7 @@ func destroy():
 # - check if collided
 
 func _touched_something() -> void:
-	print("touched something")
+	Log.out("touched something")
 	emit_signal("hit", _follower.position)
 	kill()
 

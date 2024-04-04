@@ -1,41 +1,67 @@
 extends Node2D
 class_name Level
 
+@export var entities: Node2D
+@export var _orb_scene: PackedScene
+@export var _player_scene: PackedScene
 
 func _ready():
 	if not multiplayer.is_server():
 		return
 	
-	multiplayer.peer_connected.connect(add_player)
-	multiplayer.peer_disconnected.connect(remove_player)
+	multiplayer.peer_connected.connect(_add_player)
+	multiplayer.peer_disconnected.connect(_remove_player)
 	
 	for id in multiplayer.get_peers():
-		add_player(id)
+		_add_player(id)
 	
 	if not Server.isDedicatedServer:
-		add_player(1)
+		_add_player(1)
 
-@rpc("any_peer")
-func add_orb(orb: Orb):
-	print("on player throw orb")
-	$Orbs.add_child(orb)
+
+@rpc("any_peer", "call_local", "reliable")
+func _add_orb(pos: Vector2, direction: Vector2, orb_speed: float, orb_lifespan: float, id: String):
+	Log.out("running add orb function on: " + str(multiplayer.get_unique_id()))
+	var orb = _orb_scene.instantiate()
+	
+	orb.throw(pos, Vector2(-1, 0), orb_speed, orb_lifespan)
+	entities.add_child(orb, true)
+	orb.name = id
+
+func add_orb(creator: Player, direction: Vector2, id: String):
+	var stats = creator.get_stats()
+	_add_orb.rpc(creator.position, direction, stats.orb_speed, stats.orb_lifespan, id)
+
+
+func find_entity_by_name(id: String) -> Node:
+	var entities: Array[Node] = entities.get_children()
+	
+	for entity in entities:
+		if entity.name == id:
+			return entity
+	
+	return null
 
 func _exit_tree():
 	if not multiplayer.is_server():
 		return
-	multiplayer.peer_connected.disconnect(add_player)
-	multiplayer.peer_disconnected.disconnect(remove_player)
+	multiplayer.peer_connected.disconnect(_add_player)
+	multiplayer.peer_disconnected.disconnect(_remove_player)
 
 
-func add_player(id: int):
-	var player: Player = preload("res://player/player.tscn").instantiate()
+func _add_player(id: int):
+	var player: Player = _player_scene.instantiate()
 	# Set player id.
 	player.name = str(id)
-	$Players.add_child(player, true)
+	entities.add_child(player, true)
 	
 
 
-func remove_player(id: int):
-	if not $Players.has_node(str(id)):
+func _remove_player(id: int):
+	if not entities.has_node(str(id)):
 		return
-	$Players.get_node(str(id)).queue_free()
+	entities.get_node(str(id)).queue_free()
+
+
+func _on_entity_spawner_spawned(node: Node) -> void:
+	Log.out("Spawned something")

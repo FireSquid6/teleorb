@@ -13,20 +13,21 @@ var running = false
 
 func _init() -> void:
 	var path = _get_json_filepath()
-	print("Server singleton initialized")
+	Log.out("Server singleton initialized")
 	if FileAccess.file_exists(path):
-		print("Found path for dedicated server json: " + path)
+		Log.out("Found path for dedicated server json: " + path)
 		var string = FileAccess.get_file_as_string(path)
 		var serverJson = JSON.parse_string(string)
 		
 		isDedicatedServer = serverJson["enabled"]
 		serverConfig = serverJson
 	else:
-		print("No dedicated server json path found")
+		Log.out("No dedicated server json path found")
 
 func _ready() -> void:
 	if isDedicatedServer and OS.has_feature("dedicated_server"):
-		print("Detected a dedicated server environment. Automatically starting the server.")
+		Log.out("Detected a dedicated server environment. Automatically starting the server.")
+	multiplayer.allow_object_decoding = true
 
 
 func _get_json_filepath():
@@ -38,7 +39,7 @@ func _get_json_filepath():
 
 
 func start_server():
-	print("\nStarting server...")
+	Log.out("\nStarting server...")
 	
 	peer = ENetMultiplayerPeer.new()
 	peer.create_server(PORT, MAX_CLIENTS)
@@ -48,13 +49,13 @@ func start_server():
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
-	print(IP.get_local_addresses())
+	Log.out(str(IP.get_local_addresses()))
 	running = true
 
 
 func peer_connected(id: int):
-	print("Player connected: " + str(id))
+	Log.out("Player connected: " + str(id))
 
 
 func peer_disconnected(id: int):
-	print("Player disconnected: " + str(id))
+	Log.out("Player disconnected: " + str(id))
