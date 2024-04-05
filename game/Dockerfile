@@ -12,6 +12,7 @@ ENV EXPORT_PRESET="Server"
 
 RUN mkdir /buildspace && mkdir /server
 WORKDIR /buildspace
+COPY . .
 
 RUN wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_export_templates.tpz
 RUN wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-${RELEASE_NAME}_linux.x86_64.zip
@@ -28,12 +29,14 @@ RUN mkdir ~/.cache \
 RUN godot -e --quit --display-driver headless
 
 RUN godot --headless --export-release ${EXPORT_PRESET} ${GODOT_GAME_NAME} 
-RUN ls
 RUN mv ${GODOT_GAME_NAME} /server/
+RUN mv teleorb_server.json /server/
 
 # Runtime Stage
-FROM alpine:latest as runtime
+FROM ubuntu:latest as runtime
 COPY --from=build /server /server
 
 WORKDIR /server
-CMD ./${GODOT_GAME_NAME}
+ENV TELEORB_SERVER_JSON_PATH="/server/teleorb_server.json"
+RUN chmod +x teleorb
+ENTRYPOINT ["./teleorb"]

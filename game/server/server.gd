@@ -10,8 +10,7 @@ var is_dedicated_server = false
 var server_config: Dictionary = {}
 var running = false
 
-
-func _init() -> void:
+func _ready() -> void:
 	var path = _get_json_filepath()
 	Log.out("Server singleton initialized")
 	if FileAccess.file_exists(path):
@@ -23,11 +22,11 @@ func _init() -> void:
 		server_config = serverJson
 	else:
 		Log.out("No dedicated server json path found")
-
-func _ready() -> void:
+	
+	
 	if is_dedicated_server and OS.has_feature("dedicated_server"):
 		Log.out("Detected a dedicated server environment. Automatically starting the server.")
-	multiplayer.allow_object_decoding = true
+		start_server()
 
 
 func _get_json_filepath():

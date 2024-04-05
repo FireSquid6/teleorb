@@ -6,8 +6,9 @@ signal connected
 func connect_to_server(ip: String):
 	peer = ENetMultiplayerPeer.new()
 	peer.create_client(ip, 3412)
+	Log.out("Connecting to " + ip)
 	if peer.get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED:
-		OS.alert("Failed to connect to server.")
+		Log.out("Disconnected")
 		return
 	multiplayer.multiplayer_peer = peer
 	multiplayer.connected_to_server.connect(_on_connect)
