@@ -17,5 +17,5 @@ git push origin $VERSION
 # The game is published to github releases
 
 # publishes containers to their respective registries
-publish-containers.sh $VERSION
+# publish-containers.sh $VERSION
 
