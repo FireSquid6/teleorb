@@ -7,5 +7,5 @@ if [ -z "$VERSION" ]; then
 fi
 
 # Game container
-docker build --pull -t registry.digitalocean.com/teleorb/server:$VERSION game
-docker push registry.digitalocean.com/teleorb/server:$VERSION
+docker build --pull -t firesquid/teleorb-server:$VERSION game
+docker push firesquid/teleorb-server:$VERSION
