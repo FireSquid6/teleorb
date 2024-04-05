@@ -38,7 +38,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           generateReleaseNotes: true
           tag: ${{ github.ref_name }}
-        artifacts: ${{ steps.export.outputs.archive_directory }}/*
+          artifacts: ${{ steps.export.outputs.archive_directory }}/*
   publish_containers:
     runs-on: ubuntu-latest
     permissions: write-all
