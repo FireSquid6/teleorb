@@ -12,7 +12,6 @@ var running = false
 
 func _ready() -> void:
 	var path = _get_json_filepath()
-	Log.out("Server singleton initialized")
 	if FileAccess.file_exists(path):
 		Log.out("Found path for dedicated server json: " + path)
 		var string = FileAccess.get_file_as_string(path)
@@ -27,6 +26,7 @@ func _ready() -> void:
 	if is_dedicated_server and OS.has_feature("dedicated_server"):
 		Log.out("Detected a dedicated server environment. Automatically starting the server.")
 		start_server()
+		World.main.start_game()
 
 
 func _get_json_filepath():

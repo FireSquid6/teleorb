@@ -10,6 +10,7 @@ func _ready() -> void:
 
 
 func start_game():
+	Log.out("Starting the game...")
 	get_tree().paused = false
 	
 	if multiplayer.is_server():
@@ -19,6 +20,8 @@ func start_game():
 		set_ui(preload("res://ui/dedicated_server/dedicated-server.tscn").instantiate())
 	else:
 		set_ui(preload("res://ui/hud/hud.tscn").instantiate())
+	
+	Log.out("Game started.")
 
 # TODO: Add all levels to the LevelSpawner node
 

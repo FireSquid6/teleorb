@@ -27,5 +27,6 @@ with nixpkgs; mkShell {
   ];
   shellHook = ''
     export USE_STEAM_RUN=1
+    export PATH=$PATH:$PWD/scripts
   '';
 }

@@ -39,22 +39,3 @@ jobs:
           generateReleaseNotes: true
           tag: ${{ github.ref_name }}
           artifacts: ${{ steps.export.outputs.archive_directory }}/*
-  push_registry:
-    runs-on: ubuntu-latest
-    name: build and push server docker container
-    permissions: read-all
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3.3.0
-      - name: install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITAL_OCEAN_ACCESS_TOKEN }}
-      - name: log in to DO registry
-        run: doctl registry login --expiry-seconds 600
-      - name: build image
-        working-directory: "game"
-        run: docker build --pull -t registry.digitalocean.com/teleorb/server:${{ github.ref_name }} .
-      - name: push image
-        working-directory: "game"
-        run: docker push registry.digitalocean.com/teleorb/server:${{ github.ref_name }}
