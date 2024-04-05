@@ -7,6 +7,8 @@ class_name Main
 func _ready() -> void:
 	World.main = self
 	set_ui(preload("res://ui/title_screen/title_screen.tscn").instantiate())
+	if Server.is_dedicated_server and OS.has_feature("dedicated_server"):
+		start_game()
 
 
 func start_game():

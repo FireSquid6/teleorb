@@ -26,7 +26,6 @@ func _ready() -> void:
 	if is_dedicated_server and OS.has_feature("dedicated_server"):
 		Log.out("Detected a dedicated server environment. Automatically starting the server.")
 		start_server()
-		World.main.start_game()
 
 
 func _get_json_filepath():
