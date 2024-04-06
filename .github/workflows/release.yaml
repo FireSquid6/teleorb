@@ -12,14 +12,14 @@ jobs:
     # Add permission for release creation. Can be made narrower according to your needs
     permissions: write-all
     # Job name, can be anything
-    name: Export Game
+    name: Export Game to Github Releases
     steps:
       # Always include the checkout step so that
       # your project is available for Godot to export
       - name: checkout
         uses: actions/checkout@v3.3.0
 
-      - name: export and publishPush gameserver container to registry game
+      - name: export game
         id: export
         # Use latest version (see releases for all versions)
         uses: firebelley/godot-export@v5.2.0
@@ -46,19 +46,26 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        file: ["Windows.Desktop.zip", "LinuxX11.zip", "macOS.zip", "Server.zip"]
-        channel: ["win", "linux-x11", "mac", "linux-headless"]
+        data: 
+          - file: "Windows.Desktop.zip"
+            channel: "win"
+          - file: "LinuxX11.zip"
+            channel: "linux-x11"
+          - file: "macOS.zip"
+            channel: "mac"
+          - file: "Server.zip"
+            channel: "linux-headless"
     steps:
       - name: Download zip file
-        run: wget https://github.com/firesquid6/teleorb/releases/download/${{ github.ref_name }}/${{ matrix.file }} -o ./${{ matrix.file }}
+        run: wget https://github.com/firesquid6/teleorb/releases/download/${{ github.ref_name }}/${{ matrix.data.file }} -o ./${{ matrix.data.file }}
       - name: Publish to itch.io
         uses: KikimoraGames/itch-publish@v0.0.3
         with:
           butlerApiKey: ${{ secrets.BUTLER_API_KEY }}
-          gameData: ./${{ matrix.file }}
+          gameData: ./${{ matrix.data.file }}
           itchUsername: firesquid
           itchGameId: teleorb
-          buildChannel: ${{ matrix.chanel }}
+          buildChannel: ${{ matrix.data.chanel }}
           buildNumber: ${{ github.ref_name }}
   publish_containers:
     runs-on: ubuntu-latest
