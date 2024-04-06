@@ -39,6 +39,30 @@ jobs:
           generateReleaseNotes: true
           tag: ${{ github.ref_name }}
           artifacts: ${{ steps.export.outputs.archive_directory }}/*
+  publish_to_itch:
+    runs-on: ubuntu-latest
+    needs: export_game
+    name: Publish Game to Itch.io
+    strategy:
+    fail-fast: true
+    matrix:
+      channel:
+        file: ["Windows.Desktop.zip", "LinuxX11.zip", "macOS.zip", "Server.zip"]
+        channel: ["win", "linux-x11", "mac", "linux-headless"]
+    steps:
+      - name: Download zip file
+        run: wget https://github.com/firesquid6/teleorb/releases/download/${{ github.ref_name }}/${{ matrix.file }} -o ./${{ matrix.file }}
+      - name: Publish to itch.io
+        uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          butlerApiKey: ${{ secrets.BUTLER_API_KEY }}
+          gameData: ./${{ matrix.file }}
+          itchUsername: firesquid
+          itchGameId: teleorb
+          buildChannel: ${{ matrix.chanel }}
+          buildNumber: ${{ github.ref_name }}
+
+
   publish_containers:
     runs-on: ubuntu-latest
     permissions: write-all
