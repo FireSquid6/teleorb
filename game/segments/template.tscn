@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ca2qxtljhdpl8"]
+
+[ext_resource type="PackedScene" uid="uid://wbgjoas1yy0d" path="res://components/objects/endpoint.tscn" id="1_f3ttn"]
+[ext_resource type="PackedScene" uid="uid://28qdcfpuvdkm" path="res://components/tilesets/foreground/foreground.tscn" id="2_20sxp"]
+
+[node name="Segment" type="Node2D"]
+
+[node name="Startpoint" parent="." instance=ExtResource("1_f3ttn")]
+
+[node name="Endpoint" parent="." instance=ExtResource("1_f3ttn")]
+position = Vector2(200, 0)
+
+[node name="Foreground" parent="." instance=ExtResource("2_20sxp")]
