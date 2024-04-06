@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://wbgjoas1yy0d"]
+
+[node name="Endpoint" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.427451, 0.329412, 0.0156863, 0.556863)
+polygon = PackedVector2Array(0, 0, 0, 64, 16, 64, 16, 0)
