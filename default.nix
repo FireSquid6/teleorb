@@ -14,12 +14,15 @@ with nixpkgs; mkShell {
   buildInputs = [
     unstable.bun
     nodejs_20
-    flyctl
+
     libgcc
+
+    flyctl
+    doctl
 
     wget
     unzip
-    doctl
+
 
     patchelf
     # You'll also need Godot 4 installed if you're making the server or the game

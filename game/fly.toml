@@ -1,0 +1,26 @@
+# fly.toml app configuration file generated for teleorb on 2024-04-05T15:55:29-05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'teleorb'
+primary_region = 'dfw'
+
+[build]
+
+
+[[services]]
+  internal_port = 3412
+  protocol = "tcp"
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[services.ports]]
+  port = 3412
+
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
