@@ -10,12 +10,3 @@ fi
 
 git tag -a $1 -m "version $VERSION"
 git push origin $VERSION
-
-
-
-# CI for exporting game is handled by github actions
-# The game is published to github releases
-
-# publishes containers to their respective registries
-# publish-containers.sh $VERSION
-

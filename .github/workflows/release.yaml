@@ -44,11 +44,11 @@ jobs:
     needs: export_game
     name: Publish Game to Itch.io
     strategy:
-    fail-fast: true
-    matrix:
-      channel:
-        file: ["Windows.Desktop.zip", "LinuxX11.zip", "macOS.zip", "Server.zip"]
-        channel: ["win", "linux-x11", "mac", "linux-headless"]
+      fail-fast: true
+      matrix:
+        channel:
+          file: ["Windows.Desktop.zip", "LinuxX11.zip", "macOS.zip", "Server.zip"]
+          channel: ["win", "linux-x11", "mac", "linux-headless"]
     steps:
       - name: Download zip file
         run: wget https://github.com/firesquid6/teleorb/releases/download/${{ github.ref_name }}/${{ matrix.file }} -o ./${{ matrix.file }}
@@ -61,8 +61,6 @@ jobs:
           itchGameId: teleorb
           buildChannel: ${{ matrix.chanel }}
           buildNumber: ${{ github.ref_name }}
-
-
   publish_containers:
     runs-on: ubuntu-latest
     permissions: write-all
