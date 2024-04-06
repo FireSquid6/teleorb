@@ -58,7 +58,7 @@ func _on_orb_hit(pos: Vector2):
 	_deref_orb()
 
 
-func _on_orb_destroyed(pos: Vector2):
+func _on_orb_destroyed(_pos: Vector2):
 	Log.out("destroyed")
 	
 	_deref_orb()
