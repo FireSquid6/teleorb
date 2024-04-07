@@ -73,7 +73,6 @@ func _deref_orb():
 func _ready() -> void:
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
-		$Sprite2D.modulate = Color(0, 1, 0)
 	$Label.text = str(name)
 
 func _physics_process(delta: float) -> void:

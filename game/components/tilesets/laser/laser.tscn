@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://enciv882g740"]
+
+[ext_resource type="TileSet" uid="uid://bmnxp0xt5n63n" path="res://components/tilesets/laser/laser.tres" id="1_m0faq"]
+
+[node name="Laser" type="TileMap"]
+texture_filter = 3
+tile_set = ExtResource("1_m0faq")
+format = 2

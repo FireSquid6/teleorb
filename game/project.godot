@@ -66,8 +66,10 @@ jump={
 
 2d_physics/layer_1="Terrain"
 2d_physics/layer_2="Players"
-2d_physics/layer_3="Spikess"
+2d_physics/layer_3="Spikes"
+2d_physics/layer_4="Photowalls"
 2d_physics/layer_5="Orbs"
+2d_physics/layer_6="Lasers"
 
 [rendering]
 

@@ -35,9 +35,9 @@ func add_orb(creator: Player, direction: Vector2, id: String):
 
 
 func find_entity_by_name(id: String) -> Node:
-	var entities: Array[Node] = entities.get_children()
+	var nodes: Array[Node] = entities.get_children()
 	
-	for entity in entities:
+	for entity in nodes:
 		if entity.name == id:
 			return entity
 	
