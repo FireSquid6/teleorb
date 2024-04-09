@@ -21,9 +21,9 @@ func _physics_process(_delta: float) -> void:
 	
 	var new_anim = process_animation()
 	if animation != new_anim:
-		print("Changed animation")
-		animation = new_anim
+		play(new_anim)
 		
+
 func process_animation() -> String:
 	var on_wall = player.is_on_wall()
 	var moving = player.velocity.length() > 0

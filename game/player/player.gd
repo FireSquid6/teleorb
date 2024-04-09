@@ -73,7 +73,6 @@ func _deref_orb():
 func _ready() -> void:
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
-	$Label.text = str(name)
 
 func _physics_process(delta: float) -> void:
 	# players that aren't the multiplayer authority do not do any physics processing
@@ -84,7 +83,6 @@ func _physics_process(delta: float) -> void:
 	if _inputs.throw_pressed:
 		throw_orb()
 	fsm.physics_process(delta)
-	$Label.text = str(velocity.x) + "\n" + str(velocity.y) + "\n" + str(fsm.current_state.name)
 	
 	move_and_slide()
 
