@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ca2qxtljhdpl8"]
+[gd_scene load_steps=5 format=3 uid="uid://ca2qxtljhdpl8"]
 
 [ext_resource type="PackedScene" uid="uid://wbgjoas1yy0d" path="res://components/objects/endpoint.tscn" id="1_f3ttn"]
 [ext_resource type="PackedScene" uid="uid://28qdcfpuvdkm" path="res://components/tilesets/foreground/foreground.tscn" id="2_20sxp"]
+[ext_resource type="PackedScene" uid="uid://chhu7mi7oix2k" path="res://components/tilesets/spikes/spikes.tscn" id="3_p4sqg"]
+[ext_resource type="PackedScene" uid="uid://enciv882g740" path="res://components/tilesets/laser/laser.tscn" id="4_lsut5"]
 
 [node name="Segment" type="Node2D"]
 
@@ -11,3 +13,8 @@
 position = Vector2(200, 0)
 
 [node name="Foreground" parent="." instance=ExtResource("2_20sxp")]
+
+[node name="Spikes" parent="." instance=ExtResource("3_p4sqg")]
+
+[node name="Laser" parent="." instance=ExtResource("4_lsut5")]
+layer_0/tile_data = PackedInt32Array(589827, 0, 2, 458755, 0, 1, 393219, 0, 0, 524291, 0, 1)

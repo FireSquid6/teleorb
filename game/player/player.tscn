@@ -271,14 +271,6 @@ zoom = Vector2(2, 2)
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_jg22j")
 
-[node name="Label" type="Label" parent="."]
-offset_left = -46.0
-offset_top = -63.0
-offset_right = 46.0
-offset_bottom = -27.0
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
 script = ExtResource("3_g75xk")
 current_state = NodePath("Falling")

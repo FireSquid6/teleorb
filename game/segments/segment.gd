@@ -1,5 +1,5 @@
 extends Resource
-
+class_name Segment
 
 enum BIOMES {
 	CAVE
