@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Segment" load_steps=3 format=3 uid="uid://d1fam3r44bnml"]
+
+[ext_resource type="PackedScene" uid="uid://dh1trrohrmyyd" path="res://segments/004.tscn" id="1_qq2it"]
+[ext_resource type="Script" path="res://segments/segment.gd" id="1_ve7lk"]
+
+[resource]
+script = ExtResource("1_ve7lk")
+biome = 0
+scene = ExtResource("1_qq2it")
+name = "Fourth Segment"

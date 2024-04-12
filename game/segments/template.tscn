@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://enciv882g740" path="res://components/tilesets/laser/laser.tscn" id="4_lsut5"]
 
 [node name="Segment" type="Node2D"]
+texture_filter = 1
 
 [node name="Startpoint" parent="." instance=ExtResource("1_f3ttn")]
 
@@ -17,4 +18,3 @@ position = Vector2(200, 0)
 [node name="Spikes" parent="." instance=ExtResource("3_p4sqg")]
 
 [node name="Laser" parent="." instance=ExtResource("4_lsut5")]
-layer_0/tile_data = PackedInt32Array(589827, 0, 2, 458755, 0, 1, 393219, 0, 0, 524291, 0, 1)
