@@ -68,6 +68,7 @@ func _remove_player(id: int):
 		return
 	entities.get_node(str(id)).queue_free()
 
+
 class Section:
 	var biome: Segment.BIOMES
 	var segments: Array[Segment]
@@ -95,10 +96,13 @@ class Section:
 			if i % 2 == 0:
 				var index = floor(i / 2)
 				var segment: Segment = segments[index]
+				print(index)
+				print(segment.name)
+				print(segment.scene)
 				nodes.append(segment.scene.instantiate())
 			else:
 				nodes.append(transition_scene.instantiate())
-		
+		print(nodes)
 		for node in nodes:
 			level.add_child(node)
 			var startpoint_node: Node2D = null
@@ -114,11 +118,20 @@ class Section:
 			assert(endpoint_node != null)
 			assert(startpoint_node != null)
 			
+			to_free.append(startpoint_node)
+			to_free.append(endpoint_node)
+			
 			# spawn the segment and move it to the proper location
 			var difference = startpoint_node.position
-			node.position = next_start + difference
-			
-			next_start = node.position + node.position
+			node.position = next_start - difference
+			print("new spawn")
+			print(difference)
+			print(next_start)
+			print(node.position)
+			next_start = node.position + endpoint_node.position
+		
+		for node in to_free:
+			node.queue_free()
 
 
 
