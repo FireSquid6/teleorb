@@ -21,6 +21,8 @@ All deployments are done through [fly.io](https://fly.io)
 
 # Versioning
 
+Semver doesn't really make sense for a game that doesn't expose a public interface. We use a custom versioning system.
+
 Versions look like the following:
 
 ```
@@ -35,9 +37,4 @@ beta-1-0  # you always need a trailing 0
 
 ```
 
-`HOTFIX` changes every time a small patch is made and resets whenver `VERSION` increases. `VERSION` increases whenever new features are added and resets whenever `ERA` changes. `ERA` changes whenever I feel like it.
-
-## Era naming
-
-- If it's a greek letter (alpha, beta, etc), it's a prelrelease
-- If it's a greek god (zeus, athena, zephyr), it's a
+`HOTFIX` changes every time a small patch is made and resets whenver `VERSION` increases. `VERSION` increases whenever new features are added and resets whenever `ERA` changes. `ERA` changes whenever I feel like it. Eras typically move up by using greek letters.
