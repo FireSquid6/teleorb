@@ -9,9 +9,10 @@
 texture_filter = 1
 
 [node name="Startpoint" parent="." instance=ExtResource("1_f3ttn")]
+position = Vector2(-16, 0)
 
 [node name="Endpoint" parent="." instance=ExtResource("1_f3ttn")]
-position = Vector2(200, 0)
+position = Vector2(832, 0)
 
 [node name="Foreground" parent="." instance=ExtResource("2_20sxp")]
 

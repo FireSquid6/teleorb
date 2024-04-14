@@ -5,7 +5,7 @@ class_name Level
 @export var _orb_scene: PackedScene
 @export var _player_scene: PackedScene
 @export var segments: Array[Segment]
-
+@export var spawnpoint: Node2D
 
 func _ready():
 	World.curret_level = self
@@ -59,6 +59,7 @@ func _add_player(id: int):
 	var player: Player = _player_scene.instantiate()
 	# Set player id.
 	player.name = str(id)
+	player.position = spawnpoint.position
 	entities.add_child(player, true)
 	
 
