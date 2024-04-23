@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://28qdcfpuvdkm"]
+
+[ext_resource type="TileSet" uid="uid://c6aevinp8be5h" path="res://components/tilesets/foreground/foreground.tres" id="1_c6bm4"]
+
+[node name="Foreground" type="TileMap"]
+texture_filter = 3
+tile_set = ExtResource("1_c6bm4")
+format = 2

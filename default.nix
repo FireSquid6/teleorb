@@ -14,12 +14,15 @@ with nixpkgs; mkShell {
   buildInputs = [
     unstable.bun
     nodejs_20
-    flyctl
+
     libgcc
+
+    flyctl
+    doctl
 
     wget
     unzip
-    doctl
+
 
     patchelf
     docker  # v24.0.5 
@@ -31,3 +34,4 @@ with nixpkgs; mkShell {
     export PATH=$PATH:$PWD/scripts
   '';
 }
+

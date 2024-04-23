@@ -58,7 +58,7 @@ func _on_orb_hit(pos: Vector2):
 	_deref_orb()
 
 
-func _on_orb_destroyed(pos: Vector2):
+func _on_orb_destroyed(_pos: Vector2):
 	Log.out("destroyed")
 	
 	_deref_orb()
@@ -73,8 +73,6 @@ func _deref_orb():
 func _ready() -> void:
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
-		$Sprite2D.modulate = Color(0, 1, 0)
-	$Label.text = str(name)
 
 func _physics_process(delta: float) -> void:
 	# players that aren't the multiplayer authority do not do any physics processing
@@ -85,7 +83,6 @@ func _physics_process(delta: float) -> void:
 	if _inputs.throw_pressed:
 		throw_orb()
 	fsm.physics_process(delta)
-	$Label.text = str(velocity.x) + "\n" + str(velocity.y) + "\n" + str(fsm.current_state.name)
 	
 	move_and_slide()
 
