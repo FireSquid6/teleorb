@@ -17,51 +17,66 @@ function generateRandom(): string {
 const secret = "super secret text. This is probably not how you do security."
 
 export const app = new Elysia()
-  .state("gameservers", [] as GameServer[])
-  .state("keys", new Map<string, string>())
-  .get("/gameserver/:id", ({ set, params: { id }, store }): GameServer | void => {
-    for (const gameserver of store.gameservers) {
-      if (gameserver.id === id) {
-        set.status = 200
-        return gameserver
-      }
+.state("gameservers", [] as GameServer[])
+.state("keys", new Map<string, string>())
+.get("/gameservers/:id", ({ set, params: { id }, store }): GameServer | undefined  => {
+  for (const gameserver of store.gameservers) {
+    if (gameserver.id === id) {
+      set.status = 200
+      return gameserver
     }
+  }
 
-    set.status = 404
-  }, {
+  set.status = 404
+}, {
     params: t.Object({
       id: t.String()
     })
   })
-  .get("/gameservers", ({ store }): GameServer[] => {
-    return store.gameservers
-  })
-  .post("/gameservers", async ({ store, set, body }): Promise<{ key: string } | void> => {
+.get("/gameservers", ({ store }): GameServer[] => {
+  return store.gameservers
+})
+.delete("/gameservers/:id", async ({ store, set, body, params: {id} } ) => {
+  if (id !== store.keys.get(body.key)) {
+    set.status = 401
+    await new Promise((resolve) => setTimeout(resolve, 5000))
+  }
+  
 
-    if (secret !== body.secret) {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      set.status = 401
-      return
-    }
-
-    const key = generateRandom()
-    const id = generateRandom()
-
-    store.gameservers.push({
-      id,
-      name: body.name,
-      ip: body.ip,
-      port: body.port,
-      httpUrl: body.httpUrl,
+}, {
+    body: t.Object({
+      key: t.String(),
+    }),
+    params: t.Object({
+      id: t.String()
     })
+  })
+.post("/gameservers", async ({ store, set, body }): Promise<{ key: string, id: string } | undefined> => {
 
-    store.keys.set(key, key)
+  if (secret !== body.secret) {
+    await new Promise((resolve) => setTimeout(resolve, 5000))
+    set.status = 401
+    return
+  }
+
+  const key = generateRandom()
+  const id = generateRandom()
+
+  store.gameservers.push({
+    id,
+    name: body.name,
+    ip: body.ip,
+    port: body.port,
+    httpUrl: body.httpUrl,
+  })
+
+  store.keys.set(key, key)
 
 
-    return {
-      key
-    }
-  }, {
+  return {
+    key, id
+  }
+}, {
     body: t.Object({
       name: t.String(),
       ip: t.String(),
@@ -72,11 +87,3 @@ export const app = new Elysia()
   })
 
 export type App = typeof app
-
-function startApp() {
-  app.listen(6100, () => {
-    console.log("Listening on 6100")
-  })
-}
-
-startApp()
