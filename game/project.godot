@@ -25,7 +25,7 @@ World="*res://world/world.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/asset_dock/plugin.cfg", "res://addons/finite_state_machine/plugin.cfg", "res://addons/wakatime/plugin.cfg")
+enabled=PackedStringArray("res://addons/finite_state_machine/plugin.cfg", "res://addons/wakatime/plugin.cfg")
 
 [input]
 
