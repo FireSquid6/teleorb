@@ -5,7 +5,8 @@ class_name ServerVars
 
 var var_names = [
 	["TELEORB_SERVER_ENABLED", "enabled", "false"],
-	["TELEORB_SERVER_LEVEL", "level", "000-000-000-000|001-001-001-001|002-002-002-002|003-003-003-003"]
+	["TELEORB_SERVER_LEVEL", "level", "000-000-000-000|001-001-001-001|002-002-002-002|003-003-003-003"],
+	["TELEORB_GATEKEEPER_SECRET", "gatekeeper_secret", "none"],
 ]
 
 var vars := {}

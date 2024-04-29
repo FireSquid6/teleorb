@@ -9,6 +9,7 @@ var peer = null
 var is_dedicated_server = false
 var server_config: Dictionary = {}
 var running = false
+var http_server: HttpServer
 
 func _ready() -> void:
 	var path = _get_json_filepath()
