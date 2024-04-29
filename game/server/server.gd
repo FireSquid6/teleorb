@@ -1,7 +1,7 @@
 extends Node
 
 
-const PORT = 3412
+const PORT = 5000
 const MAX_CLIENTS = 24  # subject to change
 const ENV_VARIABLE = "TELEORB_SERVER_JSON_PATH"
 
