@@ -7,11 +7,9 @@ class_name Main
 func _ready() -> void:
 	World.main = self
 	set_ui(preload("res://ui/title_screen/title_screen.tscn").instantiate())
-	if Server.is_dedicated_server and OS.has_feature("dedicated_server"):
-		start_game()
 
 
-func start_game():
+func start_game(level: String):
 	Log.out("Starting the game...")
 	get_tree().paused = false
 	
@@ -38,3 +36,9 @@ func change_level(scene: PackedScene):
 		level_container.remove_child(c)
 		c.queue_free()
 	level_container.add_child(scene.instantiate())
+
+
+func stop_game():
+	for c in level_container.get_children():
+		level_container.remove_child(c)
+		c.queue_free()
