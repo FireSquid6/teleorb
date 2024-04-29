@@ -5,8 +5,8 @@ class_name ServerVars
 
 var var_names = [
 	["TELEORB_SERVER_ENABLED", "enabled", "false"],
-	["TELEORB_SERVER_LEVEL", "level", "000-000-000-000|001-001-001-001|002-002-002-002|003-003-003-003"],
 	["TELEORB_GATEKEEPER_SECRET", "gatekeeper_secret", "none"],
+	["TELEORB_SERVER_SECRET", "server_secret", "none"],
 ]
 
 var vars := {}
@@ -23,6 +23,11 @@ func get_value(name: String) -> String:
 	if vars.has(name):
 		return vars[name]
 	return ""
+
+
+func get_bool(name: String) -> bool:
+	var val = get_value(name)
+	return val == "true" or val == "1"
 
 
 func set_value(name: String, value: String) -> void:
