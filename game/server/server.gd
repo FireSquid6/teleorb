@@ -8,7 +8,7 @@ const ENV_VARIABLE = "TELEORB_SERVER_JSON_PATH"
 var peer = null
 var is_dedicated_server = false
 var running = false
-var http_server: HttpServer
+@export var http_server: HttpServer
 var vars: ServerVars
 
 var peers: Array[int] = []
@@ -33,6 +33,7 @@ func start_server(level: String):
 	Log.out(str(IP.get_local_addresses()))
 	
 	World.main.start_game(level)
+	http_server.start()
 	running = true
 
 

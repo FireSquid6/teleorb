@@ -4,17 +4,19 @@ class_name Main
 @export var ui_canvas: CanvasLayer
 @export var level_container: Node
 
+var level_scene = preload("res://level/level.tscn")
+
 func _ready() -> void:
 	World.main = self
 	set_ui(preload("res://ui/title_screen/title_screen.tscn").instantiate())
 
 
-func start_game(level: String):
+func start_game(level: String = ""):
 	Log.out("Starting the game...")
 	get_tree().paused = false
 	
 	if multiplayer.is_server():
-		change_level.call_deferred(load("res://level/level.tscn"))
+		change_level.call_deferred()
 	
 	if Server.is_dedicated_server:
 		set_ui(preload("res://ui/dedicated_server/dedicated-server.tscn").instantiate())
@@ -31,11 +33,11 @@ func set_ui(node: Node):
 		c.queue_free()
 	ui_canvas.add_child(node)
 
-func change_level(scene: PackedScene):
+func change_level():
 	for c in level_container.get_children():
 		level_container.remove_child(c)
 		c.queue_free()
-	level_container.add_child(scene.instantiate())
+	level_container.add_child(level_scene.instantiate())
 
 
 func stop_game():

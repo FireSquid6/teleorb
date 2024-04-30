@@ -4,7 +4,7 @@ class_name TeleorbHttpServer
 signal start_on_level(level: String)
 
 
-func _ready():
+func startup():
 	server_identifier = "Teleorb Dedicated Server"
 	register_router("/", RootRouter.new())
 	register_router("/level", LevelRouter.new())

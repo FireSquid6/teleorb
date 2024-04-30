@@ -11,5 +11,5 @@ func _on_direct_connection_pressed() -> void:
 	World.main.start_game()
 
 func _on_create_server_pressed() -> void:
-	Server.start_server()
+	Server.start_server("")
 	World.main.start_game()

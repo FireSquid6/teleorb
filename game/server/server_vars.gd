@@ -14,7 +14,7 @@ var vars := {}
 func _init():
 	for var_name in var_names:
 		if OS.get_environment(var_name[0]) == "":
-			vars[var_name[1]] = vars[var_name[2]]
+			vars[var_name[1]] = var_name[2]
 		else:
 			vars[var_name[1]] = OS.get_environment(var_name[0])
 

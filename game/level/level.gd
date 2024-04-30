@@ -5,9 +5,9 @@ class_name Level
 @export var _orb_scene: PackedScene
 @export var _player_scene: PackedScene
 @export var segments: Array[Segment]
-@export var spawnpoint: Node2D
+@export var startpoint: Node2D
 
-func _ready():
+func start():
 	World.curret_level = self
 	if not multiplayer.is_server():
 		return
@@ -22,8 +22,7 @@ func _ready():
 		_add_player(1)
 	
 	var section = Section.new(Segment.BIOMES.CAVE, segments)
-	section.spawn_in(self, $Startpoint.position)
-
+	section.spawn_in(self, startpoint.position)
 
 @rpc("any_peer", "call_local", "reliable")
 func _add_orb(pos: Vector2, direction: Vector2, orb_speed: float, orb_lifespan: float, id: String):
@@ -59,7 +58,6 @@ func _add_player(id: int):
 	var player: Player = _player_scene.instantiate()
 	# Set player id.
 	player.name = str(id)
-	player.position = spawnpoint.position
 	entities.add_child(player, true)
 	
 
@@ -81,7 +79,6 @@ class Section:
 	
 	func spawn_in(level: Level, start_position: Vector2):
 		randomize()
-		print(segments)
 		segments.shuffle()
 		var to_free: Array[Node] = []
 		var next_start := start_position
@@ -97,13 +94,9 @@ class Section:
 			if i % 2 == 0:
 				var index = floor(i / 2)
 				var segment: Segment = segments[index]
-				print(index)
-				print(segment.name)
-				print(segment.scene)
 				nodes.append(segment.scene.instantiate())
 			else:
 				nodes.append(transition_scene.instantiate())
-		print(nodes)
 		for node in nodes:
 			level.add_child(node)
 			var startpoint_node: Node2D = null
@@ -125,10 +118,6 @@ class Section:
 			# spawn the segment and move it to the proper location
 			var difference = startpoint_node.position
 			node.position = next_start - difference
-			print("new spawn")
-			print(difference)
-			print(next_start)
-			print(node.position)
 			next_start = node.position + endpoint_node.position
 		
 		for node in to_free:
