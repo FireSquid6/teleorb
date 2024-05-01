@@ -70,6 +70,30 @@ func _remove_player(id: int):
 	entities.get_node(str(id)).queue_free()
 
 
+class Course:
+	var sections: Array[Section]
+	
+	func _init(level_string: String):
+		# todo: validate the level string
+		var section_codes: Array[String] = level_string.split("|")
+		
+		for section_code in section_codes:
+			var segment_codes = section_code.split("-")
+			var segments: Array[Segment] = []
+			
+			for segment_code in segment_codes:
+				# todo: error checking
+				var segment: Segment = load("res://segments/" + segment_code + ".tres")
+				segments.append(segment)
+			
+			# todo: validate that all biomes are the same
+			var biome = segments[0].biome
+			var section = Section.new(biome, segments)
+	
+	func spawn_in():
+		pass
+
+
 class Section:
 	var biome: Segment.BIOMES
 	var segments: Array[Segment]
@@ -80,8 +104,6 @@ class Section:
 		segments = s
 	
 	func spawn_in(level: Level, start_position: Vector2):
-		randomize()
-		segments.shuffle()
 		var to_free: Array[Node] = []
 		var next_start := start_position
 		
@@ -124,10 +146,4 @@ class Section:
 		
 		for node in to_free:
 			node.queue_free()
-
-
-
-
-
-
 
