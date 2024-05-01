@@ -13,7 +13,11 @@ func startup():
 
 class RootRouter extends HttpRouter:
 	func handle_get(req: HttpRequest, res: HttpResponse):
-		res.send(200, "<h1>Hello, world!</h1>")
+		var status = {
+			"level": World.curret_level.level_string,
+			"player_count": len(Server.peers)
+		}
+		res.send(200, JSON.stringify(status))
 
 
 class LevelRouter extends HttpRouter:

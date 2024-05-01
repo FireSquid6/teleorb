@@ -6,8 +6,10 @@ class_name Level
 @export var _player_scene: PackedScene
 @export var segments: Array[Segment]
 @export var startpoint: Node2D
+var level_id: String = ""
 
-func start():
+func start(level: String = ""):
+	level_id = level
 	World.curret_level = self
 	if not multiplayer.is_server():
 		return

@@ -5,10 +5,11 @@ const PORT = 5000
 const MAX_CLIENTS = 24  # subject to change
 const ENV_VARIABLE = "TELEORB_SERVER_JSON_PATH"
 
+@export var http_server: HttpServer
+
 var peer = null
 var is_dedicated_server = false
 var running = false
-@export var http_server: HttpServer
 var vars: ServerVars
 
 var peers: Array[int] = []
