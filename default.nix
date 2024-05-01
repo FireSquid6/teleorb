@@ -11,7 +11,7 @@ in
 { nixpkgs ? import <nixpkgs> { } }:
 with nixpkgs; mkShell {
   DOCKER_BUILDKIT = "1";
-  buildInputs = [
+  packages = [
     unstable.bun
     nodejs_20
 
