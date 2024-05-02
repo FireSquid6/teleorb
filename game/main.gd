@@ -21,11 +21,14 @@ func start_game(level: String):
 	if Server.is_dedicated_server:
 		set_ui(preload("res://ui/dedicated_server/dedicated-server.tscn").instantiate())
 	else:
-		set_ui(preload("res://ui/hud/hud.tscn").instantiate())
-	
-	Log.out("Game started.")
+		join_game()
 
-# TODO: Add all levels to the LevelSpawner node
+
+func join_game():
+	get_tree().paused = false
+	set_ui(preload("res://ui/hud/hud.tscn").instantiate())
+	Log.out("Game joined.")
+
 
 func set_ui(node: Node):
 	for c in ui_canvas.get_children():
@@ -39,7 +42,7 @@ func _reset_level(level_string: String):
 		c.queue_free()
 	var level: Level = level_scene.instantiate()
 	level_container.add_child(level)
-	level.start(level_string)
+	level.start.call_deferred(level_string)
 
 
 func stop_game():

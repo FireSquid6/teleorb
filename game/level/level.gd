@@ -8,10 +8,11 @@ class_name Level
 @export var startpoint: Node2D
 var level_id: String = ""
 
-func start(level: String = ""):
+func start(level: String):
 	level_id = level
 	World.curret_level = self
 	if not multiplayer.is_server():
+		Log.fatal("tried to create level while not the server")
 		return
 	
 	multiplayer.peer_connected.connect(_add_player)
@@ -23,8 +24,10 @@ func start(level: String = ""):
 	if not Server.is_dedicated_server:
 		_add_player(1)
 	
-	var section = Section.new(Segment.BIOMES.CAVE, segments)
-	section.spawn_in(self, startpoint.position)
+	print(level)
+	var course = Course.new(level)
+	course.spawn_in(self, startpoint.position)
+
 
 @rpc("any_peer", "call_local", "reliable")
 func _add_orb(pos: Vector2, direction: Vector2, orb_speed: float, orb_lifespan: float, id: String):
@@ -74,15 +77,15 @@ class Course:
 	var sections: Array[Section]
 	
 	func _init(level_string: String):
-		# todo: validate the level string
-		var section_codes: Array[String] = level_string.split("|")
+		validate_level_string(level_string)
+		var section_codes := level_string.split("|")
 		
 		for section_code in section_codes:
-			var segment_codes = section_code.split("-")
+			var segment_codes := section_code.split("-")
 			var segments: Array[Segment] = []
 			
 			for segment_code in segment_codes:
-				# todo: error checking
+				# TODO: error handling here
 				var segment: Segment = load("res://segments/" + segment_code + ".tres")
 				segments.append(segment)
 			
@@ -90,26 +93,35 @@ class Course:
 			var biome = segments[0].biome
 			var section = Section.new(biome, segments)
 	
-	func spawn_in():
-		pass
+	func spawn_in(level: Level, start_position: Vector2):
+		var current_position = start_position
+		for section in sections:
+			current_position = level.spawn_in(level, current_position)
+			# TODO: actually take biomes into account
+			current_position = level.add_transition_segment([Segment.BIOMES.CAVE, Segment.BIOMES.CAVE], current_position)
+	
+	static func validate_level_string(level: String) -> void:
+		var sections = level.split("|")
+		if len(sections) != 4:
+			Log.fatal("tried to spawn level with more or less than 4 sections: " + level)
+		
+		for section in sections:
+			var segments = section.split("-")
+			if len(segments) != 4:
+				Log.fatal("tried to spawn improper level: " + level)
 
 
 class Section:
 	var biome: Segment.BIOMES
 	var segments: Array[Segment]
 	
-	
 	func _init(b: Segment.BIOMES, s: Array[Segment]):
 		biome = b
 		segments = s
 	
-	func spawn_in(level: Level, start_position: Vector2):
+	func spawn_in(level: Level, start_position: Vector2) -> Vector2:
 		var to_free: Array[Node] = []
 		var next_start := start_position
-		
-		# we need to make sure all segments have the same biome
-		for segment in segments:
-			assert(segment.biome == biome) 
 		
 		var transition_scene: PackedScene = Segment.transitions[segments[0].biome]
 		var nodes: Array[Node2D] = []
@@ -121,29 +133,36 @@ class Section:
 				nodes.append(segment.scene.instantiate())
 			else:
 				nodes.append(transition_scene.instantiate())
-		for node in nodes:
-			level.add_child(node)
-			var startpoint_node: Node2D = null
-			var endpoint_node: Node2D = null
-			
-			for c in node.get_children():
-				if c.name == "Startpoint":
-					startpoint_node = c
-				if c.name == "Endpoint":
-					endpoint_node = c
-			
-			# if these are failing, a segment is improperly configured
-			assert(endpoint_node != null)
-			assert(startpoint_node != null)
-			
-			to_free.append(startpoint_node)
-			to_free.append(endpoint_node)
-			
-			# spawn the segment and move it to the proper location
-			var difference = startpoint_node.position
-			node.position = next_start - difference
-			next_start = node.position + endpoint_node.position
 		
-		for node in to_free:
-			node.queue_free()
+		
+		for node in nodes:
+			next_start = level.add_segment(node, next_start)
+		
+		return next_start
 
+
+func add_segment(node: Node, start: Vector2) -> Vector2:
+	var startpoint_node: Node2D = null
+	var endpoint_node: Node2D = null
+	
+	for c in node.get_children():
+		if c.name == "Startpoint":
+			startpoint_node = c
+		if c.name == "Endpoint":
+			endpoint_node = c
+	
+	# if these are failing, a segment is improperly configured
+	assert(endpoint_node != null)
+	assert(startpoint_node != null)
+	
+	startpoint_node.queue_free()
+	endpoint_node.queue_free()
+	
+	# spawn the segment and move it to the proper location
+	var difference = startpoint_node.position
+	node.position = start - difference
+	return node.position + endpoint_node.position
+
+
+func add_transition_segment(biomes: Array[Segment.BIOMES], start_position: Vector2) -> Vector2:
+	return start_position

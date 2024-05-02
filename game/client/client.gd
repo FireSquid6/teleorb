@@ -12,6 +12,8 @@ func connect_to_server(ip: String):
 		return
 	multiplayer.multiplayer_peer = peer
 	multiplayer.connected_to_server.connect(_on_connect)
+	
+	World.main.join_game()
 
 
 func _on_connect():
