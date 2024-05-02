@@ -92,11 +92,12 @@ class Course:
 			# todo: validate that all biomes are the same
 			var biome = segments[0].biome
 			var section = Section.new(biome, segments)
+			sections.append(section)
 	
 	func spawn_in(level: Level, start_position: Vector2):
 		var current_position = start_position
 		for section in sections:
-			current_position = level.spawn_in(level, current_position)
+			current_position = section.spawn_in(level, current_position)
 			# TODO: actually take biomes into account
 			current_position = level.add_transition_segment([Segment.BIOMES.CAVE, Segment.BIOMES.CAVE], current_position)
 	
@@ -120,7 +121,6 @@ class Section:
 		segments = s
 	
 	func spawn_in(level: Level, start_position: Vector2) -> Vector2:
-		var to_free: Array[Node] = []
 		var next_start := start_position
 		
 		var transition_scene: PackedScene = Segment.transitions[segments[0].biome]
@@ -134,7 +134,6 @@ class Section:
 			else:
 				nodes.append(transition_scene.instantiate())
 		
-		
 		for node in nodes:
 			next_start = level.add_segment(node, next_start)
 		
@@ -142,6 +141,7 @@ class Section:
 
 
 func add_segment(node: Node, start: Vector2) -> Vector2:
+	add_child(node)
 	var startpoint_node: Node2D = null
 	var endpoint_node: Node2D = null
 	
