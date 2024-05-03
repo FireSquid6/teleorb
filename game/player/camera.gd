@@ -27,7 +27,6 @@ func _physics_process(_delta: float) -> void:
 	if len(areas) < 0:
 		return
 	
-	# TODO deal with player stepping out of an area
 	if not current_area.has_point(global_position):
 		var found = false
 		for area in areas:
