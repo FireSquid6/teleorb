@@ -70,6 +70,7 @@ jump={
 2d_physics/layer_4="Photowalls"
 2d_physics/layer_5="Orbs"
 2d_physics/layer_6="Lasers"
+2d_physics/layer_7="CameraAreas"
 
 [rendering]
 

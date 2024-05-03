@@ -264,10 +264,6 @@ _buffer_area = NodePath("../../WallBuffer")
 [node name="ForceTimer" type="Timer" parent="PlayerInputs"]
 one_shot = true
 
-[node name="Camera2D" type="Camera2D" parent="."]
-enabled = false
-zoom = Vector2(2, 2)
-
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_jg22j")
 

@@ -17,6 +17,8 @@ var orb: Orb = null
 var has_orb = true
 var level: Level
 
+var _camera_scene = preload("res://player/camera.tscn")
+
 func _set_stats(stats: PlayerStats):
 	_stats = stats
 
@@ -72,7 +74,7 @@ func _deref_orb():
 
 func _ready() -> void:
 	if is_multiplayer_authority():
-		$Camera2D.enabled = true
+		add_child(_camera_scene.instantiate())
 
 func _physics_process(delta: float) -> void:
 	# players that aren't the multiplayer authority do not do any physics processing
