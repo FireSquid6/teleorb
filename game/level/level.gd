@@ -27,6 +27,7 @@ func start(level: String):
 	print(level)
 	var course = Course.new(level)
 	course.spawn_in(self, startpoint.position)
+	startpoint.queue_free()
 
 
 @rpc("any_peer", "call_local", "reliable")
