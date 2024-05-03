@@ -99,7 +99,7 @@ class Course:
 		for section in sections:
 			current_position = section.spawn_in(level, current_position)
 			# TODO: actually take biomes into account
-			current_position = level.add_transition_segment([Segment.BIOMES.CAVE, Segment.BIOMES.CAVE], current_position)
+			current_position = level.add_border_segment([Segment.BIOMES.CAVE, Segment.BIOMES.CAVE], current_position)
 	
 	static func validate_level_string(level: String) -> void:
 		var sections = level.split("|")
@@ -164,5 +164,7 @@ func add_segment(node: Node, start: Vector2) -> Vector2:
 	return node.position + endpoint_node.position
 
 
-func add_transition_segment(biomes: Array[Segment.BIOMES], start_position: Vector2) -> Vector2:
-	return start_position
+func add_border_segment(biomes: Array[Segment.BIOMES], start_position: Vector2) -> Vector2:
+	# TODO: make this actually do stuff
+	var node = preload("res://components/borders/cave_to_cave.tscn").instantiate()
+	return add_segment(node, start_position)
