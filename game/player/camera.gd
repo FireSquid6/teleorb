@@ -2,6 +2,7 @@ extends Camera2D
 
 
 var areas: Array[Rect2] = []
+var current_area: Rect2
 
 
 func _ready() -> void:
@@ -18,3 +19,26 @@ func _ready() -> void:
 			if node.is_camera_area():
 				areas.append(node.consume())
 	
+	if len(areas) > 0:
+		set_area(areas[0])
+
+
+func _physics_process(_delta: float) -> void:
+	if len(areas) < 0:
+		return
+	
+	# TODO deal with player stepping out of an area
+	if not current_area.has_point(global_position):
+		for area in areas:
+			if area.has_point(global_position):
+				set_area(area)
+				break
+
+
+func set_area(area: Rect2) -> void:
+	current_area = area
+	
+	limit_left = area.position.x
+	limit_top = area.position.y
+	limit_right = area.end.x
+	limit_bottom = area.end.y
