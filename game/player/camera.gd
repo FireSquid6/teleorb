@@ -29,6 +29,7 @@ func _physics_process(_delta: float) -> void:
 	
 	# TODO deal with player stepping out of an area
 	if not current_area.has_point(global_position):
+		var found = false
 		for area in areas:
 			if area.has_point(global_position):
 				set_area(area)
@@ -42,3 +43,13 @@ func set_area(area: Rect2) -> void:
 	limit_top = area.position.y
 	limit_right = area.end.x
 	limit_bottom = area.end.y
+
+
+func no_area() -> void:
+	current_area = Rect2(0, 0, 0, 0)
+	
+	limit_left = -1000000000
+	limit_right = 1000000000
+	limit_top = -1000000000
+	limit_bottom = 1000000000
+	
