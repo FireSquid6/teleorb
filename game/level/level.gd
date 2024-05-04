@@ -17,15 +17,19 @@ func start(level: String):
 	multiplayer.peer_connected.connect(_add_player)
 	multiplayer.peer_disconnected.connect(_remove_player)
 	
-	var course = Course.new(level)
-	course.spawn_in(self, startpoint.position)
-	startpoint.queue_free()
+	spawn(level)
 	
 	for id in multiplayer.get_peers():
 		_add_player(id)
 	
 	if not Server.is_dedicated_server:
 		_add_player(1)
+
+
+func spawn(level: String):
+	var course = Course.new(level)
+	course.spawn_in(self, startpoint.position)
+	startpoint.queue_free()
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -50,6 +54,7 @@ func find_entity_by_name(id: String) -> Node:
 			return entity
 	
 	return null
+
 
 func _exit_tree():
 	if not multiplayer.is_server():

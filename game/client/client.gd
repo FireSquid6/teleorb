@@ -1,21 +1,32 @@
 extends Node
 
 var peer = null
-signal connected
 
 func connect_to_server(ip: String):
 	peer = ENetMultiplayerPeer.new()
-	peer.create_client(ip, 3412)
+	peer.create_client(ip, 5000)
 	Log.out("Connecting to " + ip)
-	if peer.get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED:
-		Log.out("Disconnected")
-		return
-	multiplayer.multiplayer_peer = peer
-	multiplayer.connected_to_server.connect(_on_connect)
 	
-	World.main.join_game()
+	multiplayer.multiplayer_peer = peer
+	
+	multiplayer.connected_to_server.connect(_on_connect)
+	multiplayer.server_disconnected.connect(_on_disconnect)
+	multiplayer.connection_failed.connect(_connection_failed)
+
+
+@rpc("authority", "call_remote")
+func set_level(level: String):
+	Log.out("Recieved level from server: " + level)
+	World.main.join_game(level)
 
 
 func _on_connect():
 	Log.out("connected to server")
-	emit_signal("connected")
+
+
+func _on_disconnect():
+	Log.out("disconnected from server")
+
+
+func _connection_failed():
+	Log.out("failed to connect to server")
