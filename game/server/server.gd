@@ -11,6 +11,7 @@ var peer = null
 var is_dedicated_server = false
 var running = false
 var vars: ServerVars
+var current_level: String
 
 var peers: Array[int] = []
 
@@ -19,6 +20,7 @@ func _ready() -> void:
 
 
 func start_server(level: String):
+	current_level = level
 	Log.out("\nStarting server...")
 	
 	peer = ENetMultiplayerPeer.new()
@@ -37,6 +39,9 @@ func start_server(level: String):
 	http_server.start()
 	running = true
 
+@rpc("any_peer")
+func get_level():
+	return current_level
 
 func peer_connected(id: int):
 	Log.out("Player connected: " + str(id))
