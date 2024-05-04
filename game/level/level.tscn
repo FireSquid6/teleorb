@@ -1,24 +1,26 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2f3ncwm7mvjb"]
+[gd_scene load_steps=8 format=3 uid="uid://b2f3ncwm7mvjb"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_w22ld"]
 [ext_resource type="PackedScene" uid="uid://28qdcfpuvdkm" path="res://components/tilesets/foreground/foreground.tscn" id="2_rsk8g"]
 [ext_resource type="PackedScene" uid="uid://ck2nc0l3nwd8j" path="res://player/orb/orb.tscn" id="2_sovtg"]
 [ext_resource type="PackedScene" uid="uid://dcuo4m1c4q33f" path="res://player/player.tscn" id="3_h55b5"]
-[ext_resource type="Resource" uid="uid://bhqh8l6iy0txy" path="res://segments/001.tres" id="4_apyoe"]
 [ext_resource type="PackedScene" uid="uid://wbgjoas1yy0d" path="res://components/objects/endpoint.tscn" id="5_o8jpu"]
-[ext_resource type="Resource" uid="uid://bstc58n23e3qd" path="res://segments/002.tres" id="5_r72ow"]
-[ext_resource type="Resource" uid="uid://ck5j1xj58182d" path="res://segments/003.tres" id="6_4bsql"]
-[ext_resource type="Resource" uid="uid://dm7ju3n2j8iew" path="res://segments/004.tres" id="7_c8rcu"]
+[ext_resource type="Script" path="res://components/objects/camera_area.gd" id="10_yg1rb"]
 
-[node name="Level" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bmkpl"]
+size = Vector2(640, 448)
+
+[node name="Level" type="Node2D" node_paths=PackedStringArray("entities", "startpoint")]
 script = ExtResource("1_w22ld")
+entities = NodePath("Entities")
 _orb_scene = ExtResource("2_sovtg")
 _player_scene = ExtResource("3_h55b5")
-segments = Array[Resource("res://segments/segment.gd")]([ExtResource("4_apyoe"), ExtResource("5_r72ow"), ExtResource("6_4bsql"), ExtResource("7_c8rcu")])
-entities = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(0, 0),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
+startpoint = NodePath("Startpoint")
 
-startpoint = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(496, 192),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
-
+[node name="CameraArea" type="CollisionShape2D" parent="."]
+position = Vector2(192, 96)
+shape = SubResource("RectangleShape2D_bmkpl")
+script = ExtResource("10_yg1rb")
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player/player.tscn")

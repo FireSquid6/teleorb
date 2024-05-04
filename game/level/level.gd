@@ -4,7 +4,6 @@ class_name Level
 @export var entities: Node2D
 @export var _orb_scene: PackedScene
 @export var _player_scene: PackedScene
-@export var segments: Array[Segment]
 @export var startpoint: Node2D
 var level_id: String = ""
 
@@ -18,16 +17,15 @@ func start(level: String):
 	multiplayer.peer_connected.connect(_add_player)
 	multiplayer.peer_disconnected.connect(_remove_player)
 	
+	var course = Course.new(level)
+	course.spawn_in(self, startpoint.position)
+	startpoint.queue_free()
+	
 	for id in multiplayer.get_peers():
 		_add_player(id)
 	
 	if not Server.is_dedicated_server:
 		_add_player(1)
-	
-	print(level)
-	var course = Course.new(level)
-	course.spawn_in(self, startpoint.position)
-	startpoint.queue_free()
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -65,7 +63,6 @@ func _add_player(id: int):
 	# Set player id.
 	player.name = str(id)
 	entities.add_child(player, true)
-	
 
 
 func _remove_player(id: int):
