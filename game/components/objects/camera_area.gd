@@ -3,9 +3,9 @@ class_name CameraArea
 
 
 func consume() -> Rect2:
-	var rect = shape.get_rect()
-	rect.position = global_position
-	return rect
+	var rect_size: Vector2 = shape.get_rect().size
+	
+	return Rect2(global_position - rect_size / 2, rect_size)
 
 
 # the player's camera searchs the tree recursively for objects with this method

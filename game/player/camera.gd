@@ -29,10 +29,12 @@ func _physics_process(_delta: float) -> void:
 	
 	if not current_area.has_point(global_position):
 		var found = false
+		no_area()
 		for area in areas:
 			if area.has_point(global_position):
 				set_area(area)
 				break
+		
 
 
 func set_area(area: Rect2) -> void:
