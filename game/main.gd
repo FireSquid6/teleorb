@@ -21,7 +21,7 @@ func start_game(level: String):
 	if Server.is_dedicated_server:
 		set_ui(preload("res://ui/dedicated_server/dedicated-server.tscn").instantiate())
 	else:
-		join_game()
+		set_ui(preload("res://ui/hud/hud.tscn").instantiate())
 
 
 func join_game():

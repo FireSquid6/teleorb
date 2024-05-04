@@ -9,9 +9,4 @@ level_container = NodePath("LevelContainer")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://level/level.tscn")
-spawn_path = NodePath("../LevelContainer")
-spawn_limit = 1
-
 [node name="LevelContainer" type="Node" parent="."]
