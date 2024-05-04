@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2f3ncwm7mvjb"]
+[gd_scene load_steps=9 format=3 uid="uid://b2f3ncwm7mvjb"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_w22ld"]
 [ext_resource type="PackedScene" uid="uid://28qdcfpuvdkm" path="res://components/tilesets/foreground/foreground.tscn" id="2_rsk8g"]
 [ext_resource type="PackedScene" uid="uid://ck2nc0l3nwd8j" path="res://player/orb/orb.tscn" id="2_sovtg"]
 [ext_resource type="PackedScene" uid="uid://dcuo4m1c4q33f" path="res://player/player.tscn" id="3_h55b5"]
 [ext_resource type="PackedScene" uid="uid://wbgjoas1yy0d" path="res://components/objects/endpoint.tscn" id="5_o8jpu"]
+[ext_resource type="PackedScene" uid="uid://drq2ay5iurb23" path="res://components/objects/killzone.tscn" id="7_olyfx"]
 [ext_resource type="Script" path="res://components/objects/camera_area.gd" id="10_yg1rb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bmkpl"]
@@ -36,6 +37,9 @@ position = Vector2(496, 192)
 
 [node name="Polygon2D" parent="Startpoint" index="0"]
 color = Color(0.627451, 0, 0.34902, 0.556863)
+
+[node name="Killzone" parent="." instance=ExtResource("7_olyfx")]
+position = Vector2(0, 1088)
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_entity_spawner_spawned"]
 
