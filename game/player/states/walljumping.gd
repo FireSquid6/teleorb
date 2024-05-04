@@ -28,7 +28,6 @@ func on_physics_process(delta: float) -> void:
 	var stats = p.get_stats()
 	
 	if not inputs.jump_held:
-		Log.out("let go")
 		fsm.change_state("Falling")
 		return
 	

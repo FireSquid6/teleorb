@@ -16,8 +16,11 @@ var orb_thrown = false
 var orb: Orb = null
 var has_orb = true
 var level: Level
+var _respawn_position: Vector2
 
 var _camera_scene = preload("res://player/camera.tscn")
+
+signal died(reason: String)
 
 func _set_stats(stats: PlayerStats):
 	_stats = stats
@@ -73,6 +76,7 @@ func _deref_orb():
 	orb = null
 
 func _ready() -> void:
+	_respawn_position = position
 	if is_multiplayer_authority():
 		add_child(_camera_scene.instantiate())
 
@@ -152,8 +156,32 @@ func _handle_walljump():
 		return
 	
 
+func kill(killer: Node):
+	var reason = "unknown"
+	
+	if killer.has_method("get_kill_method"):
+		reason = killer.get_kill_method()
+	
+	emit_signal("died", reason)
+	
+	# TODO: make the player actually play a death animation
+	velocity = Vector2(0, 0)
+	position = _respawn_position
+
+
+func set_checkpoint(pos: Vector2):
+	_respawn_position = pos
+
 func _slow_down(stopping_acceleration: float):
 	if abs(velocity.x) - stopping_acceleration < 0:
 		velocity.x = 0
 	else:
 		velocity.x -= stopping_acceleration * sign(velocity.x)
+
+
+func _on_spike_detector_body_entered(body: Node2D) -> void:
+	kill(body)
+
+
+func _on_spike_detector_area_entered(area: Area2D) -> void:
+	kill(area)

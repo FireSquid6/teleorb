@@ -346,5 +346,14 @@ script = ExtResource("12_ld4ey")
 metadata/_edit_group_ = true
 metadata/_edit_lock_ = true
 
+[node name="SpikeDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeDetector"]
+shape = ExtResource("10_oodpc")
+
 [connection signal="state_changed" from="FiniteStateMachine" to="AnimatedSprite2D" method="_on_finite_state_machine_state_changed"]
 [connection signal="coyote_time" from="FiniteStateMachine/Walking" to="FiniteStateMachine/Falling" method="_on_walking_coyote_time"]
+[connection signal="area_entered" from="SpikeDetector" to="." method="_on_spike_detector_area_entered"]
+[connection signal="body_entered" from="SpikeDetector" to="." method="_on_spike_detector_body_entered"]
