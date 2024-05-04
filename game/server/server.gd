@@ -39,12 +39,10 @@ func start_server(level: String):
 	http_server.start()
 	running = true
 
-@rpc("any_peer")
-func get_level():
-	return current_level
 
 func peer_connected(id: int):
 	Log.out("Player connected: " + str(id))
+	Client.set_level.rpc_id(id, current_level)
 	peers.append(id)
 
 
