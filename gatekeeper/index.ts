@@ -73,7 +73,6 @@ export class Matchmaker {
 
   private match(client: Client, server: GameServer) {
     this.clients = this.clients.filter((client) => client.id !== client.id)
-
     this.clientConnected.emit({client, gameserver: server})
   }
 }
