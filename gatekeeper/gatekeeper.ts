@@ -1,19 +1,7 @@
 import { Elysia, t } from "elysia";
+import type { GameServer, Client } from "."
 
 
-interface GameServer {
-  id: string
-  name: string
-  ip: string
-  port: number
-  httpUrl?: string
-}
-
-interface Client {
-  id: string
-  gamemode: string
-  callbackUrl: string
-}
 
 
 function generateRandom(): string {
@@ -97,7 +85,13 @@ export const app = new Elysia()
     
   })
   .post("/clients", async ({ store, set, body }) => {
+    
 
+  }, {
+    body: t.Object({
+      gamemode: t.String(),
+      callbackUrl: t.String(),
+    })
   })
   .delete("/clients/:id", async ({ store, set, body, params: {id} }) => {
     if (id === store.clientKeys.get(body.key)) {
