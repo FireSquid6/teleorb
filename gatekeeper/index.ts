@@ -4,12 +4,12 @@ import { serverPlugin } from "./server";
 export const PORT = 3100
 
 export function startGatekeeper() {
-  const matchmaker = new RealMatchmaker()
+  const matchmaker = new Matchmaker()
   const app = new Elysia()
 
-  const server = serverPlugin(matchmaker)
+  const { plugin }= serverPlugin(matchmaker)
   
-  app.use(server.plugin)
+  app.use(plugin)
 
 
   app.listen(PORT)
@@ -30,17 +30,7 @@ export interface Client {
 }
 
 
-export interface Matchmaker {
-  addServer(server: GameServer): void
-  updateServer(id: string, server: GameServer): void
-  removeServer(id: string): void
-  addClient(client: Client): void
-  updateClient(id: string, client: Client): void
-  removeClient(id: string): void
-
-}
-
-export class RealMatchmaker implements Matchmaker {
+export class Matchmaker {
   clientConnected: Signal<{client: Client, gameserver: GameServer}> = new Signal() 
 
   private clients: Client[] = []
