@@ -20,7 +20,7 @@ const secret = "super secret text. This is probably not how you do security."
 export const app = new Elysia()
   .state("gameservers", [] as GameServer[])
   .state("keys", new Map<string, string>())
-  .get("/gameservers/:id", ({ set, params: { id }, store }): GameServer | undefined  => {
+  .get("/servers/:id", ({ set, params: { id }, store }): GameServer | undefined  => {
     for (const gameserver of store.gameservers) {
       if (gameserver.id === id) {
         set.status = 200
@@ -34,10 +34,10 @@ export const app = new Elysia()
       id: t.String()
     })
   })
-  .get("/gameservers", ({ store }): GameServer[] => {
+  .get("/servers", ({ store }): GameServer[] => {
     return store.gameservers
   })
-  .delete("/gameservers/:id", async ({ store, set, body, params: {id} } ) => {
+  .delete("/servers/:id", async ({ store, set, body, params: {id} } ) => {
     if (id !== store.keys.get(body.key)) {
       set.status = 401
       await new Promise((resolve) => setTimeout(resolve, 5000))
@@ -52,8 +52,7 @@ export const app = new Elysia()
       id: t.String()
     })
   })
-  .post("/gameservers", async ({ store, set, body }): Promise<{ key: string, id: string } | undefined> => {
-
+  .post("/servers", async ({ store, set, body }): Promise<{ key: string, id: string } | undefined> => {
     if (secret !== body.secret) {
       await new Promise((resolve) => setTimeout(resolve, 5000))
       set.status = 401
@@ -85,6 +84,15 @@ export const app = new Elysia()
       httpUrl: t.Optional(t.String()),
       port: t.Number(),
     })
+  })
+  .put("/servers/:id", async ({ store, set, body, params: {id} }) => {
+    
+  })
+  .post("/clients", async ({ store, set, body }) => {
+
+  })
+  .delete("/clients/:id", async ({ store, set, body, params: {id} }) => {
+
   })
 
 export type App = typeof app
