@@ -42,10 +42,6 @@ func destroy():
 	emit_signal("destroyed", position + _orb.position + _follower.position)
 	kill()
 
-# physics processs:
-# - move self
-# - move and slide follower
-# - check if collided
 
 func _touched_something() -> void:
 	emit_signal("hit", _follower.global_position)
