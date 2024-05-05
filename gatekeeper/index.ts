@@ -26,7 +26,6 @@ export interface GameServer {
 export interface Client {
   id: string
   gamemode: string
-  callbackUrl: string
 }
 
 
