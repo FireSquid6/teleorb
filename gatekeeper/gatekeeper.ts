@@ -15,11 +15,12 @@ function generateRandom(): string {
 }
 
 
-const secret = "super secret text. This is probably not how you do security."
+const secret = "a secret. This will be changed when warden is implemented."
 
 export const app = new Elysia()
   .state("gameservers", [] as GameServer[])
   .state("keys", new Map<string, string>())
+  .state("clients", [] as string[])
   .get("/servers/:id", ({ set, params: { id }, store }): GameServer | undefined  => {
     for (const gameserver of store.gameservers) {
       if (gameserver.id === id) {
