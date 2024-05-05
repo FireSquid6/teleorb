@@ -22,5 +22,5 @@ export function serverPlugin(matchmaker: Matchmaker) {
 
 
 
-  return {plugin, api: treaty<typeof plugin>(`localhost:${PORT}`) }
+  return { plugin, api: treaty<typeof plugin>(`localhost:${PORT}`) }
 }
