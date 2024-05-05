@@ -16,13 +16,13 @@ with nixpkgs; mkShell {
     nodejs_20
 
     libgcc
+    go
 
     flyctl
     doctl
 
     wget
     unzip
-
 
     patchelf
     docker  # v24.0.5 
