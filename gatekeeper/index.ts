@@ -1,17 +1,19 @@
+import Elysia from "elysia";
+import { serverPlugin } from "./server";
 
+export const PORT = 3100
 
 export function startGatekeeper() {
+  const matchmaker = new RealMatchmaker()
+  const app = new Elysia()
+
+  const server = serverPlugin(matchmaker)
   
+  app.use(server.plugin)
 
+
+  app.listen(PORT)
 }
-
-
-// export interface Matchmaker {
-//   addServer(server: GameServer): void
-//   removeServer(id: string): void
-//   addClient(client: Client): void
-//   removeClient(id: string): void
-// }
 
 export interface GameServer {
   id: string
@@ -28,12 +30,21 @@ export interface Client {
 }
 
 
-export class Matchmaker {
+export interface Matchmaker {
+  addServer(server: GameServer): void
+  updateServer(id: string, server: GameServer): void
+  removeServer(id: string): void
+  addClient(client: Client): void
+  updateClient(id: string, client: Client): void
+  removeClient(id: string): void
+
+}
+
+export class RealMatchmaker implements Matchmaker {
   clientConnected: Signal<{client: Client, gameserver: GameServer}> = new Signal() 
 
-  clients: Client[] = []
-  servers: GameServer[] = []
-
+  private clients: Client[] = []
+  private servers: GameServer[] = []
 
   addServer(server: GameServer) {
     this.servers.push(server)
@@ -60,6 +71,16 @@ export class Matchmaker {
     this.process()
   }
 
+  updateClient(id: string, client: Client) {
+    const index = this.clients.findIndex((client) => client.id === id)
+    if (index === -1) {
+      return
+    }
+
+    this.clients[index] = client
+    this.process()
+  }
+
   removeClient(id: string) {
     this.clients = this.clients.filter((client) => client.id !== id)
     this.process()
@@ -69,7 +90,6 @@ export class Matchmaker {
     // TODO: figure out how to match clients with servers
 
   }
-
 
   private match(client: Client, server: GameServer) {
     this.clients = this.clients.filter((client) => client.id !== client.id)
