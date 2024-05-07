@@ -113,3 +113,7 @@ export class Signal<T> {
     return this.listeners.length
   }
 }
+
+
+
+startGatekeeper()
