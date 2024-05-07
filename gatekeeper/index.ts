@@ -1,5 +1,6 @@
 import Elysia from "elysia";
 import { serverPlugin } from "./server";
+import { clientPlugin } from "./client";
 
 export const PORT = 3100
 
@@ -7,12 +8,15 @@ export function startGatekeeper() {
   const matchmaker = new Matchmaker()
   const app = new Elysia()
 
-  const { plugin }= serverPlugin(matchmaker)
+  const { plugin: server, api: serverApi } = serverPlugin(matchmaker)
+  const { plugin: client, api: clientApi } = clientPlugin(matchmaker)
   
-  app.use(plugin)
-
+  app.use(server)
+  app.use(client)
 
   app.listen(PORT)
+
+  return { matchmaker, serverApi, clientApi }
 }
 
 export interface GameServer {
