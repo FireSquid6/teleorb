@@ -1,13 +1,7 @@
 import { Elysia, t } from "elysia";
+import type { GameServer, Client } from "."
 
 
-interface GameServer {
-  id: string
-  name: string
-  ip: string
-  port: number
-  httpUrl?: string
-}
 
 
 function generateRandom(): string {
@@ -15,12 +9,14 @@ function generateRandom(): string {
 }
 
 
-const secret = "super secret text. This is probably not how you do security."
+const secret = "a secret. This will be changed when warden is implemented."
 
 export const app = new Elysia()
   .state("gameservers", [] as GameServer[])
-  .state("keys", new Map<string, string>())
-  .get("/gameservers/:id", ({ set, params: { id }, store }): GameServer | undefined  => {
+  .state("serverKeys", new Map<string, string>())
+  .state("clientKeys", new Map<string, string>())
+  .state("client", [] as Client[])
+  .get("/servers/:id", ({ set, params: { id }, store }): GameServer | undefined  => {
     for (const gameserver of store.gameservers) {
       if (gameserver.id === id) {
         set.status = 200
@@ -34,11 +30,11 @@ export const app = new Elysia()
       id: t.String()
     })
   })
-  .get("/gameservers", ({ store }): GameServer[] => {
+  .get("/servers", ({ store }): GameServer[] => {
     return store.gameservers
   })
-  .delete("/gameservers/:id", async ({ store, set, body, params: {id} } ) => {
-    if (id !== store.keys.get(body.key)) {
+  .delete("/servers/:id", async ({ store, set, body, params: {id} } ) => {
+    if (id !== store.serverKeys.get(body.key)) {
       set.status = 401
       await new Promise((resolve) => setTimeout(resolve, 5000))
     }
@@ -52,8 +48,7 @@ export const app = new Elysia()
       id: t.String()
     })
   })
-  .post("/gameservers", async ({ store, set, body }): Promise<{ key: string, id: string } | undefined> => {
-
+  .post("/servers", async ({ store, set, body }): Promise<{ key: string, id: string } | undefined> => {
     if (secret !== body.secret) {
       await new Promise((resolve) => setTimeout(resolve, 5000))
       set.status = 401
@@ -71,7 +66,7 @@ export const app = new Elysia()
       httpUrl: body.httpUrl,
     })
 
-    store.keys.set(key, key)
+    store.serverKeys.set(key, key)
 
 
     return {
@@ -84,6 +79,36 @@ export const app = new Elysia()
       secret: t.String(),
       httpUrl: t.Optional(t.String()),
       port: t.Number(),
+    })
+  })
+  .put("/servers/:id", async ({ store, set, body, params: {id} }) => {
+    
+  })
+  .post("/clients", async ({ store, set, body }) => {
+    
+
+  }, {
+    body: t.Object({
+      gamemode: t.String(),
+      callbackUrl: t.String(),
+    })
+  })
+  .delete("/clients/:id", async ({ store, set, body, params: {id} }) => {
+    if (id === store.clientKeys.get(body.key)) {
+      set.status = 204
+      store.clientKeys.delete(body.key)
+      store.client = store.client.filter((client) => client.id !== id)
+    } else {
+      set.status = 401
+      await new Promise((resolve) => setTimeout(resolve, 5000))
+    }
+
+  }, {
+    body: t.Object({
+      key: t.String(),
+    }),
+    params: t.Object({
+      id: t.String()
     })
   })
 
