@@ -4,21 +4,15 @@ Teleorb is a multiplayer speedrun based platformer.
 
 # Projects
 
-- `/game` - Acts as both the game server and the player client
-- `/warden` - Service that handles authentication for all players
-- `/gatekeeper` - Service that handles authenticating servers and creating them
+- `/game` - Acts as both the game server and the player client. Built with Godot.
+- `/warden` - Service that handles authentication for all players. Built with Bun, Typescript, and Elysia.
+- `/gatekeeper` - Service that handles authenticating servers and creating them. Built with Bun, Typescript, and Elysia.
 
-All deployments are done through [fly.io](https://fly.io)
-
-# Nitpicks for Code Reviews
-
-- Please use the terms `speed` and `velocity` appropriately when naming variables. `acceleration` could refer to a scalar or vector quantity.
-- Start private methods and variables (those only meant to be internal) with an underscore or make them a single character long
-- Don't explain _what_ the code is doing in comments, explain _why_ the code is doing
+Deployments are done on fly.io and digitalocean.
 
 # Versioning
 
-Semver doesn't really make sense for a game that doesn't expose a public interface. We use a custom versioning system.
+Teleorb uses its own versioning system since semver doesn't make much sense for a project like this. Versions across all projects are syncrhonized (even if a release doesn't actually change that project) and it is assumed that versions in all projects must be the same for the system to work properly.
 
 Versions look like the following:
 
@@ -34,4 +28,4 @@ beta-1-0  # you always need a trailing 0
 
 ```
 
-`HOTFIX` changes every time a small patch is made and resets whenver `VERSION` increases. `VERSION` increases whenever new features are added and resets whenever `ERA` changes. `ERA` changes whenever I feel like it. Eras typically move up by using greek letters.
+`HOTFIX` changes every time a small patch is made and resets whenver `VERSION` increases. `VERSION` increases whenever new features are added and resets whenever `ERA` changes. `ERA` changes whenever I feel like it. Eras used to move up using greek letters, but now use elements to distinguish them from semver (which typically uses "alpha" and "beta" to denote prereleases).
