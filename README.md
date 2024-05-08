@@ -5,11 +5,8 @@ Teleorb is a multiplayer speedrun based platformer.
 # Projects
 
 - `/game` - Acts as both the game server and the player client
-- `/server` - The runtime for each deployed server. Runs the actual game server as a subprocess.
-- `/chronos` - Service that handles leaderboard and ratings calculation
 - `/warden` - Service that handles authentication for all players
 - `/gatekeeper` - Service that handles authenticating servers and creating them
-- `/site` - The website for teleorb
 
 All deployments are done through [fly.io](https://fly.io)
 
