@@ -1,6 +1,7 @@
 import Elysia from "elysia";
 import { serverPlugin } from "./server";
 import { clientPlugin } from "./client";
+import type { Client } from "./client";
 
 export const PORT = 3100
 
@@ -25,11 +26,6 @@ export interface GameServer {
   ip: string
   port: number
   httpUrl?: string
-}
-
-export interface Client {
-  id: string
-  gamemode: string
 }
 
 
