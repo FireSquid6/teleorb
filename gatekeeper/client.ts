@@ -1,4 +1,4 @@
-import { Matchmaker, PORT, type Client } from "."
+import { Matchmaker, PORT } from "."
 import { Elysia, t } from "elysia"
 import { treaty } from "@elysiajs/eden"
 
@@ -16,7 +16,7 @@ export function clientPlugin(matchmaker: Matchmaker) {
           if (data.joinRequest) {
             matchmaker.addClient({
               id: ws.id,
-              gamemode: data.joinRequest.gamemode,
+              request: data.joinRequest as JoinRequest
             })
 
             matchmaker.clientConnected.on(({ client, gameserver }) => {
@@ -50,7 +50,7 @@ export function clientPlugin(matchmaker: Matchmaker) {
 }
 
 
-interface ClientMessage {
+export interface ClientMessage {
   operation: "join" | "leave"
   joinRequest: JoinRequest | undefined
 }
@@ -58,4 +58,15 @@ interface ClientMessage {
 
 interface JoinRequest {
   gamemode: string
+}
+
+export interface Client {
+  id: string
+  request: JoinRequest
+}
+
+export interface ServerMessage {
+  command: "join" | "leave"
+  error: string | undefined
+  server: string | undefined
 }
