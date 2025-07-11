@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbgrtaahgb1u"]
+
+[ext_resource type="Script" uid="uid://bkljjhx6ujyrm" path="res://components/objects/camera_area.gd" id="1_wn4w2"]
+
+[node name="CameraArea" type="CollisionShape2D"]
+debug_color = Color(0.686275, 0.290196, 1, 0.419608)
+script = ExtResource("1_wn4w2")

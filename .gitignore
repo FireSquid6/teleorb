@@ -1,3 +1,4 @@
-.envrc
-exports/
-tags
+# Godot 4+ specific ignores
+.godot/
+
+dedicated-server.json
