@@ -29,5 +29,10 @@ game.start('start', { // name of the start scene 'start'
     color: ex.Color.Black,
   })
 }).then(() => {
-  // Do something after the game starts
+  document.addEventListener("keydown", (evt) => {
+    if (evt.ctrlKey && evt.key === "d") {
+      evt.preventDefault();
+      game.toggleDebug();
+    }
+  });
 });
