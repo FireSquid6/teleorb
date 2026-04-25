@@ -1,4 +1,5 @@
 import * as ex from "excalibur";
+import { Resources } from "../resources";
 
 
 export interface PlayerArgs {
@@ -40,6 +41,15 @@ export class Player extends ex.Actor {
   }
 
   override onInitialize(_engine: ex.Engine): void {
+    const sheet = ex.SpriteSheet.fromImageSource({
+      image: Resources.PlayerImage,
+      grid: { rows: 1, columns: 22, spriteWidth: PLAYER_WIDTH, spriteHeight: PLAYER_HEIGHT },
+    });
+    const sprite = sheet.getSprite(0, 0);
+    if (sprite) {
+      this.graphics.use(sprite);
+    }
+
     this.on("postcollision", (evt) => {
       if (evt.side === ex.Side.Bottom) {
         this.onGround = true;
@@ -54,6 +64,7 @@ export class Player extends ex.Actor {
     let dx = 0;
     if (kb.isHeld(ex.Keys.Left) || kb.isHeld(ex.Keys.A)) dx -= 1;
     if (kb.isHeld(ex.Keys.Right) || kb.isHeld(ex.Keys.D)) dx += 1;
+
 
     const targetVx = dx * MOVE_SPEED;
     const step = ACCELERATION * seconds;

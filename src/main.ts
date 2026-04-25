@@ -8,6 +8,7 @@ const game = new ex.Engine({
   width: 800, // Logical width and height in game pixels
   height: 600,
   displayMode: ex.DisplayMode.FitScreenAndFill, // Display mode tells excalibur how to fill the window
+  backgroundColor: ex.Color.Gray,
   pixelArt: true, // pixelArt will turn on the correct settings to render pixel art without jaggies or shimmering artifacts
   pixelRatio: 2,
   scenes: {

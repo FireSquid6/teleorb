@@ -1,10 +1,11 @@
 import * as ex from "excalibur";
-import { Grid } from "../actors/grid";
+import { LevelTilemap } from "../actors/level-tilemap";
+import { Player } from "../actors/player";
 
 export class MyLevel extends ex.Scene {
   override onInitialize(_engine: ex.Engine): void {
-    const grid = new Grid();
-    this.add(grid);
+    this.add(new LevelTilemap());
+    this.add(new Player({ x: 128, y: 128 }));
   }
 
   override onPreLoad(_loader: ex.DefaultLoader): void {}

@@ -3,6 +3,7 @@ import * as ex from "excalibur";
 export const Resources = {
   Sword: new ex.ImageSource("./images/sword.png"),
   GridTileMapImage: new ex.ImageSource("./art/tilemap.png"),
+  PlayerImage: new ex.ImageSource("./art/player.png"),
 } as const;
 
 
