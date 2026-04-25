@@ -1,0 +1,11 @@
+{
+  "skillOverrides": {
+    "excalibur-ecs": "on",
+    "excalibur-setup": "on",
+    "excalibur-simulation": "on",
+    "excalibur-utilities": "on",
+    "excalibur-core": "on",
+    "excalibur-resources": "on",
+    "excalibur-visuals": "on"
+  }
+}
